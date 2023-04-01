@@ -3,7 +3,7 @@ from lexer import analisadorLexico
 def main():
     lexer = analisadorLexico()
     f = open('dataset.txt')
-    data = f.readlines()
+    data = f.read()
     lexer.analiselexica(str(data))
 
 if __name__ == "__main__":

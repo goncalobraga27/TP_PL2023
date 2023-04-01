@@ -1,4 +1,5 @@
 from ply.lex import lex
+from ply.yacc import yacc
 
 
 class analisadorLexico:
@@ -6,7 +7,9 @@ class analisadorLexico:
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive')
                   )
-        tokens = ("WORD", "NUMBER", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END")
+        tokens = (
+            "WORD", "NUMBER", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT")
 
         t_WORD = r'\w+'
         t_NUMBER = r'\d+'
@@ -18,28 +21,33 @@ class analisadorLexico:
         t_AC = r'\{'
         t_FPR = r'\]'
         t_APR = r'\['
+        t_VIRG = r'\,'
+        t_ASPA = r'\"'
+        t_IGUAL = r'\='
+        t_HASHTAG = r'\#'
+        t_CONTENT = r'(\w|\"|\-|\:|\.)+'
 
-        t_ignore = ' \t\n'
+        t_ignore = ' \t'
 
         def t_NEWLINE(t):
-            r"""\\n+"""
+            r"""\n+"""
             t.lexer.lineno += t.value.count('\n')
             return t
 
         def t_NEWDICTIONARY(t):
-            r'\[\w+\]'
+            r'\w+\]'
             print("Entrei no estado NEWDICTIONARY")
             t.lexer.begin('NEWDICTIONARY')
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'\[\w+\.\w+\]'
+            r'\w+\.\w+\]'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
 
         def t_NEWDICTIONARY_NEWSUBDICTIONARY_END(t):
-            r'\[\w+\] | \[\w+\.\w+\]'
+            r'\n\['
             print('Sai do meu estado atual, e vou voltar ao meu estado inicial')
             t.lexer.begin('INITIAL')
             return t
@@ -55,3 +63,34 @@ class analisadorLexico:
             if not tok:
                 break
             print(tok)
+
+        def p_expression(p):
+            """
+            expression : key IGUAL content
+            """
+            # p is a sequence that represents rule contents.
+            #
+            # expression : key IGUAL content
+            #   p[0]     : p[1] p[2] p[3]
+            #
+            p[0] = ('atribuição', p[2], p[1], p[3])
+
+        def p_key_word(p):
+            """
+            key: WORD
+            """
+            p[0] = ('chave', p[1])
+
+        def p_content(p):
+            """
+            content : CONTENT
+                    | lista
+            """
+            p[0] = ('content', p[1])
+
+        def p_lista(p):
+            """
+            lista : APR elementos FPR
+                  | APR FPR
+            """
+            p[0] = ('lista', p[1], p[2], p[3])
