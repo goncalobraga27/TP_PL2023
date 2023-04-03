@@ -5,7 +5,8 @@ from ply.yacc import yacc
 class analisadorLexico:
     def analiselexica(self, data):
         states = (('NEWDICTIONARY', 'inclusive'),
-                  ('NEWSUBDICTIONARY', 'inclusive')
+                  ('NEWSUBDICTIONARY', 'inclusive'),
+                  ('NEWCOMENTARY', 'exclusive')
                   )
         tokens = (
             "WORD", "NUMBER", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
@@ -27,7 +28,7 @@ class analisadorLexico:
         t_HASHTAG = r'\#'
         t_CONTENT = r'(\w|\"|\-|\:|\.)+'
 
-        t_ignore = ' \t'
+        t_ANY_ignore = ' \t'
 
         def t_NEWLINE(t):
             r"""\n+"""
@@ -41,10 +42,20 @@ class analisadorLexico:
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'\w+\.\w+\]'
+            r'(\w+\.\w+\])|((\w+\.)+\w+\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
+
+        def t_NEWCOMENTARY(t):
+            r'\#'
+            print("Entrei no estado NEWCOMENTARY")
+            t.lexer.begin('NEWCOMENTARY')
+            return t
+
+        def t_NEWCOMMENTARY_CONTENT(t):
+            r""".*\n"""
+            pass
 
         def t_NEWDICTIONARY_NEWSUBDICTIONARY_END(t):
             r'\n\['
@@ -52,7 +63,13 @@ class analisadorLexico:
             t.lexer.begin('INITIAL')
             return t
 
-        def t_error(t):
+        def t_NEWCOMENTARY_END(t):
+            r'\n'
+            print('Sai do meu estado atual, e vou voltar ao meu estado inicial')
+            t.lexer.begin('INITIAL')
+            return t
+
+        def t_ANY_error(t):
             print('Lexical error: "' + str(t.value[0]) + '" in line ' + str(t.lineno))
             t.lexer.skip(1)
 
