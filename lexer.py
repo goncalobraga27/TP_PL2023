@@ -4,31 +4,30 @@ from ply.yacc import yacc
 
 class analisadorLexico:
     def analiselexica(self, data):
+
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive'),
-                  ('NEWCOMENTARY', 'exclusive')
                   )
+        
         tokens = (
-            "WORD", "NUMBER", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT")
+            "COMMENTARY",
+            "WORD", 
+            "NUMBER", 
+            "CONTENT")
+
+        literals = (r'\.',r'\:',r'\-',r'\'',r'\}',r'\{', r'\]',r'\[',r'\,', r'\"',r'\=')
+
+
+        def t_COMMENTARY(t):
+            r"#.*\n" # r'#.*'
+            pass
 
         t_WORD = r'\w+'
         t_NUMBER = r'\d+'
-        t_POINT = r'\.'
-        t_TWOPOINTS = r'\:'
-        t_HIFEN = r'\-'
-        t_PLICA = r'\''
-        t_FC = r'\}'
-        t_AC = r'\{'
-        t_FPR = r'\]'
-        t_APR = r'\['
-        t_VIRG = r'\,'
-        t_ASPA = r'\"'
-        t_IGUAL = r'\='
-        t_HASHTAG = r'\#'
-        t_CONTENT = r'(\w|\"|\-|\:|\.)+'
 
-        t_ANY_ignore = ' \t'
+        t_CONTENT = r'(\w|\"|\-|\:|\.)+'
+        
+        t_ANY_ignore = ' \t\n'
 
         def t_NEWLINE(t):
             r"""\n+"""
