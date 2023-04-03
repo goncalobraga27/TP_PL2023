@@ -7,17 +7,20 @@ class analisadorLexico:
 
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive'),
-                  ('NEWCOMENTARY', 'inclusive')
+                  #('NEWCOMENTARY', 'inclusive')
                   )
         tokens = (
-            "WORD", "INT", "FLOAT", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
+            "COMMENTARY","WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL")
+
+        literals = (':')
+
+        
 
         t_WORD = r'[a-zA-Z_]+'
         t_FLOAT = r'\d+\,\d+'
         t_INT = r'\d+'
         t_POINT = r'\.'
-        t_TWOPOINTS = r'\:'
         t_HIFEN = r'\-'
         t_PLICA = r'\''
         t_FC = r'\}'
@@ -35,6 +38,12 @@ class analisadorLexico:
 
         t_ANY_ignore = ' \t'
 
+        def t_COMMENTARY(t):
+            r"\#.*\n"
+            t.lexer.lineno += t.value.count('\n')
+            pass
+            #return t
+
         def t_NEWLINE(t):
             r"""\n+"""
             t.lexer.lineno += t.value.count('\n')
@@ -51,25 +60,25 @@ class analisadorLexico:
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
-
+        """
         def t_NEWCOMENTARY(t):
             r'\#'
             print("Entrei no estado NEWCOMENTARY")
             t.lexer.begin('NEWCOMENTARY')
             return t
-
+        """
         def t_NEWDICTIONARY_NEWSUBDICTIONARY_END(t):
             r'\n\['
             print('Sai do meu estado atual, e vou voltar ao meu estado inicial')
             t.lexer.begin('INITIAL')
             return t
-
+            """
         def t_NEWCOMENTARY_END(t):
             r'\n'
             print('Sai do meu estado atual, e vou voltar ao meu estado inicial')
             t.lexer.begin('INITIAL')
             return t
-
+            """
         def t_ANY_error(t):
             print('Lexical error: "' + str(t.value[0]) + '" in line ' + str(t.lineno))
             t.lexer.skip(1)
