@@ -7,27 +7,33 @@ class analisadorLexico:
 
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive'),
+                  ('NEWCOMENTARY', 'inclusive')
                   )
-        
         tokens = (
-            "COMMENTARY",
-            "WORD", 
-            "NUMBER", 
-            "CONTENT")
+            "WORD", "INT", "FLOAT", "POINT", "TWOPOINTS", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL")
 
-        literals = (r'\.',r'\:',r'\-',r'\'',r'\}',r'\{', r'\]',r'\[',r'\,', r'\"',r'\=')
+        t_WORD = r'[a-zA-Z_]+'
+        t_FLOAT = r'\d+\,\d+'
+        t_INT = r'\d+'
+        t_POINT = r'\.'
+        t_TWOPOINTS = r'\:'
+        t_HIFEN = r'\-'
+        t_PLICA = r'\''
+        t_FC = r'\}'
+        t_AC = r'\{'
+        t_FPR = r'\]'
+        t_APR = r'\['
+        t_VIRG = r'\,'
+        t_ASPA = r'\"'
+        t_IGUAL = r'\='
+        t_HASHTAG = r'\#'
+        t_CONTENT = r'\".*"'
+        t_DATE = r'\d+\-\d+\-\d+'
+        t_TIME = r'\d+\:\d+:\d+'
+        t_BOOL = r'verdadeiro|falso'
 
-
-        def t_COMMENTARY(t):
-            r"#.*\n" # r'#.*'
-            pass
-
-        t_WORD = r'\w+'
-        t_NUMBER = r'\d+'
-
-        t_CONTENT = r'(\w|\"|\-|\:|\.)+'
-        
-        t_ANY_ignore = ' \t\n'
+        t_ANY_ignore = ' \t'
 
         def t_NEWLINE(t):
             r"""\n+"""
@@ -51,10 +57,6 @@ class analisadorLexico:
             print("Entrei no estado NEWCOMENTARY")
             t.lexer.begin('NEWCOMENTARY')
             return t
-
-        def t_NEWCOMMENTARY_CONTENT(t):
-            r""".*\n"""
-            pass
 
         def t_NEWDICTIONARY_NEWSUBDICTIONARY_END(t):
             r'\n\['
