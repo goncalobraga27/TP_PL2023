@@ -9,10 +9,10 @@ class analisadorLexico:
                   ('NEWSUBDICTIONARY', 'inclusive'),
                   )
         tokens = (
-            "COMMENTARY","WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
+            "COMMENTARY", "WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL")
 
-        literals = (':','-')
+        literals = (':', '-')
 
         t_WORD = r'[a-zA-Z_]+'
         t_FLOAT = r'\d+\,\d+'
@@ -31,7 +31,7 @@ class analisadorLexico:
         t_CONTENT = r'\".*"'
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
-        t_BOOL = r'verdadeiro|falso' # ou e` true or false?
+        t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
 
         t_ANY_ignore = ' \t'
 
@@ -74,9 +74,9 @@ class analisadorLexico:
                 break
             print(tok)
 
-        def p_expression(p):
+        def p_atribuicao(p):
             """
-            expression : key IGUAL content
+            atribuicao : key IGUAL content
             """
             # p is a sequence that represents rule contents.
             #
@@ -104,3 +104,40 @@ class analisadorLexico:
                   | APR FPR
             """
             p[0] = ('lista', p[1], p[2], p[3])
+
+        def p_lista_elementos(p):
+            """
+            elementos : INT
+                      | ASPA WORD ASPA
+                      | INT VIRG elementos
+                      | ASPA WORD ASPA VIRG elementos
+            """
+            p[0] = ('elementos', p[1])
+
+        def p_seccao(p):
+            """
+            seccao : APR content FPR conteudo
+            """
+            p[0] = ('seccao', p[2], p[4])
+
+        def p_seccao_conteudo(p):
+            """
+            conteudo : atribuicao outrasAtribuicoes
+                    | VAZIO
+                    | seccao
+            """
+            p[0] = ('conteudo', p[2], p[4])
+
+        def p_outrasAtribuicoes(p):
+            """
+            outrasAtribuicoes : Vazio
+                              | atribuicao outrasAtribuicoes
+            """
+            p[0] = ('Outras Atribuicoes', p[1], p[2])
+
+        # Build the parser
+        #parser = yacc()
+
+        # Parse a file
+        #ast = parser.parse()
+        #print(ast)
