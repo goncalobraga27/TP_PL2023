@@ -4,7 +4,6 @@ from ply.yacc import yacc
 
 class analisadorLexico:
     def analiselexica(self, data):
-
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive'),
                   )
@@ -67,77 +66,102 @@ class analisadorLexico:
             t.lexer.skip(1)
 
         lexer = lex()
-
+        """
         lexer.input(data)
         for tok in lexer:
             if not tok:
                 break
             print(tok)
+        """
 
-        def p_atribuicao(p):
+        def p_Atribuicao(p):
             """
-            atribuicao : key IGUAL content
+            Atribuicao : Key IGUAL Content
             """
-            # p is a sequence that represents rule contents.
-            #
-            # expression : key IGUAL content
-            #   p[0]     : p[1] p[2] p[3]
-            #
-            p[0] = ('atribuição', p[2], p[1], p[3])
 
-        def p_key_word(p):
+        def p_Key(p):
             """
-            key: WORD
+             Key : WORD
             """
-            p[0] = ('chave', p[1])
+            p[0] = p[1]
 
-        def p_content(p):
+        def p_Content(p):
             """
-            content : CONTENT
-                    | lista
+            Content : WORD
+                    | FLOAT
+                    | INT
+                    | CONTENT
+                    | DATE
+                    | TIME
+                    | BOOL
+                    | Lista
             """
-            p[0] = ('content', p[1])
+            p[0] = p[1]
+            print("Estou a printar isto:" + p[0])
 
-        def p_lista(p):
+        def p_Lista(p):
             """
-            lista : APR elementos FPR
-                  | APR FPR
+            Lista : APR Elementos FPR
             """
-            p[0] = ('lista', p[1], p[2], p[3])
+            p[0] = p[1]
 
-        def p_lista_elementos(p):
+        def p_Lista_Vazia(p):
             """
-            elementos : INT
-                      | ASPA WORD ASPA
-                      | INT VIRG elementos
-                      | ASPA WORD ASPA VIRG elementos
+            Lista : APR FPR
             """
-            p[0] = ('elementos', p[1])
 
-        def p_seccao(p):
+        def p_Elementos(p):
             """
-            seccao : APR content FPR conteudo
+            Elementos : Elementos VIRG Elemento
             """
-            p[0] = ('seccao', p[2], p[4])
 
-        def p_seccao_conteudo(p):
+        def p_Elementos_Elemento(p):
             """
-            conteudo : atribuicao outrasAtribuicoes
-                    | VAZIO
-                    | seccao
+            Elementos : Elemento
             """
-            p[0] = ('conteudo', p[2], p[4])
 
-        def p_outrasAtribuicoes(p):
+        def p_Elemento(p):
             """
-            outrasAtribuicoes : Vazio
-                              | atribuicao outrasAtribuicoes
+            Elemento : INT
+                    | WORD
+                    | CONTENT
             """
-            p[0] = ('Outras Atribuicoes', p[1], p[2])
+            p[0] = p[1]
 
-        # Build the parser
-        #parser = yacc()
+        def p_Seccao(p):
+            """
+            Seccao : APR Content FPR Conteudo
+            """
+            p[0] = p[4]
 
-        # Parse a file
-        #ast = parser.parse()
-        #print(ast)
+        def p_Seccao_Conteudo(p):
+            """
+            Conteudo : Atribuicao OutrasAtribuicoes
+                     | Seccao
+            """
+            p[0] = p[1]
+
+        def p_Seccao_Conteudo_Vazia(p):
+            """
+           Conteudo :
+            """
+        def p_OutrasAtribuicoes(p):
+            """
+            OutrasAtribuicoes : OutrasAtribuicoes Atribuicao
+            """
+            p[0] = p[2]
+
+        def p_OutrasAtribuicoes_Vazia(p):
+            """
+            OutrasAtribuicoes :
+            """
+
+        def p_error(p):
+            print("O p é isto:" + str(p))
+            print("Erro sintático no input!")
+            parser.success = False
+
+        parser = yacc()
+
+        parserResult = parser.parse(data)
+        print(parserResult)
