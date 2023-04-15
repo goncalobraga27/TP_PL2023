@@ -2,14 +2,26 @@ from ply.lex import lex
 from ply.yacc import yacc
 
 
-class analisadorLexico:
-    def analiselexica(self, data):
+class Conversor:
+    def __init__(self):
+        self.atualState = ""
+        self.auxAtualState = ""
+        self.documentTitle = ""
+        self.documentData = dict()
+    def pointsCounter(self, data):
+        resultado = 0
+        for it in data:
+            if it == '.':
+                resultado += 1
+        return resultado
+    def conversor(self, data):
+
         states = (('NEWDICTIONARY', 'inclusive'),
                   ('NEWSUBDICTIONARY', 'inclusive'),
                   )
         tokens = (
             "COMMENTARY", "WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL")
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY")
 
         literals = (':', '-')
 
@@ -74,16 +86,45 @@ class analisadorLexico:
             print(tok)
         """
 
-        def p_Atribuicao(p):
+        def p_Dados(p):
             """
-            Atribuicao : Key IGUAL Content
+            Dados : WORD IGUAL Content
+                  | APR NEWDICTIONARY
+                  | APR NEWSUBDICTIONARY
             """
+            print("AQUI")
+            if str(p[1]) == "title":
+                self.documentTitle = str(p[3])[1:][:-1]
+            elif str(p[1]) == "[":
+                if self.pointsCounter(str(p[2])) == 1:
+                    dic = dict()
+                    dic[str(p[2])[:-1]] = []
+                    self.auxAtualState = str(p[2])[:-1]
+                    self.documentData[self.atualState].append(dic)
+                elif self.pointsCounter(str(p[2])) == 0:
+                    self.documentData[str(p[2])[:-1]] = []
+                    self.atualState = str(p[2])[:-1]
+                    self.auxAtualState = ""
+                else:
+                    dic = dict()
+                    dic[str(p[2])[:-1]] = []
+                    lista = self.documentData[self.atualState]
+                    for item in lista:
+                        if type(item) == dict:
+                            item[self.auxAtualState].append(dic)
+                    self.auxAtualState = str(p[2])[:-1]
+            else:
+                if self.auxAtualState == "":
+                    at = str(p[1]) + "=" + str(p[3])
+                    self.documentData[self.atualState].append(at)
+                else:
+                    at = str(p[1]) + "=" + str(p[3])
+                    lista = self.documentData[self.atualState]
+                    for item in lista:
+                        if type(item) == dict:
+                            item[self.auxAtualState].append(at)
 
-        def p_Key(p):
-            """
-             Key : WORD
-            """
-            p[0] = p[1]
+
 
         def p_Content(p):
             """
@@ -97,28 +138,31 @@ class analisadorLexico:
                     | Lista
             """
             p[0] = p[1]
-            print("Estou a printar isto:" + p[0])
+            print("O conteúdo da atribuição é isto:" + p[0])
 
         def p_Lista(p):
             """
             Lista : APR Elementos FPR
             """
-            p[0] = p[1]
+            p[0] = "["+str(p[2])+"]"
 
         def p_Lista_Vazia(p):
             """
             Lista : APR FPR
             """
+            p[0] = "[]"
 
         def p_Elementos(p):
             """
             Elementos : Elementos VIRG Elemento
             """
+            p[0] = str(p[1])+","+str(p[3])
 
         def p_Elementos_Elemento(p):
             """
             Elementos : Elemento
             """
+            p[0] = str(p[1])
 
         def p_Elemento(p):
             """
@@ -126,35 +170,7 @@ class analisadorLexico:
                     | WORD
                     | CONTENT
             """
-            p[0] = p[1]
-
-        def p_Seccao(p):
-            """
-            Seccao : APR Content FPR Conteudo
-            """
-            p[0] = p[4]
-
-        def p_Seccao_Conteudo(p):
-            """
-            Conteudo : Atribuicao OutrasAtribuicoes
-                     | Seccao
-            """
-            p[0] = p[1]
-
-        def p_Seccao_Conteudo_Vazia(p):
-            """
-           Conteudo :
-            """
-        def p_OutrasAtribuicoes(p):
-            """
-            OutrasAtribuicoes : OutrasAtribuicoes Atribuicao
-            """
-            p[0] = p[2]
-
-        def p_OutrasAtribuicoes_Vazia(p):
-            """
-            OutrasAtribuicoes :
-            """
+            p[0] = str(p[1])
 
         def p_error(p):
             print("O p é isto:" + str(p))
@@ -162,6 +178,6 @@ class analisadorLexico:
             parser.success = False
 
         parser = yacc()
-
-        parserResult = parser.parse(data)
-        print(parserResult)
+        data = data.split('\n')
+        for it in data:
+            parser.parse(it)

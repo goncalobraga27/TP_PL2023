@@ -1,10 +1,10 @@
 import toml
-from lexer import analisadorLexico
+from conversorTOMLtoJSON import Conversor
 def main():
-    lexer = analisadorLexico()
+    conv = Conversor()
     f = open('dataset.txt')
     data = f.read()
-    lexer.analiselexica(str(data))
+    conv.conversor(str(data))
 
 if __name__ == "__main__":
     main()
