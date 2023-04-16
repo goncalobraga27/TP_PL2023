@@ -1,19 +1,28 @@
 from ply.lex import lex
 from ply.yacc import yacc
+import json
 
 
 class Conversor:
     def __init__(self):
-        self.atualState = ""
-        self.auxAtualState = ""
+        self.fileStates = []
         self.documentTitle = ""
         self.documentData = dict()
-    def pointsCounter(self, data):
-        resultado = 0
+
+    def levelsData(self, data):
+        nLevel = 0
+        resultado = []
+        level = ""
         for it in data:
             if it == '.':
-                resultado += 1
+                resultado.append(level)
+                nLevel += 1
+                level += it
+            else:
+                level += it
+        resultado.append(data)
         return resultado
+
     def conversor(self, data):
 
         states = (('NEWDICTIONARY', 'inclusive'),
@@ -92,39 +101,29 @@ class Conversor:
                   | APR NEWDICTIONARY
                   | APR NEWSUBDICTIONARY
             """
-            print("AQUI")
             if str(p[1]) == "title":
                 self.documentTitle = str(p[3])[1:][:-1]
             elif str(p[1]) == "[":
-                if self.pointsCounter(str(p[2])) == 1:
-                    dic = dict()
-                    dic[str(p[2])[:-1]] = []
-                    self.auxAtualState = str(p[2])[:-1]
-                    self.documentData[self.atualState].append(dic)
-                elif self.pointsCounter(str(p[2])) == 0:
-                    self.documentData[str(p[2])[:-1]] = []
-                    self.atualState = str(p[2])[:-1]
-                    self.auxAtualState = ""
+                self.fileStates = self.levelsData(str(p[2])[:-1])
+                if len(self.fileStates) == 1:
+                    self.documentData[self.fileStates[0]] = dict()
                 else:
-                    dic = dict()
-                    dic[str(p[2])[:-1]] = []
-                    lista = self.documentData[self.atualState]
-                    for item in lista:
-                        if type(item) == dict:
-                            item[self.auxAtualState].append(dic)
-                    self.auxAtualState = str(p[2])[:-1]
+                    if self.fileStates[0] not in self.documentData:
+                        self.documentData[self.fileStates[0]] = dict()
+                    dic = self.documentData[self.fileStates[0]]
+                    for i in range(1, len(self.fileStates)):
+                        if self.fileStates[i] not in dic:
+                            dic[self.fileStates[i]] = dict()
+                        dic = dic[self.fileStates[i]]
+
             else:
-                if self.auxAtualState == "":
-                    at = str(p[1]) + "=" + str(p[3])
-                    self.documentData[self.atualState].append(at)
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                    dic[str(p[1])] = str(p[3])
                 else:
-                    at = str(p[1]) + "=" + str(p[3])
-                    lista = self.documentData[self.atualState]
-                    for item in lista:
-                        if type(item) == dict:
-                            item[self.auxAtualState].append(at)
-
-
+                    dic[str(p[1])] = str(p[3])
 
         def p_Content(p):
             """
@@ -144,7 +143,7 @@ class Conversor:
             """
             Lista : APR Elementos FPR
             """
-            p[0] = "["+str(p[2])+"]"
+            p[0] = "[" + str(p[2]) + "]"
 
         def p_Lista_Vazia(p):
             """
@@ -156,7 +155,7 @@ class Conversor:
             """
             Elementos : Elementos VIRG Elemento
             """
-            p[0] = str(p[1])+","+str(p[3])
+            p[0] = str(p[1]) + "," + str(p[3])
 
         def p_Elementos_Elemento(p):
             """
@@ -181,3 +180,6 @@ class Conversor:
         data = data.split('\n')
         for it in data:
             parser.parse(it)
+        print(self.documentData)
+        with open(self.documentTitle, "w") as write_file:
+            json.dump(self.documentData, write_file, indent=4)
