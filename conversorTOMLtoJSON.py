@@ -31,17 +31,7 @@ class Conversor:
         return resultado
 
     def levelsData(self, data):
-        nLevel = 0
-        resultado = []
-        level = ""
-        for it in data:
-            if it == '.':
-                resultado.append(level)
-                nLevel += 1
-                level += it
-            else:
-                level += it
-        resultado.append(data)
+        resultado = data.split('.')
         return resultado
 
     def conversor(self, data):
