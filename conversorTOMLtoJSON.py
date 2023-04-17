@@ -9,6 +9,27 @@ class Conversor:
         self.documentTitle = ""
         self.documentData = dict()
 
+    def splitData(self, data):
+        resultado = []
+        resultadoInt = data.split('\n')
+        lista = ""
+        inLista = 0
+        for it in resultadoInt:
+            if len(it) >= 1:
+                if it[-1] != '[' and inLista == 0:
+                    resultado.append(it)
+                elif it[-1] == '[':
+                    inLista = 1
+                    lista += it
+                elif inLista == 1 and it[-1] != ']':
+                    lista += it
+                elif inLista == 1 and it[-1] == ']':
+                    lista += it
+                    resultado.append(lista)
+                    lista = ""
+                    inLista = 0
+        return resultado
+
     def levelsData(self, data):
         nLevel = 0
         resultado = []
@@ -30,7 +51,8 @@ class Conversor:
                   )
         tokens = (
             "COMMENTARY", "WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY")
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY",
+            "SPACE")
 
         literals = (':', '-')
 
@@ -52,7 +74,7 @@ class Conversor:
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
         t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
-
+        t_SPACE = r'\s'
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -100,6 +122,7 @@ class Conversor:
             Dados : WORD IGUAL Content
                   | APR NEWDICTIONARY
                   | APR NEWSUBDICTIONARY
+                  | HASHTAG Frase
             """
             if str(p[1]) == "title":
                 self.documentTitle = str(p[3])[1:][:-1]
@@ -115,15 +138,32 @@ class Conversor:
                         if self.fileStates[i] not in dic:
                             dic[self.fileStates[i]] = dict()
                         dic = dic[self.fileStates[i]]
-
-            else:
+            elif str(p[2]) == "=":
                 dic = self.documentData[self.fileStates[0]]
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
-                    dic[str(p[1])] = str(p[3])
+                    if str(p[3])[0] == '"':
+                        dic[str(p[1])] = str(p[3])[1:][:-1]
+                    else:
+                        dic[str(p[1])] = str(p[3])
                 else:
-                    dic[str(p[1])] = str(p[3])
+                    if str(p[3])[0] == '"':
+                        dic[str(p[1])] = str(p[3])[1:][:-1]
+                    else:
+                        dic[str(p[1])] = str(p[3])
+
+        def p_Frase(p):
+            """
+            Frase : WORD
+                  | Seqword
+            """
+
+        def p_SeqWord(p):
+            """
+            Seqword : WORD  Seqword
+                    |
+            """
 
         def p_Content(p):
             """
@@ -155,7 +195,7 @@ class Conversor:
             """
             Elementos : Elementos VIRG Elemento
             """
-            p[0] = str(p[1]) + "," + str(p[3])
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
 
         def p_Elementos_Elemento(p):
             """
@@ -169,7 +209,10 @@ class Conversor:
                     | WORD
                     | CONTENT
             """
-            p[0] = str(p[1])
+            if str(p[1])[0] == '"':
+                p[0] = '"'+str(p[1])[1:][:-1]+'"'
+            else:
+                p[0] = str(p[1])
 
         def p_error(p):
             print("O p é isto:" + str(p))
@@ -177,7 +220,6 @@ class Conversor:
             parser.success = False
 
         parser = yacc()
-        data = data.split('\n')
         for it in data:
             parser.parse(it)
         print(self.documentData)
