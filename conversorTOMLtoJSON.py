@@ -213,5 +213,5 @@ class Conversor:
         for it in data:
             parser.parse(it)
         print(self.documentData)
-        with open(self.documentTitle, "w") as write_file:
+        with open(self.documentTitle + ".json", "w") as write_file:
             json.dump(self.documentData, write_file, indent=4)
