@@ -8,6 +8,7 @@ class Conversor:
         self.fileStates = []
         self.documentTitle = ""
         self.documentData = dict()
+        self.keyEmpty = 0
 
     def splitData(self, data):
         resultado = []
@@ -46,7 +47,7 @@ class Conversor:
 
         literals = (':', '-')
 
-        t_WORD = r'[a-zA-Z_]+'
+        t_WORD = r'[a-zA-Z_\-]+'
         t_FLOAT = r'\d+\,\d+'
         t_INT = r'\d+'
         t_POINT = r'\.'
@@ -60,7 +61,7 @@ class Conversor:
         t_ASPA = r'\"'
         t_IGUAL = r'\='
         t_HASHTAG = r'\#'
-        t_CONTENT = r'\".*"'
+        t_CONTENT = r'("|\').[^=]*("|\')'
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
         t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
@@ -113,6 +114,11 @@ class Conversor:
                   | APR NEWDICTIONARY
                   | APR NEWSUBDICTIONARY
                   | HASHTAG Frase
+                  | INT IGUAL Content
+                  | CONTENT IGUAL Content
+                  | ASPA ASPA IGUAL Content
+                  | PLICA PLICA IGUAL Content
+
             """
             if str(p[1]) == "title":
                 self.documentTitle = str(p[3])[1:][:-1]
@@ -139,9 +145,51 @@ class Conversor:
                         dic[str(p[1])] = str(p[3])
                 else:
                     if str(p[3])[0] == '"':
-                        dic[str(p[1])] = str(p[3])[1:][:-1]
+                        if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                            dic[str(p[1])[1:][:-1]] = str(p[3])[1:][:-1]
+                        else:
+                            dic[str(p[1])] = str(p[3])[1:][:-1]
                     else:
-                        dic[str(p[1])] = str(p[3])
+                        if str(p[1])[0] == '"'or str(p[1])[0] == '\'':
+                            dic[str(p[1])[1:][:-1]] = str(p[3])
+                        else:
+                            dic[str(p[1])] = str(p[3])
+            elif str(p[1]) == '"' and str(p[2]) == '"':
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                    if str(p[4])[0] == '"':
+                        dic['discouraged'+str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
+                        self.keyEmpty += 1
+                else:
+                    if str(p[4])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        self.keyEmpty += 1
+            elif  str(p[1]) == '\'' and str(p[2]) == '\'':
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                    if str(p[4])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
+                        self.keyEmpty += 1
+                else:
+                    if str(p[4])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        self.keyEmpty += 1
 
         def p_Frase(p):
             """
@@ -200,7 +248,7 @@ class Conversor:
                     | CONTENT
             """
             if str(p[1])[0] == '"':
-                p[0] = '"'+str(p[1])[1:][:-1]+'"'
+                p[0] = '"' + str(p[1])[1:][:-1] + '"'
             else:
                 p[0] = str(p[1])
 

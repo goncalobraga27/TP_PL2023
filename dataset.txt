@@ -1,8 +1,8 @@
 title = "TOML Example"
 [owner]
-name = "Tom Preston-Werner"
-date = 2010-04-23
-time = 21:30:00
+"" = "value"  # This is a comment at the end of a line
+'' = "# This is not a comment"
+1234 = "teste"
 [database]
 server = "192.168.1.1"
 ports = [ 8001, 8001, 8002 ]
