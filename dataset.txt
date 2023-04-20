@@ -1,7 +1,11 @@
 title = "TOML Example"
 [owner]
-"" = "value"  # This is a comment at the end of a line
+"" = "Teste de descouraged"
+physical. color= "value"  # This is a comment at the end of a line
+physical. type="teste"
+site."google.com"= true
 '' = "# This is not a comment"
+'another "teste"' = "Passed"
 1234 = "teste"
 [database]
 server = "192.168.1.1"

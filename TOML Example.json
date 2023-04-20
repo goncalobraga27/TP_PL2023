@@ -1,8 +1,12 @@
 {
     "owner": {
-        "name": "Tom Preston-Werner",
-        "date": "2010-04-23",
-        "time": "21:30:00"
+        "discouraged0": "Teste de descouraged",
+        "discouraged1": "# This is not a comment",
+        "another \"teste\"": "Passed",
+        "1234": "teste"
+    },
+    "site": {
+        "google.com": "true"
     },
     "database": {
         "server": "192.168.1.1",

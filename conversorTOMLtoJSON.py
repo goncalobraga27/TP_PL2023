@@ -32,7 +32,22 @@ class Conversor:
         return resultado
 
     def levelsData(self, data):
-        resultado = data.split('.')
+        resultado = []
+        level = ""
+        inComa = 0
+        for it in data:
+            if it == '\"':
+                inComa = 1
+            elif it != '.' and inComa == 0:
+                level += it
+            elif it != '.' and inComa == 1:
+                level += it
+            elif it == '.' and inComa == 0:
+                resultado.append(level)
+                level = ""
+            elif it == '.' and inComa == 1:
+                level += it
+        resultado.append(level)
         return resultado
 
     def conversor(self, data):
@@ -41,31 +56,27 @@ class Conversor:
                   ('NEWSUBDICTIONARY', 'inclusive'),
                   )
         tokens = (
-            "COMMENTARY", "WORD", "INT", "FLOAT", "POINT", "HIFEN", "PLICA", "FC", "AC", "FPR", "APR", "NEWLINE", "END",
+            "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY",
-            "SPACE")
+        )
 
         literals = (':', '-')
 
-        t_WORD = r'[a-zA-Z_\-]+'
+        t_WORD = r'[a-zA-Z_\-\.\"]+'
         t_FLOAT = r'\d+\,\d+'
         t_INT = r'\d+'
-        t_POINT = r'\.'
-        t_HIFEN = r'\-'
         t_PLICA = r'\''
-        t_FC = r'\}'
-        t_AC = r'\{'
         t_FPR = r'\]'
         t_APR = r'\['
         t_VIRG = r'\,'
-        t_ASPA = r'\"'
+        t_ASPA = r'"'
         t_IGUAL = r'\='
         t_HASHTAG = r'\#'
         t_CONTENT = r'("|\').[^=]*("|\')'
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
         t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
-        t_SPACE = r'\s'
+
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -134,7 +145,43 @@ class Conversor:
                         if self.fileStates[i] not in dic:
                             dic[self.fileStates[i]] = dict()
                         dic = dic[self.fileStates[i]]
-            elif str(p[2]) == "=":
+            elif str(p[1]) == '\"\"':
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                    if str(p[3])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        self.keyEmpty += 1
+                else:
+                    if str(p[3])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        self.keyEmpty += 1
+            elif str(p[1]) == '\'' and str(p[2]) == '\'':
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                    if str(p[4])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
+                        self.keyEmpty += 1
+                else:
+                    if str(p[4])[0] == '"':
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        self.keyEmpty += 1
+                    else:
+                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        self.keyEmpty += 1
+            elif str(p[2]) == "=" and '.' not in str(p[1]):
                 dic = self.documentData[self.fileStates[0]]
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
@@ -150,46 +197,25 @@ class Conversor:
                         else:
                             dic[str(p[1])] = str(p[3])[1:][:-1]
                     else:
-                        if str(p[1])[0] == '"'or str(p[1])[0] == '\'':
+                        if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
                             dic[str(p[1])[1:][:-1]] = str(p[3])
                         else:
                             dic[str(p[1])] = str(p[3])
-            elif str(p[1]) == '"' and str(p[2]) == '"':
-                dic = self.documentData[self.fileStates[0]]
-                if len(self.fileStates) != 1:
-                    for i in range(1, len(self.fileStates)):
-                        dic = dic[self.fileStates[i]]
-                    if str(p[4])[0] == '"':
-                        dic['discouraged'+str(self.keyEmpty)] = str(p[4])[1:][:-1]
-                        self.keyEmpty += 1
-                    else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
-                        self.keyEmpty += 1
+            elif str(p[2]) == "=" and '.' in str(p[1]):
+                fileStatesTemp = self.levelsData(str(p[1]))
+                if len(fileStatesTemp) == 1:
+                    self.documentData[fileStatesTemp[0]] = dict()
                 else:
-                    if str(p[4])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
-                        self.keyEmpty += 1
+                    if fileStatesTemp[0] not in self.documentData:
+                        self.documentData[fileStatesTemp[0]] = dict()
+                    dic = self.documentData[fileStatesTemp[0]]
+                    for i in range(1, len(fileStatesTemp)):
+                        if fileStatesTemp[i] not in dic:
+                            dic[fileStatesTemp[i]] = dict()
+                    if str(p[3])[0] == '"':
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])[1:][:-1]
                     else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
-                        self.keyEmpty += 1
-            elif  str(p[1]) == '\'' and str(p[2]) == '\'':
-                dic = self.documentData[self.fileStates[0]]
-                if len(self.fileStates) != 1:
-                    for i in range(1, len(self.fileStates)):
-                        dic = dic[self.fileStates[i]]
-                    if str(p[4])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
-                        self.keyEmpty += 1
-                    else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
-                        self.keyEmpty += 1
-                else:
-                    if str(p[4])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
-                        self.keyEmpty += 1
-                    else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
-                        self.keyEmpty += 1
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])
 
         def p_Frase(p):
             """
