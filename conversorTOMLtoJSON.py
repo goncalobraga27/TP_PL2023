@@ -122,29 +122,15 @@ class Conversor:
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
-                  | APR NEWDICTIONARY
-                  | APR NEWSUBDICTIONARY
                   | HASHTAG Frase
-                  | INT IGUAL Content
-                  | CONTENT IGUAL Content
                   | ASPA ASPA IGUAL Content
                   | PLICA PLICA IGUAL Content
+                  | INT IGUAL Content
+                  | CONTENT IGUAL Content
 
             """
             if str(p[1]) == "title":
                 self.documentTitle = str(p[3])[1:][:-1]
-            elif str(p[1]) == "[":
-                self.fileStates = self.levelsData(str(p[2])[:-1])
-                if len(self.fileStates) == 1:
-                    self.documentData[self.fileStates[0]] = dict()
-                else:
-                    if self.fileStates[0] not in self.documentData:
-                        self.documentData[self.fileStates[0]] = dict()
-                    dic = self.documentData[self.fileStates[0]]
-                    for i in range(1, len(self.fileStates)):
-                        if self.fileStates[i] not in dic:
-                            dic[self.fileStates[i]] = dict()
-                        dic = dic[self.fileStates[i]]
             elif str(p[1]) == '\"\"':
                 dic = self.documentData[self.fileStates[0]]
                 if len(self.fileStates) != 1:
@@ -216,6 +202,23 @@ class Conversor:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])[1:][:-1]
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])
+
+        def p_Dados_NewDict_NewSubDict(p):
+            """
+            Dados : APR NEWDICTIONARY
+                  | APR NEWSUBDICTIONARY
+            """
+            self.fileStates = self.levelsData(str(p[2])[:-1])
+            if len(self.fileStates) == 1:
+                self.documentData[self.fileStates[0]] = dict()
+            else:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
+                dic = self.documentData[self.fileStates[0]]
+                for i in range(1, len(self.fileStates)):
+                    if self.fileStates[i] not in dic:
+                        dic[self.fileStates[i]] = dict()
+                    dic = dic[self.fileStates[i]]
 
         def p_Frase(p):
             """
