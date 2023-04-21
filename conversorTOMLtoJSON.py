@@ -57,7 +57,7 @@ class Conversor:
                   )
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY",
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY"
         )
 
         literals = (':', '-')
@@ -109,16 +109,15 @@ class Conversor:
         def t_ANY_error(t):
             print('Lexical error: "' + str(t.value[0]) + '" in line ' + str(t.lineno))
             t.lexer.skip(1)
-
         lexer = lex()
         """
-        lexer.input(data)
-        for tok in lexer:
-            if not tok:
-                break
-            print(tok)
+        for it in data:
+            lexer.input(it)
+            for tok in lexer:
+                if not tok:
+                    break
+                print(tok)
         """
-
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -220,6 +219,46 @@ class Conversor:
                         dic[self.fileStates[i]] = dict()
                     dic = dic[self.fileStates[i]]
 
+        def p_Dados_WithOneEspace(p):
+            """
+            Dados : WORD WORD IGUAL Content
+            """
+            key = str(p[1]) + str(p[2])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[4])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[4])[1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[4])
+
+        def p_Dados_WithTwoEspaces(p):
+            """
+            Dados : WORD WORD WORD IGUAL Content
+            """
+            key = str(p[1]) + str(p[2]) + str(p[3])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[5])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])[1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])
+
         def p_Frase(p):
             """
             Frase : WORD
@@ -282,7 +321,7 @@ class Conversor:
                 p[0] = str(p[1])
 
         def p_error(p):
-            print("O p é isto:" + str(p))
+            # print("O p é isto:" + str(p))
             print("Erro sintático no input!")
             parser.success = False
 

@@ -5,6 +5,10 @@
         "another \"teste\"": "Passed",
         "1234": "teste"
     },
+    "physical": {
+        "color": "value",
+        "type": "teste"
+    },
     "site": {
         "google.com": "true"
     },

@@ -1,8 +1,8 @@
 title = "TOML Example"
 [owner]
 "" = "Teste de descouraged"
-physical. color= "value"  # This is a comment at the end of a line
-physical. type="teste"
+physical . color= "value"  # This is a comment at the end of a line
+physical . type="teste"
 site."google.com"= true
 '' = "# This is not a comment"
 'another "teste"' = "Passed"
