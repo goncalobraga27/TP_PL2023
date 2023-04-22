@@ -14,10 +14,12 @@ class Conversor:
         resultado = []
         resultadoInt = data.split('\n')
         lista = ""
+        stringJunta = ""
         inLista = 0
+        inString = 0
         for it in resultadoInt:
             if len(it) >= 1:
-                if it[-1] != '[' and inLista == 0:
+                if it[-1] != '[' and inLista == 0 and it[-1] != '"' and inString == 0:
                     resultado.append(it)
                 elif it[-1] == '[':
                     inLista = 1
@@ -29,6 +31,19 @@ class Conversor:
                     resultado.append(lista)
                     lista = ""
                     inLista = 0
+                elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 0:
+                    stringJunta += it
+                    inString = 1
+                elif it[-1] != "\"" and it[-2] != "\"" and it[-3] != "\"" and inString == 1:
+                    stringJunta += it+"\n"
+                elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 1:
+                    stringJunta += it
+                    inString = 0
+                    resultado.append(stringJunta)
+                    stringJunta = ""
+                else:
+                    resultado.append(it)
+
         return resultado
 
     def levelsData(self, data):
@@ -48,6 +63,13 @@ class Conversor:
             elif it == '.' and inComa == 1:
                 level += it
         resultado.append(level)
+        return resultado
+
+    def countPoints(self, data):
+        resultado = 0
+        for it in data:
+            if it == '.':
+                resultado += 1
         return resultado
 
     def conversor(self, data):
@@ -109,6 +131,7 @@ class Conversor:
         def t_ANY_error(t):
             print('Lexical error: "' + str(t.value[0]) + '" in line ' + str(t.lineno))
             t.lexer.skip(1)
+
         lexer = lex()
         """
         for it in data:
@@ -166,7 +189,7 @@ class Conversor:
                     else:
                         dic['discouraged' + str(self.keyEmpty)] = str(p[3])
                         self.keyEmpty += 1
-            elif str(p[2]) == "=" and '.' not in str(p[1]):
+            elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 0:
                 dic = self.documentData[self.fileStates[0]]
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
@@ -186,7 +209,7 @@ class Conversor:
                             dic[str(p[1])[1:][:-1]] = str(p[3])
                         else:
                             dic[str(p[1])] = str(p[3])
-            elif str(p[2]) == "=" and '.' in str(p[1]):
+            elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
                 fileStatesTemp = self.levelsData(str(p[1]))
                 if len(fileStatesTemp) == 1:
                     self.documentData[fileStatesTemp[0]] = dict()
@@ -194,10 +217,30 @@ class Conversor:
                     if fileStatesTemp[0] not in self.documentData:
                         self.documentData[fileStatesTemp[0]] = dict()
                     dic = self.documentData[fileStatesTemp[0]]
-                    for i in range(1, len(fileStatesTemp)):
+                    for i in range(1, len(fileStatesTemp) - 1):
                         if fileStatesTemp[i] not in dic:
                             dic[fileStatesTemp[i]] = dict()
-                    if str(p[3])[0] == '"':
+                            dic = dic[fileStatesTemp[i]]
+                        else:
+                            dic = dic[fileStatesTemp[i]]
+                    if type(dic) != str:
+                        if p[3][0] == '"':
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                        else:
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+            elif str(p[2]) == "=" and self.countPoints(str(p[1])) > 1:
+                fileStatesTemp = self.levelsData(str(p[1]))
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp) - 1):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                        dic = dic[fileStatesTemp[i]]
+                    else:
+                        dic = dic[fileStatesTemp[i]]
+                if type(dic) != str:
+                    if p[3][0] == '"':
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])[1:][:-1]
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])
@@ -242,6 +285,26 @@ class Conversor:
         def p_Dados_WithTwoEspaces(p):
             """
             Dados : WORD WORD WORD IGUAL Content
+            """
+            key = str(p[1]) + str(p[2]) + str(p[3])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[5])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])[1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])
+
+        def p_Dados_IntwithPoints(p):
+            """
+            Dados : INT WORD INT IGUAL Content
             """
             key = str(p[1]) + str(p[2]) + str(p[3])
             fileStatesTemp = self.levelsData(key)

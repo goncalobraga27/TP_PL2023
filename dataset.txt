@@ -1,5 +1,14 @@
 title = "TOML Example"
 [owner]
+str = "I'm a string. \"You can quote me\". Name\tJos\u00E9\nLocation\tSF."
+multilinestring = """
+Roses are red
+Violets are blue"""
+fruit.apple.smooth = true
+fruit.apple.badTaste = true
+fruit.apple.badAspect = YES
+fruit.orange = 2
+3.14159 = "pi"
 "" = "Teste de descouraged"
 physical . color= "value"  # This is a comment at the end of a line
 physical . type="teste"

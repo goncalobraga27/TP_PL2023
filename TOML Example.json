@@ -1,9 +1,22 @@
 {
     "owner": {
+        "str": "I'm a string. \\\"You can quote me\\\". Name\\tJos\\u00E9\\nLocation\\tSF.",
+        "multilinestring": "\"\"Roses are red\nViolets are blue\"\"",
         "discouraged0": "Teste de descouraged",
         "discouraged1": "# This is not a comment",
         "another \"teste\"": "Passed",
         "1234": "teste"
+    },
+    "fruit": {
+        "apple": {
+            "smooth": "true",
+            "badTaste": "true",
+            "badAspect": "YES"
+        },
+        "orange": "2"
+    },
+    "3": {
+        "14159": "pi"
     },
     "physical": {
         "color": "value",
