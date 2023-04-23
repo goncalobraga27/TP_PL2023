@@ -17,9 +17,10 @@ class Conversor:
         stringJunta = ""
         inLista = 0
         inString = 0
+        inLiteral = 0
         for it in resultadoInt:
             if len(it) >= 1:
-                if it[-1] != '[' and inLista == 0 and it[-1] != '"' and inString == 0:
+                if it[-1] != '[' and inLista == 0 and it[-1] != '"' and it[-1] != '\\' and it[-1] != '\'' and inString == 0 and inLiteral == 0:
                     resultado.append(it)
                 elif it[-1] == '[':
                     inLista = 1
@@ -34,11 +35,31 @@ class Conversor:
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 0:
                     stringJunta += it
                     inString = 1
-                elif it[-1] != "\"" and it[-2] != "\"" and it[-3] != "\"" and inString == 1:
+                elif it[-1] != "\"" and it[-2] != "\"" and it[-3] != "\"" and it[-1] != '\\' and it[-1] != '\'' and inString == 1:
                     stringJunta += it+"\n"
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 1:
                     stringJunta += it
                     inString = 0
+                    resultado.append(stringJunta)
+                    stringJunta = ""
+                elif it[-1] == "\\" and inString == 0:
+                    stringJunta += it[:-1]
+                    inString = 1
+                elif it[-1] == "\\" and inString == 1:
+                    stringJunta += it[:-1] +" "
+                elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 1:
+                    stringJunta += it
+                    inString = 0
+                    resultado.append(stringJunta)
+                    stringJunta = ""
+                elif it[-1] == "\'" and it[-2] == "\'" and it[-3] == "\'" and inLiteral == 0:
+                    stringJunta += it
+                    inLiteral = 1
+                elif it[-1] != "\'" and it[-2] != "\'" and it[-3] != "\'" and inLiteral == 1:
+                    stringJunta += it +" "
+                elif it[-1] == "\'" and it[-2] == "\'" and it[-3] == "\'" and inLiteral == 1:
+                    stringJunta += it
+                    inLiteral = 0
                     resultado.append(stringJunta)
                     stringJunta = ""
                 else:
