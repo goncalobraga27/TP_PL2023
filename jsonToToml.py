@@ -69,6 +69,7 @@ def p_array(p):
     array : LPR elementos RPR
     '''
     p[0] = p[2]
+    #print(p[0])
 
 def p_elementos(p):
     '''
@@ -87,6 +88,7 @@ def p_value_outros(p):
           | array
     '''
     p[0] = p[1]
+    
 
 
 def p_value_Bool(p):
@@ -190,3 +192,12 @@ exemplo2 = '''
 '''
 
 print(toml.dumps(parser.parse(exemplo2))) # esta correto (ERRO NO ARRAY)
+
+
+print('''\n\n------------------------\n
+      Problemas : \n
+      -Tratar da notacao cientifica\n
+      -Ver se as datas fazem parte\n
+      - Problema virgula array\n
+      - testar com mais exemplos
+--------------------------\n''')
