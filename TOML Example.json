@@ -1,5 +1,6 @@
 {
     "owner": {
+        "num": "Ola Turma de PL teste teste",
         "regex": "'I [dw]on't need \\d{2} apples'",
         "lines": "'''The first newline is trimmed in raw strings.    All other whitespace    is preserved. '''",
         "multilinestring": "\"\"The quick brown  fox jumps over  the lazy dog. \"\"",

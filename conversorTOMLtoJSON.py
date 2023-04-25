@@ -20,7 +20,8 @@ class Conversor:
         inLiteral = 0
         for it in resultadoInt:
             if len(it) >= 1:
-                if it[-1] != '[' and inLista == 0 and it[-1] != '"' and it[-1] != '\\' and it[-1] != '\'' and inString == 0 and inLiteral == 0:
+                if it[-1] != '[' and inLista == 0 and it[-1] != '"' and it[-1] != '\\' and it[
+                    -1] != '\'' and inString == 0 and inLiteral == 0:
                     resultado.append(it)
                 elif it[-1] == '[':
                     inLista = 1
@@ -35,8 +36,9 @@ class Conversor:
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 0:
                     stringJunta += it
                     inString = 1
-                elif it[-1] != "\"" and it[-2] != "\"" and it[-3] != "\"" and it[-1] != '\\' and it[-1] != '\'' and inString == 1:
-                    stringJunta += it+"\n"
+                elif it[-1] != "\"" and it[-2] != "\"" and it[-3] != "\"" and it[-1] != '\\' and it[
+                    -1] != '\'' and inString == 1:
+                    stringJunta += it + "\n"
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 1:
                     stringJunta += it
                     inString = 0
@@ -46,7 +48,7 @@ class Conversor:
                     stringJunta += it[:-1]
                     inString = 1
                 elif it[-1] == "\\" and inString == 1:
-                    stringJunta += it[:-1] +" "
+                    stringJunta += it[:-1] + " "
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 1:
                     stringJunta += it
                     inString = 0
@@ -56,7 +58,7 @@ class Conversor:
                     stringJunta += it
                     inLiteral = 1
                 elif it[-1] != "\'" and it[-2] != "\'" and it[-3] != "\'" and inLiteral == 1:
-                    stringJunta += it +" "
+                    stringJunta += it + " "
                 elif it[-1] == "\'" and it[-2] == "\'" and it[-3] == "\'" and inLiteral == 1:
                     stringJunta += it
                     inLiteral = 0
@@ -100,7 +102,9 @@ class Conversor:
                   )
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY"
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY",
+            "SIGNAL"
+
         )
 
         literals = (':', '-')
@@ -119,7 +123,7 @@ class Conversor:
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
         t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
-
+        t_SIGNAL = r'(\+|-){1}'
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -154,14 +158,14 @@ class Conversor:
             t.lexer.skip(1)
 
         lexer = lex()
-        """
+
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
-        """
+
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -365,8 +369,16 @@ class Conversor:
                     | TIME
                     | BOOL
                     | Lista
+                    | Palavras
             """
             p[0] = p[1]
+            print("O conteúdo da atribuição é isto:" + p[0])
+
+        def p_Signal_Numbers(p):
+            """
+            Content : SIGNAL INT
+            """
+            p[0] = p[1] + p[2]
             print("O conteúdo da atribuição é isto:" + p[0])
 
         def p_Lista(p):
@@ -403,6 +415,23 @@ class Conversor:
                 p[0] = '"' + str(p[1])[1:][:-1] + '"'
             else:
                 p[0] = str(p[1])
+
+        def p_Palavras(p):
+            """
+            Palavras : WORD Palavras
+            """
+            p[0] = p[1] + " " + str(p[2])
+
+        def p_Palavras_Unica(p):
+            """
+            Palavras : WORD
+            """
+            p[0] = p[1]
+        def p_Palavras_Vazia(p):
+            """
+            Palavras :
+            """
+            p[0] = ""
 
         def p_error(p):
             # print("O p é isto:" + str(p))
