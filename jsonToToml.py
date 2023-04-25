@@ -102,7 +102,11 @@ def p_value_NUM(p):
     value : NUM
     '''
     # mudar aqui, nao aceita so ints (TAMBEM TEM DE ACEITAR NOTACAO CIENTIFICA)
-    p[0] = int(p[1])
+    try :
+        p[0] = int(p[1])
+    except:
+        p[0] = float(p[1])
+    
 
 
 def p_value_String(p):
@@ -147,7 +151,8 @@ exemplo2 = '''
   "firstName": "John",
   "lastName": "Doe",
   "age": 35,
-  "age1": +35,
+  "age1": 35e10,
+  "age1": 35e-1,
   "age2": -35,
   "address": {
     "street": "123 Main St",
@@ -186,11 +191,13 @@ exemplo2 = '''
   "favoriteColors": {
     "primary": "blue",
     "secondary": "green"
-  }
+  },
+  "date": "2023-04-25T12:00:00.000Z"
 }
 
 '''
-
+print(parser.parse(exemplo2))
+print("-<><><><><><><><><><><><")
 print(toml.dumps(parser.parse(exemplo2))) # esta correto (ERRO NO ARRAY)
 
 
@@ -198,6 +205,6 @@ print('''\n\n------------------------\n
       Problemas : \n
       -Tratar da notacao cientifica\n
       -Ver se as datas fazem parte\n
-      - Problema virgula array\n
+      - Problema virgula array -> supostamente funciona em python
       - testar com mais exemplos
 --------------------------\n''')
