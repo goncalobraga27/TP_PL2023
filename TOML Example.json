@@ -1,6 +1,13 @@
 {
     "owner": {
-        "num": "Ola Turma de PL teste teste",
+        "testeBool": false,
+        "ports": [
+            8001,
+            8001,
+            8002
+        ],
+        "connection_max": 5000.1,
+        "num": 89,
         "regex": "'I [dw]on't need \\d{2} apples'",
         "lines": "'''The first newline is trimmed in raw strings.    All other whitespace    is preserved. '''",
         "multilinestring": "\"\"The quick brown  fox jumps over  the lazy dog. \"\"",
@@ -13,27 +20,27 @@
     },
     "fruit": {
         "apple": {
-            "smooth": "true",
-            "badTaste": "true",
+            "smooth": true,
+            "badTaste": true,
             "badAspect": "YES"
         },
-        "orange": "2"
-    },
-    "3": {
-        "14159": "pi"
+        "orange": 2
     },
     "physical": {
         "color": "value",
         "type": "teste"
     },
     "site": {
-        "google.com": "true"
+        "google.com": true
     },
     "database": {
         "server": "192.168.1.1",
-        "ports": "[8001,8001,8002]",
-        "connection_max": "5000,1",
-        "enabled": "true"
+        "ports": [
+            8001,
+            8001,
+            8002
+        ],
+        "enabled": true
     },
     "servers": {
         "alpha": {
@@ -47,7 +54,10 @@
         "beta": {
             "ip": "10.0.0.2",
             "dc": "eqdc10",
-            "hosts": "[\"alpha\",\"omega\"]"
+            "hosts": [
+                "alpha",
+                "omega"
+            ]
         }
     }
 }

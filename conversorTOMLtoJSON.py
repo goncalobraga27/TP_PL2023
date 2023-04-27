@@ -9,6 +9,7 @@ class Conversor:
         self.documentTitle = ""
         self.documentData = dict()
         self.keyEmpty = 0
+        self.auxListas = []
 
     def splitData(self, data):
         resultado = []
@@ -102,7 +103,7 @@ class Conversor:
                   )
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "BOOL", "NEWDICTIONARY", "NEWSUBDICTIONARY",
+            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
             "SIGNAL"
 
         )
@@ -110,7 +111,7 @@ class Conversor:
         literals = (':', '-')
 
         t_WORD = r'[a-zA-Z_\-\.\"]+'
-        t_FLOAT = r'\d+\,\d+'
+        t_FLOAT = r'\d+\.\d+'
         t_INT = r'\d+'
         t_PLICA = r'\''
         t_FPR = r'\]'
@@ -122,7 +123,6 @@ class Conversor:
         t_CONTENT = r'("|\').[^=]*("|\')'
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
-        t_BOOL = r'verdadeiro|falso'  # ou e` true or false?
         t_SIGNAL = r'(\+|-){1}'
         t_ANY_ignore = ' \t'
 
@@ -158,14 +158,14 @@ class Conversor:
             t.lexer.skip(1)
 
         lexer = lex()
-
+        """
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
-
+        """
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -177,24 +177,24 @@ class Conversor:
 
             """
             if str(p[1]) == "title":
-                self.documentTitle = str(p[3])[1:][:-1]
+                self.documentTitle = p[3][1:][:-1]
             elif str(p[1]) == '\"\"':
                 dic = self.documentData[self.fileStates[0]]
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
                     if str(p[3])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])[1:][:-1]
+                        dic['discouraged' + str(self.keyEmpty)] = p[3][1:][:-1]
                         self.keyEmpty += 1
                     else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        dic['discouraged' + str(self.keyEmpty)] = p[3]
                         self.keyEmpty += 1
                 else:
                     if str(p[3])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])[1:][:-1]
+                        dic['discouraged' + str(self.keyEmpty)] = p[3][1:][:-1]
                         self.keyEmpty += 1
                     else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        dic['discouraged' + str(self.keyEmpty)] = p[3]
                         self.keyEmpty += 1
             elif str(p[1]) == '\'' and str(p[2]) == '\'':
                 dic = self.documentData[self.fileStates[0]]
@@ -202,17 +202,17 @@ class Conversor:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
                     if str(p[4])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        dic['discouraged' + str(self.keyEmpty)] = p[4][1:][:-1]
                         self.keyEmpty += 1
                     else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])
+                        dic['discouraged' + str(self.keyEmpty)] = p[4]
                         self.keyEmpty += 1
                 else:
                     if str(p[4])[0] == '"':
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[4])[1:][:-1]
+                        dic['discouraged' + str(self.keyEmpty)] = p[4][1:][:-1]
                         self.keyEmpty += 1
                     else:
-                        dic['discouraged' + str(self.keyEmpty)] = str(p[3])
+                        dic['discouraged' + str(self.keyEmpty)] = p[3]
                         self.keyEmpty += 1
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 0:
                 dic = self.documentData[self.fileStates[0]]
@@ -220,20 +220,20 @@ class Conversor:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
                     if str(p[3])[0] == '"':
-                        dic[str(p[1])] = str(p[3])[1:][:-1]
+                        dic[str(p[1])] = p[3][1:][:-1]
                     else:
-                        dic[str(p[1])] = str(p[3])
+                        dic[str(p[1])] = p[3]
                 else:
                     if str(p[3])[0] == '"':
                         if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                            dic[str(p[1])[1:][:-1]] = str(p[3])[1:][:-1]
+                            dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
                         else:
-                            dic[str(p[1])] = str(p[3])[1:][:-1]
+                            dic[str(p[1])] = p[3][1:][:-1]
                     else:
                         if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                            dic[str(p[1])[1:][:-1]] = str(p[3])
+                            dic[str(p[1])[1:][:-1]] = p[3]
                         else:
-                            dic[str(p[1])] = str(p[3])
+                            dic[str(p[1])] = p[3]
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
                 fileStatesTemp = self.levelsData(str(p[1]))
                 if len(fileStatesTemp) == 1:
@@ -249,7 +249,7 @@ class Conversor:
                         else:
                             dic = dic[fileStatesTemp[i]]
                     if type(dic) != str:
-                        if p[3][0] == '"':
+                        if str(p[3])[0] == '"':
                             dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                         else:
                             dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
@@ -265,10 +265,10 @@ class Conversor:
                     else:
                         dic = dic[fileStatesTemp[i]]
                 if type(dic) != str:
-                    if p[3][0] == '"':
-                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])[1:][:-1]
+                    if str(p[3])[0] == '"':
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                     else:
-                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[3])
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
 
         def p_Dados_NewDict_NewSubDict(p):
             """
@@ -303,9 +303,9 @@ class Conversor:
                     if fileStatesTemp[i] not in dic:
                         dic[fileStatesTemp[i]] = dict()
                 if str(p[4])[0] == '"':
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[4])[1:][:-1]
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[4][1:][:-1]
                 else:
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[4])
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[4]
 
         def p_Dados_WithTwoEspaces(p):
             """
@@ -323,9 +323,9 @@ class Conversor:
                     if fileStatesTemp[i] not in dic:
                         dic[fileStatesTemp[i]] = dict()
                 if str(p[5])[0] == '"':
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])[1:][:-1]
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5][1:][:-1]
                 else:
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5]
 
         def p_Dados_IntwithPoints(p):
             """
@@ -343,9 +343,9 @@ class Conversor:
                     if fileStatesTemp[i] not in dic:
                         dic[fileStatesTemp[i]] = dict()
                 if str(p[5])[0] == '"':
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])[1:][:-1]
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5][1:][:-1]
                 else:
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = str(p[5])
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5]
 
         def p_Frase(p):
             """
@@ -362,17 +362,33 @@ class Conversor:
         def p_Content(p):
             """
             Content : WORD
-                    | FLOAT
-                    | INT
                     | CONTENT
                     | DATE
                     | TIME
-                    | BOOL
                     | Lista
                     | Palavras
             """
-            p[0] = p[1]
-            print("O conteúdo da atribuição é isto:" + p[0])
+            if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
+                p[0] = bool(p[1])
+            elif p[1] == 'False' or p[1] == 'false' or p[1] == 'Falso' or p[1] == 'falso':
+                p[0] = bool(None)
+            else:
+                p[0] = p[1]
+            print("O conteúdo da atribuição é isto:" + str(p[0]))
+
+        def p_Content_inteiros(p):
+            """
+            Content : INT
+            """
+            p[0] = int(p[1])
+            print("O conteúdo da atribuição é isto:" + str(p[0]))
+
+        def p_Content_floats(p):
+            """
+            Content : FLOAT
+            """
+            p[0] = float(p[1])
+            print("O conteúdo da atribuição é isto:" + str(p[0]))
 
         def p_Signal_Numbers(p):
             """
@@ -385,48 +401,68 @@ class Conversor:
             """
             Lista : APR Elementos FPR
             """
-            p[0] = "[" + str(p[2]) + "]"
+            p[0] = self.auxListas
+            self.auxListas = []
 
         def p_Lista_Vazia(p):
             """
             Lista : APR FPR
             """
-            p[0] = "[]"
+            p[0] = []
 
         def p_Elementos(p):
             """
             Elementos : Elementos VIRG Elemento
             """
-            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+            p[0] = p[1]
+            self.auxListas.append(p[3])
 
         def p_Elementos_Elemento(p):
             """
             Elementos : Elemento
             """
-            p[0] = str(p[1])
+            if ',' not in str(p[1]):
+                p[0] = p[1]
+                self.auxListas.append(p[1])
+            else:
+                palavras = p[1].split(',')
+                for item in palavras:
+                    self.auxListas.append(item[1:][:-1])
 
         def p_Elemento(p):
             """
-            Elemento : INT
-                    | WORD
-                    | CONTENT
+            Elemento : WORD
             """
-            if str(p[1])[0] == '"':
-                p[0] = '"' + str(p[1])[1:][:-1] + '"'
+            if p[1][0] == '"':
+                p[0] = '"' + p[1][1:][:-1] + '"'
+
             else:
-                p[0] = str(p[1])
+                p[0] = p[1]
+
+        def p_Elemento_Content(p):
+            """
+            Elemento : CONTENT
+            """
+            p[0] = p[1]
+
+        def p_Elemento_inteiros(p):
+            """
+            Elemento : INT
+            """
+            p[0] = int(p[1])
 
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
             """
-            p[0] = p[1] + " " + str(p[2])
+            p[0] = str(p[1]) + " " + str(p[2])
 
         def p_Palavras_Unica(p):
             """
             Palavras : WORD
             """
-            p[0] = p[1]
+            p[0] = str(p[1])
+
         def p_Palavras_Vazia(p):
             """
             Palavras :

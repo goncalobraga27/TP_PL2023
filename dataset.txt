@@ -1,6 +1,9 @@
 title = "TOML Example"
 [owner]
-num = "Ola Turma de PL teste teste"
+testeBool = Falso
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000.1
+num = 89
 regex = 'I [dw]on't need \d{2} apples'
 lines  = '''
 The first newline is
@@ -14,15 +17,15 @@ fox jumps over \
 the lazy dog.\
 """
 str = "I'm a string. \"You can quote me\". Name\tJos\u00E9\nLocation\tSF."
-fruit.apple.smooth = true
-fruit.apple.badTaste = true
+fruit.apple.smooth = True
+fruit.apple.badTaste = True
 fruit.apple.badAspect = YES
 fruit.orange = 2
 3.14159 = "pi"
 "" = "Teste de descouraged"
 physical . color= "value"  # This is a comment at the end of a line
 physical . type="teste"
-site."google.com"= true
+site."google.com"= True
 '' = "# This is not a comment"
 'another "teste"' = "Passed"
 1234 = "teste"
@@ -30,8 +33,7 @@ winpath = 'C:\Users\nodejs\templates'
 [database]
 server = "192.168.1.1"
 ports = [ 8001, 8001, 8002 ]
-connection_max = 5000,1
-enabled = true
+enabled = True
 [servers]
 [servers.alpha]
 ip = "10.0.0.1"
