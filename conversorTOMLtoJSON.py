@@ -166,6 +166,7 @@ class Conversor:
                     break
                 print(tok)
         """
+
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -346,6 +347,26 @@ class Conversor:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5][1:][:-1]
                 else:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5]
+
+        def p_Dados_IntwithPoints_Float(p):
+            """
+            Dados : FLOAT IGUAL Content
+            """
+            key = str(p[1])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[3])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
 
         def p_Frase(p):
             """

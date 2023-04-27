@@ -26,6 +26,9 @@
         },
         "orange": 2
     },
+    "3": {
+        "14159": "pi"
+    },
     "physical": {
         "color": "value",
         "type": "teste"
