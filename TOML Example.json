@@ -1,6 +1,12 @@
 {
     "owner": {
-        "testeBool": false,
+        "float": 3.1415,
+        "bin": "0b11010110",
+        "testeOctal": "0o01234567",
+        "testetesteOctal": "0o755",
+        "testeHexadecimal": "0xDEADBEEF",
+        "testeTesteHexadecimal": "0xdead_beef",
+        "testeUnderScores": "1_23_34",
         "ports": [
             8001,
             8001,

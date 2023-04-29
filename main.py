@@ -4,7 +4,6 @@ def main():
     while True:
         nomeFicheiro = input('Insira o path do ficheiro que quer converter : ')
         conv = Conversor()
-
         f = open(nomeFicheiro)
         data = f.read()
         data = conv.splitData(data)
