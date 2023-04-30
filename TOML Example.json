@@ -1,5 +1,7 @@
 {
     "owner": {
+        "testeInf": false,
+        "expoente": "224_617_991_228",
         "float": 3.1415,
         "bin": "0b11010110",
         "testeOctal": "0o01234567",

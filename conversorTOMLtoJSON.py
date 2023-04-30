@@ -104,7 +104,7 @@ class Conversor:
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
-            "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO"
+            "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE"
 
         )
 
@@ -125,9 +125,11 @@ class Conversor:
         t_TIME = r'\d+\:\d+:\d+'
         t_SIGNAL = r'(\+|-){1}'
         t_INTWITHUNDERSCORE = r'\d+(?=\_)|\_|(?<=\_)\d+'
+        t_FLOATWITHUNDERSCORE = r'((\d+\.\d+)|\d+)(?=\_)|\_|(?<=\_)(\d+\.\d+|\d+)'
         t_HEXADECIMAL = r'0[xX][0-9a-fA-F\_]+'
         t_OCTAL = r'0[oO][0-7]+'
         t_BINARIO = r'0[bB][0-1]+'
+        t_EXPONENCIACAO = r'(\+|\-)?(\d+|\d+\.\d+){1}[eE](\+|\-)?\d+'
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -392,9 +394,12 @@ class Conversor:
                     | Lista
                     | Palavras
                     | LittleEndian
+                    | LittleEndianFloat
                     | HEXADECIMAL
                     | OCTAL
                     | BINARIO
+                    | EXPONENCIACAO
+                    | signalInf
             """
             if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
                 p[0] = bool(p[1])
@@ -403,6 +408,19 @@ class Conversor:
             else:
                 p[0] = p[1]
             print("O conteúdo da atribuição é isto:" + str(p[0]))
+
+        def p_Content_signalInf(p):
+            """
+            signalInf : SIGNAL WORD
+                      | WORD WORD
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_Content_LittleEndianFloat(p):
+            """
+            LittleEndianFloat : FLOATWITHUNDERSCORE OtherEndiansFloat
+            """
+            p[0] = str(p[1]) + str(p[2])
 
         def p_Content_LittleEndian(p):
             """
@@ -416,9 +434,21 @@ class Conversor:
             """
             p[0] = str(p[1]) + str(p[2])
 
+        def p_OtherEndiansFloat(p):
+            """
+            OtherEndiansFloat : FLOATWITHUNDERSCORE OtherEndiansFloat
+            """
+            p[0] = str(p[1]) + str(p[2])
+
         def p_OtherEndians_Vazio(p):
             """
             OtherEndians :
+            """
+            p[0] = ""
+
+        def p_OtherEndiansFloat_Vazio(p):
+            """
+            OtherEndiansFloat :
             """
             p[0] = ""
 
@@ -456,6 +486,7 @@ class Conversor:
             else:
                 p[0] = 0 + float(p[2])
             print("O conteúdo da atribuição é isto:" + str(p[0]))
+
         def p_Lista(p):
             """
             Lista : APR Elementos FPR
