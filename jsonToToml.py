@@ -207,4 +207,5 @@ print('''\n\n------------------------\n
       -Ver se as datas fazem parte\n
       - Problema virgula array -> supostamente funciona em python
       - testar com mais exemplos
+      - date type error
 --------------------------\n''')

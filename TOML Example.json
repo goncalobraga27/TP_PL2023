@@ -1,6 +1,19 @@
 {
     "owner": {
-        "testeBool": false,
+        "numbers": [
+            1,
+            2,
+            null
+        ],
+        "testeInf": false,
+        "expoente": "224_617_991_228",
+        "float": 3.1415,
+        "bin": "0b11010110",
+        "testeOctal": "0o01234567",
+        "testetesteOctal": "0o755",
+        "testeHexadecimal": "0xDEADBEEF",
+        "testeTesteHexadecimal": "0xdead_beef",
+        "testeUnderScores": "1_23_34",
         "ports": [
             8001,
             8001,
@@ -25,6 +38,9 @@
             "badAspect": "YES"
         },
         "orange": 2
+    },
+    "3": {
+        "14159": "pi"
     },
     "physical": {
         "color": "value",

@@ -104,7 +104,8 @@ class Conversor:
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
-            "SIGNAL"
+            "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
+            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME"
 
         )
 
@@ -124,6 +125,16 @@ class Conversor:
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
         t_SIGNAL = r'(\+|-){1}'
+        t_INTWITHUNDERSCORE = r'\d+(?=\_)|\_|(?<=\_)\d+'
+        t_FLOATWITHUNDERSCORE = r'((\d+\.\d+)|\d+)(?=\_)|\_|(?<=\_)(\d+\.\d+|\d+)'
+        t_HEXADECIMAL = r'0[xX][0-9a-fA-F\_]+'
+        t_OCTAL = r'0[oO][0-7]+'
+        t_BINARIO = r'0[bB][0-1]+'
+        t_EXPONENCIACAO = r'(\+|\-)?(\d+|\d+\.\d+){1}[eE](\+|\-)?\d+'
+        t_OFFSETDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:((\d{2}Z|\d+\.\d+\-\d{2}:\d{2})|\d{2}\-\d{2}\:\d{2})'
+        t_LOCALDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:(\d+\.\d+|\d{2})'
+        t_LOCALDATE = r'\d{4}-\d{2}-\d{2}'
+        t_LOCALTIME = r'\d{2}:\d{2}:(\d+\.\d+|\d{2})'
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -136,13 +147,13 @@ class Conversor:
             return t
 
         def t_NEWDICTIONARY(t):
-            r'\w+\]'
+            r'[a-zA-Z]+\]'
             print("Entrei no estado NEWDICTIONARY")
             t.lexer.begin('NEWDICTIONARY')
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'(\w+\.\w+\])|((\w+\.)+\w+\])'
+            r'([a-zA-Z]+\.[a-zA-Z]+\])|(([a-zA-Z]+\.)+[a-zA-Z]+\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
@@ -166,6 +177,7 @@ class Conversor:
                     break
                 print(tok)
         """
+
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -347,6 +359,26 @@ class Conversor:
                 else:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5]
 
+        def p_Dados_IntwithPoints_Float(p):
+            """
+            Dados : FLOAT IGUAL Content
+            """
+            key = str(p[1])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[3])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+
         def p_Frase(p):
             """
             Frase : WORD
@@ -367,6 +399,17 @@ class Conversor:
                     | TIME
                     | Lista
                     | Palavras
+                    | LittleEndian
+                    | LittleEndianFloat
+                    | HEXADECIMAL
+                    | OCTAL
+                    | BINARIO
+                    | EXPONENCIACAO
+                    | signalInf
+                    | OFFSETDATETIME
+                    | LOCALDATETIME
+                    | LOCALDATE
+                    | LOCALTIME
             """
             if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
                 p[0] = bool(p[1])
@@ -375,6 +418,49 @@ class Conversor:
             else:
                 p[0] = p[1]
             print("O conteúdo da atribuição é isto:" + str(p[0]))
+
+        def p_Content_signalInf(p):
+            """
+            signalInf : SIGNAL WORD
+                      | WORD WORD
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_Content_LittleEndianFloat(p):
+            """
+            LittleEndianFloat : FLOATWITHUNDERSCORE OtherEndiansFloat
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_Content_LittleEndian(p):
+            """
+            LittleEndian : INTWITHUNDERSCORE OtherEndians
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_OtherEndians(p):
+            """
+            OtherEndians : INTWITHUNDERSCORE OtherEndians
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_OtherEndiansFloat(p):
+            """
+            OtherEndiansFloat : FLOATWITHUNDERSCORE OtherEndiansFloat
+            """
+            p[0] = str(p[1]) + str(p[2])
+
+        def p_OtherEndians_Vazio(p):
+            """
+            OtherEndians :
+            """
+            p[0] = ""
+
+        def p_OtherEndiansFloat_Vazio(p):
+            """
+            OtherEndiansFloat :
+            """
+            p[0] = ""
 
         def p_Content_inteiros(p):
             """
@@ -390,12 +476,26 @@ class Conversor:
             p[0] = float(p[1])
             print("O conteúdo da atribuição é isto:" + str(p[0]))
 
-        def p_Signal_Numbers(p):
+        def p_Signal_Numbers_INT(p):
             """
             Content : SIGNAL INT
             """
-            p[0] = p[1] + p[2]
-            print("O conteúdo da atribuição é isto:" + p[0])
+            if p[1] == '-':
+                p[0] = 0 - int(p[2])
+            else:
+                p[0] = 0 + int(p[2])
+            print("O conteúdo da atribuição é isto:" + str(p[0]))
+
+        def p_Signal_Numbers_FLOAT(p):
+            """
+            Content : SIGNAL FLOAT
+                    | WORD FLOAT
+            """
+            if p[1] == '-':
+                p[0] = 0 - float(p[2])
+            else:
+                p[0] = 0 + float(p[2])
+            print("O conteúdo da atribuição é isto:" + str(p[0]))
 
         def p_Lista(p):
             """
@@ -451,6 +551,11 @@ class Conversor:
             """
             p[0] = int(p[1])
 
+        def p_Elemento_Vazio(p):
+            """
+            Elemento :
+            """
+
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
@@ -470,7 +575,7 @@ class Conversor:
             p[0] = ""
 
         def p_error(p):
-            # print("O p é isto:" + str(p))
+            print("O p é isto:" + str(p))
             print("Erro sintático no input!")
             parser.success = False
 
