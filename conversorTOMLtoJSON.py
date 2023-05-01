@@ -104,7 +104,8 @@ class Conversor:
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
-            "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE"
+            "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
+            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME"
 
         )
 
@@ -130,6 +131,10 @@ class Conversor:
         t_OCTAL = r'0[oO][0-7]+'
         t_BINARIO = r'0[bB][0-1]+'
         t_EXPONENCIACAO = r'(\+|\-)?(\d+|\d+\.\d+){1}[eE](\+|\-)?\d+'
+        t_OFFSETDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:((\d{2}Z|\d+\.\d+\-\d{2}:\d{2})|\d{2}\-\d{2}\:\d{2})'
+        t_LOCALDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:(\d+\.\d+|\d{2})'
+        t_LOCALDATE = r'\d{4}-\d{2}-\d{2}'
+        t_LOCALTIME = r'\d{2}:\d{2}:(\d+\.\d+|\d{2})'
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -142,13 +147,13 @@ class Conversor:
             return t
 
         def t_NEWDICTIONARY(t):
-            r'\w+\]'
+            r'[a-zA-Z]+\]'
             print("Entrei no estado NEWDICTIONARY")
             t.lexer.begin('NEWDICTIONARY')
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'(\w+\.\w+\])|((\w+\.)+\w+\])'
+            r'([a-zA-Z]+\.[a-zA-Z]+\])|(([a-zA-Z]+\.)+[a-zA-Z]+\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
@@ -164,13 +169,14 @@ class Conversor:
             t.lexer.skip(1)
 
         lexer = lex()
-
+        """
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
+        """
 
         def p_Dados(p):
             """
@@ -400,6 +406,10 @@ class Conversor:
                     | BINARIO
                     | EXPONENCIACAO
                     | signalInf
+                    | OFFSETDATETIME
+                    | LOCALDATETIME
+                    | LOCALDATE
+                    | LOCALTIME
             """
             if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
                 p[0] = bool(p[1])
@@ -541,6 +551,11 @@ class Conversor:
             """
             p[0] = int(p[1])
 
+        def p_Elemento_Vazio(p):
+            """
+            Elemento :
+            """
+
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
@@ -560,7 +575,7 @@ class Conversor:
             p[0] = ""
 
         def p_error(p):
-            # print("O p é isto:" + str(p))
+            print("O p é isto:" + str(p))
             print("Erro sintático no input!")
             parser.success = False
 

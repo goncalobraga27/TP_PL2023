@@ -1,5 +1,9 @@
 title = "TOML Example"
 [owner]
+numbers = [
+    1,
+    2,
+]
 testeInf = false
 expoente = 224_617_991_228
 float = +3.1415
