@@ -1,4 +1,5 @@
 title = "TOML Example"
+
 [owner]
 numbers = [
     1,
@@ -42,17 +43,22 @@ site."google.com"= True
 'another "teste"' = "Passed"
 1234 = "teste"
 winpath = 'C:\Users\nodejs\templates'
+
 [database]
 server = "192.168.1.1"
 ports = [ 8001, 8001, 8002 ]
 enabled = True
+
 [servers]
+
 [servers.alpha]
 ip = "10.0.0.1"
 dc = "eqdc10"
+
 [servers.alpha.beta]
 ip = "10.0.1.2"
 dc = "eqdc10.1"
+
 [servers.beta]
 ip = "10.0.0.2"
 dc = "eqdc10"
