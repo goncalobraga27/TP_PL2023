@@ -2,11 +2,6 @@
     "owner": {
         "testeBool": true,
         "teste_inf": "inf ",
-        "numbers": [
-            1,
-            2,
-            null
-        ],
         "testeInf": false,
         "expoente": "224_617_991_228",
         "float": 3.1415,

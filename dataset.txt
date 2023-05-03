@@ -4,8 +4,8 @@ title = "TOML Example"
 testeBool = true
 teste_inf = inf
 numbers = [
-    1,
-    2,
+[1],
+[2,3]
 ]
 testeInf = false
 expoente = 224_617_991_228

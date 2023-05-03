@@ -55,8 +55,9 @@ Rule 49    Elemento -> WORD
 Rule 50    Elemento -> CONTENT
 Rule 51    Elemento -> INT
 Rule 52    Elemento -> <empty>
-Rule 53    Palavras -> WORD Palavras
-Rule 54    Palavras -> <empty>
+Rule 53    Elemento -> Lista
+Rule 54    Palavras -> WORD Palavras
+Rule 55    Palavras -> <empty>
 
 Terminals, with rules where they appear
 
@@ -86,7 +87,7 @@ PLICA                : 4 4
 SIGNAL               : 33 42 43
 TIME                 : 18
 VIRG                 : 47
-WORD                 : 1 9 9 10 10 10 11 14 33 44 49 53
+WORD                 : 1 9 9 10 10 10 11 14 33 44 49 54
 error                : 
 
 Nonterminals, with rules where they appear
@@ -96,12 +97,12 @@ Dados                : 0
 Elemento             : 47 48
 Elementos            : 45 47
 Frase                : 2
-Lista                : 19
+Lista                : 19 53
 LittleEndian         : 21
 LittleEndianFloat    : 22
 OtherEndians         : 35 36
 OtherEndiansFloat    : 34 37
-Palavras             : 20 53
+Palavras             : 20 54
 Seqword              : 13 14
 signalInf            : 27
 
@@ -244,8 +245,8 @@ state 11
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -267,7 +268,7 @@ state 11
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
@@ -344,8 +345,8 @@ state 17
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -367,7 +368,7 @@ state 17
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
@@ -412,8 +413,8 @@ state 19
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -435,7 +436,7 @@ state 19
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
@@ -487,8 +488,8 @@ state 22
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -510,7 +511,7 @@ state 22
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
@@ -555,8 +556,8 @@ state 24
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -578,7 +579,7 @@ state 24
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
@@ -592,13 +593,13 @@ state 24
 state 25
 
     (44) Content -> WORD . FLOAT
-    (53) Palavras -> WORD . Palavras
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> WORD . Palavras
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
 
     FLOAT           shift and go to state 60
     WORD            shift and go to state 59
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
 
     Palavras                       shift and go to state 61
 
@@ -763,6 +764,9 @@ state 47
     (50) Elemento -> . CONTENT
     (51) Elemento -> . INT
     (52) Elemento -> .
+    (53) Elemento -> . Lista
+    (45) Lista -> . APR Elementos FPR
+    (46) Lista -> . APR FPR
 
   ! shift/reduce conflict for FPR resolved as shift
     FPR             shift and go to state 66
@@ -770,11 +774,13 @@ state 47
     CONTENT         shift and go to state 69
     INT             shift and go to state 70
     VIRG            reduce using rule 52 (Elemento -> .)
+    APR             shift and go to state 47
 
   ! FPR             [ reduce using rule 52 (Elemento -> .) ]
 
     Elementos                      shift and go to state 65
     Elemento                       shift and go to state 67
+    Lista                          shift and go to state 71
 
 state 48
 
@@ -782,10 +788,10 @@ state 48
     (36) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
     (38) OtherEndians -> .
 
-    INTWITHUNDERSCORE shift and go to state 71
+    INTWITHUNDERSCORE shift and go to state 72
     $end            reduce using rule 38 (OtherEndians -> .)
 
-    OtherEndians                   shift and go to state 72
+    OtherEndians                   shift and go to state 73
 
 state 49
 
@@ -793,10 +799,10 @@ state 49
     (37) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (39) OtherEndiansFloat -> .
 
-    FLOATWITHUNDERSCORE shift and go to state 73
+    FLOATWITHUNDERSCORE shift and go to state 74
     $end            reduce using rule 39 (OtherEndiansFloat -> .)
 
-    OtherEndiansFloat              shift and go to state 74
+    OtherEndiansFloat              shift and go to state 75
 
 state 50
 
@@ -832,8 +838,8 @@ state 51
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -855,11 +861,11 @@ state 51
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
-    Content                        shift and go to state 75
+    Content                        shift and go to state 76
     Lista                          shift and go to state 30
     Palavras                       shift and go to state 31
     LittleEndian                   shift and go to state 32
@@ -893,8 +899,8 @@ state 52
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -916,11 +922,11 @@ state 52
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
-    Content                        shift and go to state 76
+    Content                        shift and go to state 77
     Lista                          shift and go to state 30
     Palavras                       shift and go to state 31
     LittleEndian                   shift and go to state 32
@@ -938,7 +944,7 @@ state 54
 
     (11) Dados -> INT WORD INT . IGUAL Content
 
-    IGUAL           shift and go to state 77
+    IGUAL           shift and go to state 78
 
 
 state 55
@@ -982,8 +988,8 @@ state 57
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -1005,11 +1011,11 @@ state 57
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
-    Content                        shift and go to state 78
+    Content                        shift and go to state 79
     Lista                          shift and go to state 30
     Palavras                       shift and go to state 31
     LittleEndian                   shift and go to state 32
@@ -1025,12 +1031,12 @@ state 58
 
 state 59
 
-    (53) Palavras -> WORD . Palavras
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> WORD . Palavras
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
 
     WORD            shift and go to state 59
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
 
     Palavras                       shift and go to state 61
 
@@ -1043,9 +1049,9 @@ state 60
 
 state 61
 
-    (53) Palavras -> WORD Palavras .
+    (54) Palavras -> WORD Palavras .
 
-    $end            reduce using rule 53 (Palavras -> WORD Palavras .)
+    $end            reduce using rule 54 (Palavras -> WORD Palavras .)
 
 
 state 62
@@ -1074,8 +1080,8 @@ state 65
     (45) Lista -> APR Elementos . FPR
     (47) Elementos -> Elementos . VIRG Elemento
 
-    FPR             shift and go to state 79
-    VIRG            shift and go to state 80
+    FPR             shift and go to state 80
+    VIRG            shift and go to state 81
 
 
 state 66
@@ -1083,6 +1089,8 @@ state 66
     (46) Lista -> APR FPR .
 
     $end            reduce using rule 46 (Lista -> APR FPR .)
+    FPR             reduce using rule 46 (Lista -> APR FPR .)
+    VIRG            reduce using rule 46 (Lista -> APR FPR .)
 
 
 state 67
@@ -1119,55 +1127,63 @@ state 70
 
 state 71
 
+    (53) Elemento -> Lista .
+
+    FPR             reduce using rule 53 (Elemento -> Lista .)
+    VIRG            reduce using rule 53 (Elemento -> Lista .)
+
+
+state 72
+
     (36) OtherEndians -> INTWITHUNDERSCORE . OtherEndians
     (36) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
     (38) OtherEndians -> .
 
-    INTWITHUNDERSCORE shift and go to state 71
+    INTWITHUNDERSCORE shift and go to state 72
     $end            reduce using rule 38 (OtherEndians -> .)
 
-    OtherEndians                   shift and go to state 81
+    OtherEndians                   shift and go to state 82
 
-state 72
+state 73
 
     (35) LittleEndian -> INTWITHUNDERSCORE OtherEndians .
 
     $end            reduce using rule 35 (LittleEndian -> INTWITHUNDERSCORE OtherEndians .)
 
 
-state 73
+state 74
 
     (37) OtherEndiansFloat -> FLOATWITHUNDERSCORE . OtherEndiansFloat
     (37) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (39) OtherEndiansFloat -> .
 
-    FLOATWITHUNDERSCORE shift and go to state 73
+    FLOATWITHUNDERSCORE shift and go to state 74
     $end            reduce using rule 39 (OtherEndiansFloat -> .)
 
-    OtherEndiansFloat              shift and go to state 82
+    OtherEndiansFloat              shift and go to state 83
 
-state 74
+state 75
 
     (34) LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
 
     $end            reduce using rule 34 (LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
 
 
-state 75
+state 76
 
     (3) Dados -> ASPA ASPA IGUAL Content .
 
     $end            reduce using rule 3 (Dados -> ASPA ASPA IGUAL Content .)
 
 
-state 76
+state 77
 
     (4) Dados -> PLICA PLICA IGUAL Content .
 
     $end            reduce using rule 4 (Dados -> PLICA PLICA IGUAL Content .)
 
 
-state 77
+state 78
 
     (11) Dados -> INT WORD INT IGUAL . Content
     (16) Content -> . CONTENT
@@ -1194,8 +1210,8 @@ state 77
     (44) Content -> . WORD FLOAT
     (45) Lista -> . APR Elementos FPR
     (46) Lista -> . APR FPR
-    (53) Palavras -> . WORD Palavras
-    (54) Palavras -> .
+    (54) Palavras -> . WORD Palavras
+    (55) Palavras -> .
     (35) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
     (34) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
     (33) signalInf -> . SIGNAL WORD
@@ -1217,69 +1233,76 @@ state 77
     SIGNAL          shift and go to state 46
     WORD            shift and go to state 25
     APR             shift and go to state 47
-    $end            reduce using rule 54 (Palavras -> .)
+    $end            reduce using rule 55 (Palavras -> .)
     INTWITHUNDERSCORE shift and go to state 48
     FLOATWITHUNDERSCORE shift and go to state 49
 
-    Content                        shift and go to state 83
+    Content                        shift and go to state 84
     Lista                          shift and go to state 30
     Palavras                       shift and go to state 31
     LittleEndian                   shift and go to state 32
     LittleEndianFloat              shift and go to state 33
     signalInf                      shift and go to state 38
 
-state 78
+state 79
 
     (10) Dados -> WORD WORD WORD IGUAL Content .
 
     $end            reduce using rule 10 (Dados -> WORD WORD WORD IGUAL Content .)
 
 
-state 79
+state 80
 
     (45) Lista -> APR Elementos FPR .
 
     $end            reduce using rule 45 (Lista -> APR Elementos FPR .)
+    FPR             reduce using rule 45 (Lista -> APR Elementos FPR .)
+    VIRG            reduce using rule 45 (Lista -> APR Elementos FPR .)
 
 
-state 80
+state 81
 
     (47) Elementos -> Elementos VIRG . Elemento
     (49) Elemento -> . WORD
     (50) Elemento -> . CONTENT
     (51) Elemento -> . INT
     (52) Elemento -> .
+    (53) Elemento -> . Lista
+    (45) Lista -> . APR Elementos FPR
+    (46) Lista -> . APR FPR
 
     WORD            shift and go to state 68
     CONTENT         shift and go to state 69
     INT             shift and go to state 70
     FPR             reduce using rule 52 (Elemento -> .)
     VIRG            reduce using rule 52 (Elemento -> .)
+    APR             shift and go to state 47
 
-    Elemento                       shift and go to state 84
+    Elemento                       shift and go to state 85
+    Lista                          shift and go to state 71
 
-state 81
+state 82
 
     (36) OtherEndians -> INTWITHUNDERSCORE OtherEndians .
 
     $end            reduce using rule 36 (OtherEndians -> INTWITHUNDERSCORE OtherEndians .)
 
 
-state 82
+state 83
 
     (37) OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
 
     $end            reduce using rule 37 (OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
 
 
-state 83
+state 84
 
     (11) Dados -> INT WORD INT IGUAL Content .
 
     $end            reduce using rule 11 (Dados -> INT WORD INT IGUAL Content .)
 
 
-state 84
+state 85
 
     (47) Elementos -> Elementos VIRG Elemento .
 

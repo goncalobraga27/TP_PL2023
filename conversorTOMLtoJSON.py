@@ -534,7 +534,7 @@ class Conversor:
             Elemento : WORD
             """
             if p[1][0] == '"':
-                p[0] = '"' + p[1][1:][:-1] + '"'
+                p[0] =p[1][1:][:-1]
 
             else:
                 p[0] = p[1]
@@ -554,6 +554,11 @@ class Conversor:
             """
             Elemento : 
             """
+        def p_Elemento_Lista(p):
+            """
+            Elemento : Lista
+            """
+            p[0] = p[1]
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
