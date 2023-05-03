@@ -1,6 +1,8 @@
 title = "TOML Example"
 
 [owner]
+testeBool = true
+teste_inf = inf
 numbers = [
     1,
     2,

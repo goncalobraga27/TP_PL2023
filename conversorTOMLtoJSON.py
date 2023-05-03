@@ -105,12 +105,13 @@ class Conversor:
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
             "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
-            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME"
+            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL"
 
         )
 
         literals = (':', '-')
-
+        
+        t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
         t_WORD = r'[a-zA-Z_\-\.\"]+'
         t_FLOAT = r'\d+\.\d+'
         t_INT = r'\d+'
@@ -381,8 +382,7 @@ class Conversor:
 
         def p_Frase(p):
             """
-            Frase : WORD
-                  | Seqword
+            Frase : Seqword 
             """
 
         def p_SeqWord(p):
@@ -393,8 +393,7 @@ class Conversor:
 
         def p_Content(p):
             """
-            Content : WORD
-                    | CONTENT
+            Content : CONTENT
                     | DATE
                     | TIME
                     | Lista
@@ -410,6 +409,7 @@ class Conversor:
                     | LOCALDATETIME
                     | LOCALDATE
                     | LOCALTIME
+                    | BOOL
             """
             if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
                 p[0] = bool(p[1])
@@ -422,7 +422,7 @@ class Conversor:
         def p_Content_signalInf(p):
             """
             signalInf : SIGNAL WORD
-                      | WORD WORD
+
             """
             p[0] = str(p[1]) + str(p[2])
 
@@ -550,23 +550,15 @@ class Conversor:
             Elemento : INT
             """
             p[0] = int(p[1])
-
         def p_Elemento_Vazio(p):
             """
-            Elemento :
+            Elemento : 
             """
-
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
             """
             p[0] = str(p[1]) + " " + str(p[2])
-
-        def p_Palavras_Unica(p):
-            """
-            Palavras : WORD
-            """
-            p[0] = str(p[1])
 
         def p_Palavras_Vazia(p):
             """

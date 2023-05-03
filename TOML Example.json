@@ -1,5 +1,7 @@
 {
     "owner": {
+        "testeBool": true,
+        "teste_inf": "inf ",
         "numbers": [
             1,
             2,
@@ -35,7 +37,7 @@
         "apple": {
             "smooth": true,
             "badTaste": true,
-            "badAspect": "YES"
+            "badAspect": "YES "
         },
         "orange": 2
     },
