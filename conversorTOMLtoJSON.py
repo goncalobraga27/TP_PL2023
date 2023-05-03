@@ -579,7 +579,8 @@ class Conversor:
             print("Erro sintático no input!")
             parser.success = False
 
-        parser = yacc()
+        parser = yacc(debug=True)
+
         for it in data:
             parser.parse(it)
         print(self.documentData)
