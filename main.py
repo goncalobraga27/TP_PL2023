@@ -7,6 +7,6 @@ def main():
         f = open(nomeFicheiro)
         data = f.read()
         data = conv.splitData(data)
-        conv.conversor(data)
+        #conv.conversor(data)
 if __name__ == "__main__":
     main()

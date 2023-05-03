@@ -19,6 +19,7 @@ class Conversor:
         inLista = 0
         inString = 0
         inLiteral = 0
+        balanceado = 0
         for it in resultadoInt:
             if len(it) >= 1:
                 if it[-1] != '[' and inLista == 0 and it[-1] != '"' and it[-1] != '\\' and it[
@@ -27,13 +28,18 @@ class Conversor:
                 elif it[-1] == '[':
                     inLista = 1
                     lista += it
-                elif inLista == 1 and it[-1] != ']':
+                    balanceado += 1
+                elif inLista == 1 and it[-1] != ']' :
                     lista += it
-                elif inLista == 1 and it[-1] == ']':
-                    lista += it
-                    resultado.append(lista)
-                    lista = ""
-                    inLista = 0
+                elif inLista == 1 and it[-1] == ']' and balanceado != 0:
+                    balanceado -= 1
+                    if balanceado != 0 :
+                        lista += it
+                    else :
+                        lista += it
+                        resultado.append(lista)
+                        lista = ""
+                        inLista = 0
                 elif it[-1] == "\"" and it[-2] == "\"" and it[-3] == "\"" and inString == 0:
                     stringJunta += it
                     inString = 1
@@ -170,15 +176,14 @@ class Conversor:
             t.lexer.skip(1)
 
         lexer = lex()
-        """
+
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
-        """
-
+        
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -517,6 +522,12 @@ class Conversor:
             p[0] = p[1]
             self.auxListas.append(p[3])
 
+        def p_Elementos_VIRG(p):
+            """
+            Elementos : Elementos VIRG
+            """
+            p[0] = p[1]
+
         def p_Elementos_Elemento(p):
             """
             Elementos : Elemento
@@ -534,7 +545,7 @@ class Conversor:
             Elemento : WORD
             """
             if p[1][0] == '"':
-                p[0] =p[1][1:][:-1]
+                p[0] = p[1][1:][:-1]
 
             else:
                 p[0] = p[1]
@@ -550,15 +561,12 @@ class Conversor:
             Elemento : INT
             """
             p[0] = int(p[1])
-        def p_Elemento_Vazio(p):
-            """
-            Elemento : 
-            """
         def p_Elemento_Lista(p):
             """
             Elemento : Lista
             """
             p[0] = p[1]
+
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
