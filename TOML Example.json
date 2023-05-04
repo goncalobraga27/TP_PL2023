@@ -1,3 +1,17 @@
 {
-    "owner": {}
+    "banaan": {
+        "teste": 123
+    },
+    "fruit": {
+        "apple": {
+            "color": "red",
+            "taste": {
+                "sweet": true
+            },
+            "texture": {
+                "smooth": true
+            },
+            "smooth": true
+        }
+    }
 }

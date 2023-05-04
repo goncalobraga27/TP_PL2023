@@ -131,6 +131,7 @@ class Conversor:
 
         literals = (':', '-')
         
+        # t_KEY = r'.+(?==)'
         t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
         t_WORD = r'[a-zA-Z_\-\.\"]+'
         t_FLOAT = r'\d+\.\d+'
@@ -168,13 +169,13 @@ class Conversor:
             return t
 
         def t_NEWDICTIONARY(t):
-            r'[a-zA-Z]+\]'
+            r'[a-zA-Z\d\-]+(\s+)?\]'
             print("Entrei no estado NEWDICTIONARY")
             t.lexer.begin('NEWDICTIONARY')
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'([a-zA-Z]+\.[a-zA-Z]+\])|(([a-zA-Z]+\.)+[a-zA-Z]+\])'
+            r'([a-zA-Z\d\-]+(\s+)?\.(\s+)?[a-zA-Z\d\-]+(\s+)?\])|(([a-zA-Z\-\d]+(\s+)?\.(\s+)?)+[a-zA-Z\d\-]+(\s+)?\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
@@ -191,14 +192,14 @@ class Conversor:
 
         lexer = lex()
 
-        """
+
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
-        """
+    
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -252,10 +253,11 @@ class Conversor:
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
-                    if str(p[3])[0] == '"':
-                        dic[str(p[1])] = p[3][1:][:-1]
-                    else:
-                        dic[str(p[1])] = p[3]
+                        if type(dic) == dict:
+                            if str(p[3])[0] == '"':
+                                dic[str(p[1])] = str(p[3][1:][:-1])
+                            else:
+                                dic[str(p[1])] = p[3]
                 else:
                     if str(p[3])[0] == '"':
                         if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
@@ -268,13 +270,16 @@ class Conversor:
                         else:
                             dic[str(p[1])] = p[3]
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
+                dicPreencher=self.documentData
+                for it in self.fileStates:
+                    dicPreencher = dicPreencher[it]
                 fileStatesTemp = self.levelsData(str(p[1]))
                 if len(fileStatesTemp) == 1:
-                    self.documentData[fileStatesTemp[0]] = dict()
+                    dicPreencher[fileStatesTemp[0]] = dict()
                 else:
-                    if fileStatesTemp[0] not in self.documentData:
-                        self.documentData[fileStatesTemp[0]] = dict()
-                    dic = self.documentData[fileStatesTemp[0]]
+                    if fileStatesTemp[0] not in dicPreencher:
+                       dicPreencher[fileStatesTemp[0]] = dict()
+                    dic = dicPreencher[fileStatesTemp[0]]
                     for i in range(1, len(fileStatesTemp) - 1):
                         if fileStatesTemp[i] not in dic:
                             dic[fileStatesTemp[i]] = dict()
@@ -287,10 +292,13 @@ class Conversor:
                         else:
                             dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) > 1:
+                dicPreencher=self.documentData
+                for it in self.fileStates:
+                    dicPreencher = dicPreencher [it]
                 fileStatesTemp = self.levelsData(str(p[1]))
-                if fileStatesTemp[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
-                dic = self.documentData[fileStatesTemp[0]]
+                if fileStatesTemp[0] not in dicPreencher:
+                    dicPreencher[fileStatesTemp[0]] = dict()
+                dic = dicPreencher[fileStatesTemp[0]]
                 for i in range(1, len(fileStatesTemp) - 1):
                     if fileStatesTemp[i] not in dic:
                         dic[fileStatesTemp[i]] = dict()
@@ -310,7 +318,40 @@ class Conversor:
             """
             self.fileStates = self.levelsData(str(p[2])[:-1])
             if len(self.fileStates) == 1:
-                self.documentData[self.fileStates[0]] = dict()
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
+            else:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
+                dic = self.documentData[self.fileStates[0]]
+                for i in range(1, len(self.fileStates)):
+                    if self.fileStates[i] not in dic:
+                        dic[self.fileStates[i]] = dict()
+                    dic = dic[self.fileStates[i]]
+        def p_Dados_NewDict_NewSubDict_Aspas(p):
+            """
+            Dados : APR CONTENT FPR
+            """
+            self.fileStates = self.levelsData(str(p[2]))
+            if len(self.fileStates) == 1:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
+            else:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
+                dic = self.documentData[self.fileStates[0]]
+                for i in range(1, len(self.fileStates)):
+                    if self.fileStates[i] not in dic:
+                        dic[self.fileStates[i]] = dict()
+                    dic = dic[self.fileStates[i]]
+        def p_Dados_NewDict_NewSubDict_Word(p):
+            """
+            Dados : APR WORD FPR
+            """
+            self.fileStates = self.levelsData(str(p[2]))
+            if len(self.fileStates) == 1:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[self.fileStates[0]] = dict()
             else:
                 if self.fileStates[0] not in self.documentData:
                     self.documentData[self.fileStates[0]] = dict()
@@ -327,7 +368,8 @@ class Conversor:
             key = str(p[1]) + str(p[2])
             fileStatesTemp = self.levelsData(key)
             if len(fileStatesTemp) == 1:
-                self.documentData[fileStatesTemp[0]] = dict()
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
             else:
                 if fileStatesTemp[0] not in self.documentData:
                     self.documentData[fileStatesTemp[0]] = dict()
@@ -347,7 +389,8 @@ class Conversor:
             key = str(p[1]) + str(p[2]) + str(p[3])
             fileStatesTemp = self.levelsData(key)
             if len(fileStatesTemp) == 1:
-                self.documentData[fileStatesTemp[0]] = dict()
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
             else:
                 if fileStatesTemp[0] not in self.documentData:
                     self.documentData[fileStatesTemp[0]] = dict()
@@ -367,7 +410,8 @@ class Conversor:
             key = str(p[1]) + str(p[2]) + str(p[3])
             fileStatesTemp = self.levelsData(key)
             if len(fileStatesTemp) == 1:
-                self.documentData[fileStatesTemp[0]] = dict()
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
             else:
                 if fileStatesTemp[0] not in self.documentData:
                     self.documentData[fileStatesTemp[0]] = dict()
@@ -387,7 +431,8 @@ class Conversor:
             key = str(p[1])
             fileStatesTemp = self.levelsData(key)
             if len(fileStatesTemp) == 1:
-                self.documentData[fileStatesTemp[0]] = dict()
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
             else:
                 if fileStatesTemp[0] not in self.documentData:
                     self.documentData[fileStatesTemp[0]] = dict()
