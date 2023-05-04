@@ -191,13 +191,14 @@ class Conversor:
 
         lexer = lex()
 
+        """
         for it in data:
             lexer.input(it)
             for tok in lexer:
                 if not tok:
                     break
                 print(tok)
-        
+        """
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
@@ -528,6 +529,7 @@ class Conversor:
             Lista : APR FPR
             """
             p[0] = []
+            self.auxListas.append([])
 
         def p_Elementos(p):
             """
@@ -575,12 +577,16 @@ class Conversor:
             Elemento : INT
             """
             p[0] = int(p[1])
+        def p_Elemento_floats(p):
+            """
+            Elemento : FLOAT
+            """
+            p[0] = float(p[1]) 
         def p_Elemento_Lista(p):
             """
             Elemento : Lista
             """
             p[0] = p[1]
-
         def p_Palavras(p):
             """
             Palavras : WORD Palavras
