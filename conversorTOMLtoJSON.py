@@ -10,7 +10,18 @@ class Conversor:
         self.documentData = dict()
         self.keyEmpty = 0
         self.auxListas = []
-
+    def contaAPR(self,data):
+        resultado = 0 
+        for it in data:
+            if it == '[':
+                resultado += 1 
+        return resultado
+    def contaFPR(self,data):
+        resultado = 0 
+        for it in data:
+            if it == ']':
+                resultado += 1 
+        return resultado
     def splitData(self, data):
         resultado = []
         resultadoInt = data.split('\n')
@@ -31,8 +42,11 @@ class Conversor:
                     balanceado += 1
                 elif inLista == 1 and it[-1] != ']' :
                     lista += it
+                    balanceado += self.contaAPR(it)
+                    balanceado -= self.contaFPR(it)
                 elif inLista == 1 and it[-1] == ']' and balanceado != 0:
-                    balanceado -= 1
+                    balanceado += self.contaAPR(it)
+                    balanceado -= self.contaFPR(it)
                     if balanceado != 0 :
                         lista += it
                     else :
