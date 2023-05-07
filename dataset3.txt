@@ -1,5 +1,5 @@
 title = "TOML Example"
 
-ola.adeus.s = 5
-[owner]
-name.teste = { first = "Tom", last = "Preston-Werner" }
+
+[[hello]]
+can = 5

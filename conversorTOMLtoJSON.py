@@ -123,7 +123,7 @@ class Conversor:
                   )
         tokens = (
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
-            "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
+            "VIRG", "ASPA", "IGUAL", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
             "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
             "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL","APC","FPC"
 
@@ -142,7 +142,7 @@ class Conversor:
         t_VIRG = r'\,'
         t_ASPA = r'"'
         t_IGUAL = r'\='
-        t_HASHTAG = r'\#'
+        #t_HASHTAG = r'\#'
         t_CONTENT = r'("|\').[^=]*("|\')'
         t_DATE = r'\d+\-\d+\-\d+'
         t_TIME = r'\d+\:\d+:\d+'
@@ -162,7 +162,7 @@ class Conversor:
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
-            r"\#.*\n"
+            r'\#.*'
             pass
 
         def t_NEWLINE(t):
@@ -201,16 +201,14 @@ class Conversor:
                 if not tok:
                     break
                 print(tok)
-    
+        # dividir isto em varios casos !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         def p_Dados(p):
             """
             Dados : WORD IGUAL Content
-                  | HASHTAG Frase
                   | ASPA ASPA IGUAL Content
                   | PLICA PLICA IGUAL Content
                   | INT IGUAL Content
                   | CONTENT IGUAL Content
-
             """
             if str(p[1]) == "title":
                 self.documentTitle = p[3][1:][:-1]
@@ -312,6 +310,7 @@ class Conversor:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+
         def p_Dados_InlineTables(p):
             """
             Dados : WORD IGUAL InlineTable
@@ -345,6 +344,7 @@ class Conversor:
                     if self.fileStates[i] not in dic:
                         dic[self.fileStates[i]] = dict()
                     dic = dic[self.fileStates[i]]
+
         def p_Dados_NewDict_NewSubDict_Aspas(p):
             """
             Dados : APR CONTENT FPR
@@ -462,17 +462,6 @@ class Conversor:
                 else:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
                     
-        def p_Frase(p):
-            """
-            Frase : Seqword 
-            """
-
-        def p_SeqWord(p):
-            """
-            Seqword : WORD  Seqword
-                    |
-            """
-
         def p_Content(p):
             """
             Content : CONTENT

@@ -1,13 +1,7 @@
 {
     "ola": {
-        "adeus": {
-            "s": 5
-        }
-    },
-    "owner": {
-        "name.teste": {
-            "first": "Tom",
-            "last": "Preston-Werner"
-        }
+        "adeus": 5,
+        "asda": 41,
+        "ola": 5
     }
 }
