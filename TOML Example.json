@@ -1,17 +1,54 @@
 {
-    "banaan": {
-        "teste": 123
+    "owner": {
+        "testeBool": true,
+        "teste_inf": "inf ",
+        "testeInf": false,
+        "expoente": "224_617_991 _228 ",
+        "float": 3.1415,
+        "bin": "0b11010110 ",
+        "testeOctal": "0o01234567 ",
+        "testetesteOctal": "0o755 ",
+        "testeHexadecimal": "0xDEADBEEF ",
+        "testeTesteHexadecimal": "0xdead_beef ",
+        "testeUnderScores": "1_23_34 ",
+        "connection_max": 5000.1,
+        "num": 89,
+        "regex": "'I [dw]on't need \\d{2} apples'",
+        "lines": "'''The first newline is trimmed in raw strings.    All other whitespace    is preserved. '''",
+        "multilinestring": "\"\"The quick brown  fox jumps over  the lazy dog. \"\"",
+        "str": "I'm a string. \\\"You can quote me\\\". Name\\tJos\\u00E9\\nLocation\\tSF.",
+        "discouraged0": "# This is not a comment",
+        "another \"teste\"": "Passed",
+        "1234": "teste",
+        "winpath": "'C:\\Users\\nodejs\\templates'"
     },
-    "fruit": {
-        "apple": {
-            "color": "red",
-            "taste": {
-                "sweet": true
-            },
-            "texture": {
-                "smooth": true
-            },
-            "smooth": true
+    "3": {
+        "14159": "pi"
+    },
+    "database": {
+        "server": "192.168.1.1",
+        "enabled": true
+    },
+    "servers": {
+        "alpha": {
+            "ip": "10.0.1.2",
+            "dc": "eqdc10.1",
+            "beta": {
+                "ip": "10.0.1.2",
+                "dc": "eqdc10.1"
+            }
+        },
+        "beta": {
+            "ip": "10.0.0.2",
+            "dc": "eqdc10",
+            "hosts": [
+                8001,
+                8001,
+                8001,
+                8001,
+                "alpha",
+                "omega"
+            ]
         }
     }
 }

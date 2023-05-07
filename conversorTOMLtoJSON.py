@@ -133,7 +133,7 @@ class Conversor:
         
         # t_KEY = r'.+(?==)'
         t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
-        t_WORD = r'[a-zA-Z_\-\.\"]+'
+        t_WORD = r'([0-9]+)?[A-Za-z_\-]+([0-9]+)?([A-Za-z_\-]+)?([0-9]+)?'
         t_FLOAT = r'\d+\.\d+'
         t_INT = r'\d+'
         t_PLICA = r'\''
@@ -424,6 +424,27 @@ class Conversor:
                 else:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[5]
 
+        def p_Dados_IntwithPoints_Float(p):
+            """
+            Dados : FLOAT IGUAL Content
+            """
+            key = str(p[1])
+            fileStatesTemp = self.levelsData(key)
+            if len(fileStatesTemp) == 1:
+                if self.fileStates[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+            else:
+                if fileStatesTemp[0] not in self.documentData:
+                    self.documentData[fileStatesTemp[0]] = dict()
+                dic = self.documentData[fileStatesTemp[0]]
+                for i in range(1, len(fileStatesTemp)):
+                    if fileStatesTemp[i] not in dic:
+                        dic[fileStatesTemp[i]] = dict()
+                if str(p[3])[0] == '"':
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                else:
+                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+                    
         def p_Dados_IntwithPoints_Float(p):
             """
             Dados : FLOAT IGUAL Content
