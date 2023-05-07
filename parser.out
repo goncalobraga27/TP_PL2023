@@ -1,10 +1,5 @@
 Created by PLY (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    APC
-    FPC
-
 Grammar
 
 Rule 0     S' -> Dados
@@ -14,107 +9,114 @@ Rule 3     Dados -> ASPA ASPA IGUAL Content
 Rule 4     Dados -> PLICA PLICA IGUAL Content
 Rule 5     Dados -> INT IGUAL Content
 Rule 6     Dados -> CONTENT IGUAL Content
-Rule 7     Dados -> APR NEWDICTIONARY
-Rule 8     Dados -> APR NEWSUBDICTIONARY
-Rule 9     Dados -> APR CONTENT FPR
-Rule 10    Dados -> APR WORD FPR
-Rule 11    Dados -> WORD WORD IGUAL Content
-Rule 12    Dados -> WORD WORD WORD IGUAL Content
-Rule 13    Dados -> INT WORD INT IGUAL Content
-Rule 14    Dados -> FLOAT IGUAL Content
-Rule 15    Frase -> Seqword
-Rule 16    Seqword -> WORD Seqword
-Rule 17    Seqword -> <empty>
-Rule 18    Content -> CONTENT
-Rule 19    Content -> DATE
-Rule 20    Content -> TIME
-Rule 21    Content -> Lista
-Rule 22    Content -> Palavras
-Rule 23    Content -> LittleEndian
-Rule 24    Content -> LittleEndianFloat
-Rule 25    Content -> HEXADECIMAL
-Rule 26    Content -> OCTAL
-Rule 27    Content -> BINARIO
-Rule 28    Content -> EXPONENCIACAO
-Rule 29    Content -> signalInf
-Rule 30    Content -> OFFSETDATETIME
-Rule 31    Content -> LOCALDATETIME
-Rule 32    Content -> LOCALDATE
-Rule 33    Content -> LOCALTIME
-Rule 34    Content -> BOOL
-Rule 35    signalInf -> SIGNAL WORD
-Rule 36    LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat
-Rule 37    LittleEndian -> INTWITHUNDERSCORE OtherEndians
-Rule 38    OtherEndians -> INTWITHUNDERSCORE OtherEndians
-Rule 39    OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat
-Rule 40    OtherEndians -> <empty>
-Rule 41    OtherEndiansFloat -> <empty>
-Rule 42    Content -> INT
-Rule 43    Content -> FLOAT
-Rule 44    Content -> SIGNAL INT
-Rule 45    Content -> SIGNAL FLOAT
-Rule 46    Content -> WORD FLOAT
-Rule 47    Lista -> APR Elementos FPR
-Rule 48    Lista -> APR FPR
-Rule 49    Elementos -> Elementos VIRG Elemento
-Rule 50    Elementos -> Elementos VIRG
-Rule 51    Elementos -> Elemento
-Rule 52    Elemento -> WORD
-Rule 53    Elemento -> CONTENT
-Rule 54    Elemento -> INT
-Rule 55    Elemento -> FLOAT
-Rule 56    Elemento -> Lista
-Rule 57    Palavras -> WORD Palavras
-Rule 58    Palavras -> <empty>
+Rule 7     Dados -> WORD IGUAL InlineTable
+Rule 8     Dados -> APR NEWDICTIONARY
+Rule 9     Dados -> APR NEWSUBDICTIONARY
+Rule 10    Dados -> APR CONTENT FPR
+Rule 11    Dados -> APR WORD FPR
+Rule 12    Dados -> WORD WORD IGUAL Content
+Rule 13    Dados -> WORD WORD WORD IGUAL Content
+Rule 14    Dados -> INT WORD INT IGUAL Content
+Rule 15    Dados -> FLOAT IGUAL Content
+Rule 16    Frase -> Seqword
+Rule 17    Seqword -> WORD Seqword
+Rule 18    Seqword -> <empty>
+Rule 19    Content -> CONTENT
+Rule 20    Content -> DATE
+Rule 21    Content -> TIME
+Rule 22    Content -> Lista
+Rule 23    Content -> Palavras
+Rule 24    Content -> LittleEndian
+Rule 25    Content -> LittleEndianFloat
+Rule 26    Content -> HEXADECIMAL
+Rule 27    Content -> OCTAL
+Rule 28    Content -> BINARIO
+Rule 29    Content -> EXPONENCIACAO
+Rule 30    Content -> signalInf
+Rule 31    Content -> OFFSETDATETIME
+Rule 32    Content -> LOCALDATETIME
+Rule 33    Content -> LOCALDATE
+Rule 34    Content -> LOCALTIME
+Rule 35    Content -> BOOL
+Rule 36    signalInf -> SIGNAL WORD
+Rule 37    InlineTable -> APC Conteudo FPC
+Rule 38    InlineTable -> APC FPC
+Rule 39    Conteudo -> Conteudo VIRG Dados
+Rule 40    Conteudo -> Dados
+Rule 41    LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat
+Rule 42    LittleEndian -> INTWITHUNDERSCORE OtherEndians
+Rule 43    OtherEndians -> INTWITHUNDERSCORE OtherEndians
+Rule 44    OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat
+Rule 45    OtherEndians -> <empty>
+Rule 46    OtherEndiansFloat -> <empty>
+Rule 47    Content -> INT
+Rule 48    Content -> FLOAT
+Rule 49    Content -> SIGNAL INT
+Rule 50    Content -> SIGNAL FLOAT
+Rule 51    Content -> WORD FLOAT
+Rule 52    Lista -> APR Elementos FPR
+Rule 53    Lista -> APR FPR
+Rule 54    Elementos -> Elementos VIRG Elemento
+Rule 55    Elementos -> Elementos VIRG
+Rule 56    Elementos -> Elemento
+Rule 57    Elemento -> WORD
+Rule 58    Elemento -> CONTENT
+Rule 59    Elemento -> INT
+Rule 60    Elemento -> FLOAT
+Rule 61    Elemento -> Lista
+Rule 62    Palavras -> WORD Palavras
+Rule 63    Palavras -> <empty>
 
 Terminals, with rules where they appear
 
-APC                  : 
-APR                  : 7 8 9 10 47 48
+APC                  : 37 38
+APR                  : 8 9 10 11 52 53
 ASPA                 : 3 3
-BINARIO              : 27
-BOOL                 : 34
-CONTENT              : 6 9 18 53
-DATE                 : 19
-EXPONENCIACAO        : 28
-FLOAT                : 14 43 45 46 55
-FLOATWITHUNDERSCORE  : 36 39
-FPC                  : 
-FPR                  : 9 10 47 48
+BINARIO              : 28
+BOOL                 : 35
+CONTENT              : 6 10 19 58
+DATE                 : 20
+EXPONENCIACAO        : 29
+FLOAT                : 15 48 50 51 60
+FLOATWITHUNDERSCORE  : 41 44
+FPC                  : 37 38
+FPR                  : 10 11 52 53
 HASHTAG              : 2
-HEXADECIMAL          : 25
-IGUAL                : 1 3 4 5 6 11 12 13 14
-INT                  : 5 13 13 42 44 54
-INTWITHUNDERSCORE    : 37 38
-LOCALDATE            : 32
-LOCALDATETIME        : 31
-LOCALTIME            : 33
-NEWDICTIONARY        : 7
-NEWSUBDICTIONARY     : 8
-OCTAL                : 26
-OFFSETDATETIME       : 30
+HEXADECIMAL          : 26
+IGUAL                : 1 3 4 5 6 7 12 13 14 15
+INT                  : 5 14 14 47 49 59
+INTWITHUNDERSCORE    : 42 43
+LOCALDATE            : 33
+LOCALDATETIME        : 32
+LOCALTIME            : 34
+NEWDICTIONARY        : 8
+NEWSUBDICTIONARY     : 9
+OCTAL                : 27
+OFFSETDATETIME       : 31
 PLICA                : 4 4
-SIGNAL               : 35 44 45
-TIME                 : 20
-VIRG                 : 49 50
-WORD                 : 1 10 11 11 12 12 12 13 16 35 46 52 57
+SIGNAL               : 36 49 50
+TIME                 : 21
+VIRG                 : 39 54 55
+WORD                 : 1 7 11 12 12 13 13 13 14 17 36 51 57 62
 error                : 
 
 Nonterminals, with rules where they appear
 
-Content              : 1 3 4 5 6 11 12 13 14
-Dados                : 0
-Elemento             : 49 51
-Elementos            : 47 49 50
+Content              : 1 3 4 5 6 12 13 14 15
+Conteudo             : 37 39
+Dados                : 39 40 0
+Elemento             : 54 56
+Elementos            : 52 54 55
 Frase                : 2
-Lista                : 21 56
-LittleEndian         : 23
-LittleEndianFloat    : 24
-OtherEndians         : 37 38
-OtherEndiansFloat    : 36 39
-Palavras             : 22 57
-Seqword              : 15 16
-signalInf            : 29
+InlineTable          : 7
+Lista                : 22 61
+LittleEndian         : 24
+LittleEndianFloat    : 25
+OtherEndians         : 42 43
+OtherEndiansFloat    : 41 44
+Palavras             : 23 62
+Seqword              : 16 17
+signalInf            : 30
 
 
 state 0
@@ -126,14 +128,15 @@ state 0
     (4) Dados -> . PLICA PLICA IGUAL Content
     (5) Dados -> . INT IGUAL Content
     (6) Dados -> . CONTENT IGUAL Content
-    (7) Dados -> . APR NEWDICTIONARY
-    (8) Dados -> . APR NEWSUBDICTIONARY
-    (9) Dados -> . APR CONTENT FPR
-    (10) Dados -> . APR WORD FPR
-    (11) Dados -> . WORD WORD IGUAL Content
-    (12) Dados -> . WORD WORD WORD IGUAL Content
-    (13) Dados -> . INT WORD INT IGUAL Content
-    (14) Dados -> . FLOAT IGUAL Content
+    (7) Dados -> . WORD IGUAL InlineTable
+    (8) Dados -> . APR NEWDICTIONARY
+    (9) Dados -> . APR NEWSUBDICTIONARY
+    (10) Dados -> . APR CONTENT FPR
+    (11) Dados -> . APR WORD FPR
+    (12) Dados -> . WORD WORD IGUAL Content
+    (13) Dados -> . WORD WORD WORD IGUAL Content
+    (14) Dados -> . INT WORD INT IGUAL Content
+    (15) Dados -> . FLOAT IGUAL Content
 
     WORD            shift and go to state 2
     HASHTAG         shift and go to state 3
@@ -155,8 +158,9 @@ state 1
 state 2
 
     (1) Dados -> WORD . IGUAL Content
-    (11) Dados -> WORD . WORD IGUAL Content
-    (12) Dados -> WORD . WORD WORD IGUAL Content
+    (7) Dados -> WORD . IGUAL InlineTable
+    (12) Dados -> WORD . WORD IGUAL Content
+    (13) Dados -> WORD . WORD WORD IGUAL Content
 
     IGUAL           shift and go to state 11
     WORD            shift and go to state 10
@@ -165,12 +169,14 @@ state 2
 state 3
 
     (2) Dados -> HASHTAG . Frase
-    (15) Frase -> . Seqword
-    (16) Seqword -> . WORD Seqword
-    (17) Seqword -> .
+    (16) Frase -> . Seqword
+    (17) Seqword -> . WORD Seqword
+    (18) Seqword -> .
 
     WORD            shift and go to state 14
-    $end            reduce using rule 17 (Seqword -> .)
+    $end            reduce using rule 18 (Seqword -> .)
+    FPC             reduce using rule 18 (Seqword -> .)
+    VIRG            reduce using rule 18 (Seqword -> .)
 
     Frase                          shift and go to state 12
     Seqword                        shift and go to state 13
@@ -192,7 +198,7 @@ state 5
 state 6
 
     (5) Dados -> INT . IGUAL Content
-    (13) Dados -> INT . WORD INT IGUAL Content
+    (14) Dados -> INT . WORD INT IGUAL Content
 
     IGUAL           shift and go to state 17
     WORD            shift and go to state 18
@@ -207,10 +213,10 @@ state 7
 
 state 8
 
-    (7) Dados -> APR . NEWDICTIONARY
-    (8) Dados -> APR . NEWSUBDICTIONARY
-    (9) Dados -> APR . CONTENT FPR
-    (10) Dados -> APR . WORD FPR
+    (8) Dados -> APR . NEWDICTIONARY
+    (9) Dados -> APR . NEWSUBDICTIONARY
+    (10) Dados -> APR . CONTENT FPR
+    (11) Dados -> APR . WORD FPR
 
     NEWDICTIONARY   shift and go to state 20
     NEWSUBDICTIONARY shift and go to state 21
@@ -220,15 +226,15 @@ state 8
 
 state 9
 
-    (14) Dados -> FLOAT . IGUAL Content
+    (15) Dados -> FLOAT . IGUAL Content
 
     IGUAL           shift and go to state 24
 
 
 state 10
 
-    (11) Dados -> WORD WORD . IGUAL Content
-    (12) Dados -> WORD WORD . WORD IGUAL Content
+    (12) Dados -> WORD WORD . IGUAL Content
+    (13) Dados -> WORD WORD . WORD IGUAL Content
 
     IGUAL           shift and go to state 26
     WORD            shift and go to state 25
@@ -237,1128 +243,1372 @@ state 10
 state 11
 
     (1) Dados -> WORD IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (7) Dados -> WORD IGUAL . InlineTable
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (37) InlineTable -> . APC Conteudo FPC
+    (38) InlineTable -> . APC FPC
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
     WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    APC             shift and go to state 50
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
     Content                        shift and go to state 28
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    InlineTable                    shift and go to state 29
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 12
 
     (2) Dados -> HASHTAG Frase .
 
     $end            reduce using rule 2 (Dados -> HASHTAG Frase .)
+    FPC             reduce using rule 2 (Dados -> HASHTAG Frase .)
+    VIRG            reduce using rule 2 (Dados -> HASHTAG Frase .)
 
 
 state 13
 
-    (15) Frase -> Seqword .
+    (16) Frase -> Seqword .
 
-    $end            reduce using rule 15 (Frase -> Seqword .)
+    $end            reduce using rule 16 (Frase -> Seqword .)
+    FPC             reduce using rule 16 (Frase -> Seqword .)
+    VIRG            reduce using rule 16 (Frase -> Seqword .)
 
 
 state 14
 
-    (16) Seqword -> WORD . Seqword
-    (16) Seqword -> . WORD Seqword
-    (17) Seqword -> .
+    (17) Seqword -> WORD . Seqword
+    (17) Seqword -> . WORD Seqword
+    (18) Seqword -> .
 
     WORD            shift and go to state 14
-    $end            reduce using rule 17 (Seqword -> .)
+    $end            reduce using rule 18 (Seqword -> .)
+    FPC             reduce using rule 18 (Seqword -> .)
+    VIRG            reduce using rule 18 (Seqword -> .)
 
-    Seqword                        shift and go to state 52
+    Seqword                        shift and go to state 54
 
 state 15
 
     (3) Dados -> ASPA ASPA . IGUAL Content
 
-    IGUAL           shift and go to state 53
+    IGUAL           shift and go to state 55
 
 
 state 16
 
     (4) Dados -> PLICA PLICA . IGUAL Content
 
-    IGUAL           shift and go to state 54
+    IGUAL           shift and go to state 56
 
 
 state 17
 
     (5) Dados -> INT IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
     WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
-    Content                        shift and go to state 55
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    Content                        shift and go to state 57
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 18
 
-    (13) Dados -> INT WORD . INT IGUAL Content
+    (14) Dados -> INT WORD . INT IGUAL Content
 
-    INT             shift and go to state 56
+    INT             shift and go to state 58
 
 
 state 19
 
     (6) Dados -> CONTENT IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
     WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
-    Content                        shift and go to state 57
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    Content                        shift and go to state 59
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 20
 
-    (7) Dados -> APR NEWDICTIONARY .
+    (8) Dados -> APR NEWDICTIONARY .
 
-    $end            reduce using rule 7 (Dados -> APR NEWDICTIONARY .)
+    $end            reduce using rule 8 (Dados -> APR NEWDICTIONARY .)
+    FPC             reduce using rule 8 (Dados -> APR NEWDICTIONARY .)
+    VIRG            reduce using rule 8 (Dados -> APR NEWDICTIONARY .)
 
 
 state 21
 
-    (8) Dados -> APR NEWSUBDICTIONARY .
+    (9) Dados -> APR NEWSUBDICTIONARY .
 
-    $end            reduce using rule 8 (Dados -> APR NEWSUBDICTIONARY .)
+    $end            reduce using rule 9 (Dados -> APR NEWSUBDICTIONARY .)
+    FPC             reduce using rule 9 (Dados -> APR NEWSUBDICTIONARY .)
+    VIRG            reduce using rule 9 (Dados -> APR NEWSUBDICTIONARY .)
 
 
 state 22
 
-    (9) Dados -> APR CONTENT . FPR
+    (10) Dados -> APR CONTENT . FPR
 
-    FPR             shift and go to state 58
+    FPR             shift and go to state 60
 
 
 state 23
 
-    (10) Dados -> APR WORD . FPR
+    (11) Dados -> APR WORD . FPR
 
-    FPR             shift and go to state 59
+    FPR             shift and go to state 61
 
 
 state 24
 
-    (14) Dados -> FLOAT IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (15) Dados -> FLOAT IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
     WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
-    Content                        shift and go to state 60
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    Content                        shift and go to state 62
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 25
 
-    (12) Dados -> WORD WORD WORD . IGUAL Content
+    (13) Dados -> WORD WORD WORD . IGUAL Content
 
-    IGUAL           shift and go to state 61
+    IGUAL           shift and go to state 63
 
 
 state 26
 
-    (11) Dados -> WORD WORD IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (12) Dados -> WORD WORD IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
     WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
-    Content                        shift and go to state 62
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    Content                        shift and go to state 64
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 27
 
-    (46) Content -> WORD . FLOAT
-    (57) Palavras -> WORD . Palavras
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
+    (51) Content -> WORD . FLOAT
+    (62) Palavras -> WORD . Palavras
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
 
-    FLOAT           shift and go to state 64
-    WORD            shift and go to state 63
-    $end            reduce using rule 58 (Palavras -> .)
+    FLOAT           shift and go to state 66
+    WORD            shift and go to state 65
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
 
-    Palavras                       shift and go to state 65
+    Palavras                       shift and go to state 67
 
 state 28
 
     (1) Dados -> WORD IGUAL Content .
 
     $end            reduce using rule 1 (Dados -> WORD IGUAL Content .)
+    FPC             reduce using rule 1 (Dados -> WORD IGUAL Content .)
+    VIRG            reduce using rule 1 (Dados -> WORD IGUAL Content .)
 
 
 state 29
 
-    (18) Content -> CONTENT .
+    (7) Dados -> WORD IGUAL InlineTable .
 
-    $end            reduce using rule 18 (Content -> CONTENT .)
+    $end            reduce using rule 7 (Dados -> WORD IGUAL InlineTable .)
+    FPC             reduce using rule 7 (Dados -> WORD IGUAL InlineTable .)
+    VIRG            reduce using rule 7 (Dados -> WORD IGUAL InlineTable .)
 
 
 state 30
 
-    (19) Content -> DATE .
+    (19) Content -> CONTENT .
 
-    $end            reduce using rule 19 (Content -> DATE .)
+    $end            reduce using rule 19 (Content -> CONTENT .)
+    FPC             reduce using rule 19 (Content -> CONTENT .)
+    VIRG            reduce using rule 19 (Content -> CONTENT .)
 
 
 state 31
 
-    (20) Content -> TIME .
+    (20) Content -> DATE .
 
-    $end            reduce using rule 20 (Content -> TIME .)
+    $end            reduce using rule 20 (Content -> DATE .)
+    FPC             reduce using rule 20 (Content -> DATE .)
+    VIRG            reduce using rule 20 (Content -> DATE .)
 
 
 state 32
 
-    (21) Content -> Lista .
+    (21) Content -> TIME .
 
-    $end            reduce using rule 21 (Content -> Lista .)
+    $end            reduce using rule 21 (Content -> TIME .)
+    FPC             reduce using rule 21 (Content -> TIME .)
+    VIRG            reduce using rule 21 (Content -> TIME .)
 
 
 state 33
 
-    (22) Content -> Palavras .
+    (22) Content -> Lista .
 
-    $end            reduce using rule 22 (Content -> Palavras .)
+    $end            reduce using rule 22 (Content -> Lista .)
+    FPC             reduce using rule 22 (Content -> Lista .)
+    VIRG            reduce using rule 22 (Content -> Lista .)
 
 
 state 34
 
-    (23) Content -> LittleEndian .
+    (23) Content -> Palavras .
 
-    $end            reduce using rule 23 (Content -> LittleEndian .)
+    $end            reduce using rule 23 (Content -> Palavras .)
+    FPC             reduce using rule 23 (Content -> Palavras .)
+    VIRG            reduce using rule 23 (Content -> Palavras .)
 
 
 state 35
 
-    (24) Content -> LittleEndianFloat .
+    (24) Content -> LittleEndian .
 
-    $end            reduce using rule 24 (Content -> LittleEndianFloat .)
+    $end            reduce using rule 24 (Content -> LittleEndian .)
+    FPC             reduce using rule 24 (Content -> LittleEndian .)
+    VIRG            reduce using rule 24 (Content -> LittleEndian .)
 
 
 state 36
 
-    (25) Content -> HEXADECIMAL .
+    (25) Content -> LittleEndianFloat .
 
-    $end            reduce using rule 25 (Content -> HEXADECIMAL .)
+    $end            reduce using rule 25 (Content -> LittleEndianFloat .)
+    FPC             reduce using rule 25 (Content -> LittleEndianFloat .)
+    VIRG            reduce using rule 25 (Content -> LittleEndianFloat .)
 
 
 state 37
 
-    (26) Content -> OCTAL .
+    (26) Content -> HEXADECIMAL .
 
-    $end            reduce using rule 26 (Content -> OCTAL .)
+    $end            reduce using rule 26 (Content -> HEXADECIMAL .)
+    FPC             reduce using rule 26 (Content -> HEXADECIMAL .)
+    VIRG            reduce using rule 26 (Content -> HEXADECIMAL .)
 
 
 state 38
 
-    (27) Content -> BINARIO .
+    (27) Content -> OCTAL .
 
-    $end            reduce using rule 27 (Content -> BINARIO .)
+    $end            reduce using rule 27 (Content -> OCTAL .)
+    FPC             reduce using rule 27 (Content -> OCTAL .)
+    VIRG            reduce using rule 27 (Content -> OCTAL .)
 
 
 state 39
 
-    (28) Content -> EXPONENCIACAO .
+    (28) Content -> BINARIO .
 
-    $end            reduce using rule 28 (Content -> EXPONENCIACAO .)
+    $end            reduce using rule 28 (Content -> BINARIO .)
+    FPC             reduce using rule 28 (Content -> BINARIO .)
+    VIRG            reduce using rule 28 (Content -> BINARIO .)
 
 
 state 40
 
-    (29) Content -> signalInf .
+    (29) Content -> EXPONENCIACAO .
 
-    $end            reduce using rule 29 (Content -> signalInf .)
+    $end            reduce using rule 29 (Content -> EXPONENCIACAO .)
+    FPC             reduce using rule 29 (Content -> EXPONENCIACAO .)
+    VIRG            reduce using rule 29 (Content -> EXPONENCIACAO .)
 
 
 state 41
 
-    (30) Content -> OFFSETDATETIME .
+    (30) Content -> signalInf .
 
-    $end            reduce using rule 30 (Content -> OFFSETDATETIME .)
+    $end            reduce using rule 30 (Content -> signalInf .)
+    FPC             reduce using rule 30 (Content -> signalInf .)
+    VIRG            reduce using rule 30 (Content -> signalInf .)
 
 
 state 42
 
-    (31) Content -> LOCALDATETIME .
+    (31) Content -> OFFSETDATETIME .
 
-    $end            reduce using rule 31 (Content -> LOCALDATETIME .)
+    $end            reduce using rule 31 (Content -> OFFSETDATETIME .)
+    FPC             reduce using rule 31 (Content -> OFFSETDATETIME .)
+    VIRG            reduce using rule 31 (Content -> OFFSETDATETIME .)
 
 
 state 43
 
-    (32) Content -> LOCALDATE .
+    (32) Content -> LOCALDATETIME .
 
-    $end            reduce using rule 32 (Content -> LOCALDATE .)
+    $end            reduce using rule 32 (Content -> LOCALDATETIME .)
+    FPC             reduce using rule 32 (Content -> LOCALDATETIME .)
+    VIRG            reduce using rule 32 (Content -> LOCALDATETIME .)
 
 
 state 44
 
-    (33) Content -> LOCALTIME .
+    (33) Content -> LOCALDATE .
 
-    $end            reduce using rule 33 (Content -> LOCALTIME .)
+    $end            reduce using rule 33 (Content -> LOCALDATE .)
+    FPC             reduce using rule 33 (Content -> LOCALDATE .)
+    VIRG            reduce using rule 33 (Content -> LOCALDATE .)
 
 
 state 45
 
-    (34) Content -> BOOL .
+    (34) Content -> LOCALTIME .
 
-    $end            reduce using rule 34 (Content -> BOOL .)
+    $end            reduce using rule 34 (Content -> LOCALTIME .)
+    FPC             reduce using rule 34 (Content -> LOCALTIME .)
+    VIRG            reduce using rule 34 (Content -> LOCALTIME .)
 
 
 state 46
 
-    (42) Content -> INT .
+    (35) Content -> BOOL .
 
-    $end            reduce using rule 42 (Content -> INT .)
+    $end            reduce using rule 35 (Content -> BOOL .)
+    FPC             reduce using rule 35 (Content -> BOOL .)
+    VIRG            reduce using rule 35 (Content -> BOOL .)
 
 
 state 47
 
-    (43) Content -> FLOAT .
+    (47) Content -> INT .
 
-    $end            reduce using rule 43 (Content -> FLOAT .)
+    $end            reduce using rule 47 (Content -> INT .)
+    FPC             reduce using rule 47 (Content -> INT .)
+    VIRG            reduce using rule 47 (Content -> INT .)
 
 
 state 48
 
-    (44) Content -> SIGNAL . INT
-    (45) Content -> SIGNAL . FLOAT
-    (35) signalInf -> SIGNAL . WORD
+    (48) Content -> FLOAT .
 
-    INT             shift and go to state 66
-    FLOAT           shift and go to state 67
-    WORD            shift and go to state 68
+    $end            reduce using rule 48 (Content -> FLOAT .)
+    FPC             reduce using rule 48 (Content -> FLOAT .)
+    VIRG            reduce using rule 48 (Content -> FLOAT .)
 
 
 state 49
 
-    (47) Lista -> APR . Elementos FPR
-    (48) Lista -> APR . FPR
-    (49) Elementos -> . Elementos VIRG Elemento
-    (50) Elementos -> . Elementos VIRG
-    (51) Elementos -> . Elemento
-    (52) Elemento -> . WORD
-    (53) Elemento -> . CONTENT
-    (54) Elemento -> . INT
-    (55) Elemento -> . FLOAT
-    (56) Elemento -> . Lista
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
+    (49) Content -> SIGNAL . INT
+    (50) Content -> SIGNAL . FLOAT
+    (36) signalInf -> SIGNAL . WORD
 
-    FPR             shift and go to state 70
-    WORD            shift and go to state 72
-    CONTENT         shift and go to state 73
-    INT             shift and go to state 74
-    FLOAT           shift and go to state 75
-    APR             shift and go to state 49
+    INT             shift and go to state 68
+    FLOAT           shift and go to state 69
+    WORD            shift and go to state 70
 
-    Elementos                      shift and go to state 69
-    Elemento                       shift and go to state 71
-    Lista                          shift and go to state 76
 
 state 50
 
-    (37) LittleEndian -> INTWITHUNDERSCORE . OtherEndians
-    (38) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
-    (40) OtherEndians -> .
+    (37) InlineTable -> APC . Conteudo FPC
+    (38) InlineTable -> APC . FPC
+    (39) Conteudo -> . Conteudo VIRG Dados
+    (40) Conteudo -> . Dados
+    (1) Dados -> . WORD IGUAL Content
+    (2) Dados -> . HASHTAG Frase
+    (3) Dados -> . ASPA ASPA IGUAL Content
+    (4) Dados -> . PLICA PLICA IGUAL Content
+    (5) Dados -> . INT IGUAL Content
+    (6) Dados -> . CONTENT IGUAL Content
+    (7) Dados -> . WORD IGUAL InlineTable
+    (8) Dados -> . APR NEWDICTIONARY
+    (9) Dados -> . APR NEWSUBDICTIONARY
+    (10) Dados -> . APR CONTENT FPR
+    (11) Dados -> . APR WORD FPR
+    (12) Dados -> . WORD WORD IGUAL Content
+    (13) Dados -> . WORD WORD WORD IGUAL Content
+    (14) Dados -> . INT WORD INT IGUAL Content
+    (15) Dados -> . FLOAT IGUAL Content
 
-    INTWITHUNDERSCORE shift and go to state 77
-    $end            reduce using rule 40 (OtherEndians -> .)
+    FPC             shift and go to state 72
+    WORD            shift and go to state 2
+    HASHTAG         shift and go to state 3
+    ASPA            shift and go to state 4
+    PLICA           shift and go to state 5
+    INT             shift and go to state 6
+    CONTENT         shift and go to state 7
+    APR             shift and go to state 8
+    FLOAT           shift and go to state 9
 
-    OtherEndians                   shift and go to state 78
+    Conteudo                       shift and go to state 71
+    Dados                          shift and go to state 73
 
 state 51
 
-    (36) LittleEndianFloat -> FLOATWITHUNDERSCORE . OtherEndiansFloat
-    (39) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (41) OtherEndiansFloat -> .
+    (52) Lista -> APR . Elementos FPR
+    (53) Lista -> APR . FPR
+    (54) Elementos -> . Elementos VIRG Elemento
+    (55) Elementos -> . Elementos VIRG
+    (56) Elementos -> . Elemento
+    (57) Elemento -> . WORD
+    (58) Elemento -> . CONTENT
+    (59) Elemento -> . INT
+    (60) Elemento -> . FLOAT
+    (61) Elemento -> . Lista
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
 
-    FLOATWITHUNDERSCORE shift and go to state 79
-    $end            reduce using rule 41 (OtherEndiansFloat -> .)
+    FPR             shift and go to state 75
+    WORD            shift and go to state 77
+    CONTENT         shift and go to state 78
+    INT             shift and go to state 79
+    FLOAT           shift and go to state 80
+    APR             shift and go to state 51
 
-    OtherEndiansFloat              shift and go to state 80
+    Elementos                      shift and go to state 74
+    Elemento                       shift and go to state 76
+    Lista                          shift and go to state 81
 
 state 52
 
-    (16) Seqword -> WORD Seqword .
+    (42) LittleEndian -> INTWITHUNDERSCORE . OtherEndians
+    (43) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
+    (45) OtherEndians -> .
 
-    $end            reduce using rule 16 (Seqword -> WORD Seqword .)
+    INTWITHUNDERSCORE shift and go to state 82
+    $end            reduce using rule 45 (OtherEndians -> .)
+    FPC             reduce using rule 45 (OtherEndians -> .)
+    VIRG            reduce using rule 45 (OtherEndians -> .)
 
+    OtherEndians                   shift and go to state 83
 
 state 53
 
-    (3) Dados -> ASPA ASPA IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (41) LittleEndianFloat -> FLOATWITHUNDERSCORE . OtherEndiansFloat
+    (44) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (46) OtherEndiansFloat -> .
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
-    WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    FLOATWITHUNDERSCORE shift and go to state 84
+    $end            reduce using rule 46 (OtherEndiansFloat -> .)
+    FPC             reduce using rule 46 (OtherEndiansFloat -> .)
+    VIRG            reduce using rule 46 (OtherEndiansFloat -> .)
 
-    Content                        shift and go to state 81
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
+    OtherEndiansFloat              shift and go to state 85
 
 state 54
 
-    (4) Dados -> PLICA PLICA IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (17) Seqword -> WORD Seqword .
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
-    WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    $end            reduce using rule 17 (Seqword -> WORD Seqword .)
+    FPC             reduce using rule 17 (Seqword -> WORD Seqword .)
+    VIRG            reduce using rule 17 (Seqword -> WORD Seqword .)
 
-    Content                        shift and go to state 82
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
 
 state 55
+
+    (3) Dados -> ASPA ASPA IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
+
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
+    WORD            shift and go to state 27
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
+
+    Content                        shift and go to state 86
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
+
+state 56
+
+    (4) Dados -> PLICA PLICA IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
+
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
+    WORD            shift and go to state 27
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
+
+    Content                        shift and go to state 87
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
+
+state 57
 
     (5) Dados -> INT IGUAL Content .
 
     $end            reduce using rule 5 (Dados -> INT IGUAL Content .)
-
-
-state 56
-
-    (13) Dados -> INT WORD INT . IGUAL Content
-
-    IGUAL           shift and go to state 83
-
-
-state 57
-
-    (6) Dados -> CONTENT IGUAL Content .
-
-    $end            reduce using rule 6 (Dados -> CONTENT IGUAL Content .)
+    FPC             reduce using rule 5 (Dados -> INT IGUAL Content .)
+    VIRG            reduce using rule 5 (Dados -> INT IGUAL Content .)
 
 
 state 58
 
-    (9) Dados -> APR CONTENT FPR .
+    (14) Dados -> INT WORD INT . IGUAL Content
 
-    $end            reduce using rule 9 (Dados -> APR CONTENT FPR .)
+    IGUAL           shift and go to state 88
 
 
 state 59
 
-    (10) Dados -> APR WORD FPR .
+    (6) Dados -> CONTENT IGUAL Content .
 
-    $end            reduce using rule 10 (Dados -> APR WORD FPR .)
+    $end            reduce using rule 6 (Dados -> CONTENT IGUAL Content .)
+    FPC             reduce using rule 6 (Dados -> CONTENT IGUAL Content .)
+    VIRG            reduce using rule 6 (Dados -> CONTENT IGUAL Content .)
 
 
 state 60
 
-    (14) Dados -> FLOAT IGUAL Content .
+    (10) Dados -> APR CONTENT FPR .
 
-    $end            reduce using rule 14 (Dados -> FLOAT IGUAL Content .)
+    $end            reduce using rule 10 (Dados -> APR CONTENT FPR .)
+    FPC             reduce using rule 10 (Dados -> APR CONTENT FPR .)
+    VIRG            reduce using rule 10 (Dados -> APR CONTENT FPR .)
 
 
 state 61
 
-    (12) Dados -> WORD WORD WORD IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (11) Dados -> APR WORD FPR .
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
-    WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    $end            reduce using rule 11 (Dados -> APR WORD FPR .)
+    FPC             reduce using rule 11 (Dados -> APR WORD FPR .)
+    VIRG            reduce using rule 11 (Dados -> APR WORD FPR .)
 
-    Content                        shift and go to state 84
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
 
 state 62
 
-    (11) Dados -> WORD WORD IGUAL Content .
+    (15) Dados -> FLOAT IGUAL Content .
 
-    $end            reduce using rule 11 (Dados -> WORD WORD IGUAL Content .)
+    $end            reduce using rule 15 (Dados -> FLOAT IGUAL Content .)
+    FPC             reduce using rule 15 (Dados -> FLOAT IGUAL Content .)
+    VIRG            reduce using rule 15 (Dados -> FLOAT IGUAL Content .)
 
 
 state 63
 
-    (57) Palavras -> WORD . Palavras
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
+    (13) Dados -> WORD WORD WORD IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    WORD            shift and go to state 63
-    $end            reduce using rule 58 (Palavras -> .)
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
+    WORD            shift and go to state 27
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
-    Palavras                       shift and go to state 65
+    Content                        shift and go to state 89
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 64
 
-    (46) Content -> WORD FLOAT .
+    (12) Dados -> WORD WORD IGUAL Content .
 
-    $end            reduce using rule 46 (Content -> WORD FLOAT .)
+    $end            reduce using rule 12 (Dados -> WORD WORD IGUAL Content .)
+    FPC             reduce using rule 12 (Dados -> WORD WORD IGUAL Content .)
+    VIRG            reduce using rule 12 (Dados -> WORD WORD IGUAL Content .)
 
 
 state 65
 
-    (57) Palavras -> WORD Palavras .
+    (62) Palavras -> WORD . Palavras
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
 
-    $end            reduce using rule 57 (Palavras -> WORD Palavras .)
+    WORD            shift and go to state 65
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
 
+    Palavras                       shift and go to state 67
 
 state 66
 
-    (44) Content -> SIGNAL INT .
+    (51) Content -> WORD FLOAT .
 
-    $end            reduce using rule 44 (Content -> SIGNAL INT .)
+    $end            reduce using rule 51 (Content -> WORD FLOAT .)
+    FPC             reduce using rule 51 (Content -> WORD FLOAT .)
+    VIRG            reduce using rule 51 (Content -> WORD FLOAT .)
 
 
 state 67
 
-    (45) Content -> SIGNAL FLOAT .
+    (62) Palavras -> WORD Palavras .
 
-    $end            reduce using rule 45 (Content -> SIGNAL FLOAT .)
+    $end            reduce using rule 62 (Palavras -> WORD Palavras .)
+    FPC             reduce using rule 62 (Palavras -> WORD Palavras .)
+    VIRG            reduce using rule 62 (Palavras -> WORD Palavras .)
 
 
 state 68
 
-    (35) signalInf -> SIGNAL WORD .
+    (49) Content -> SIGNAL INT .
 
-    $end            reduce using rule 35 (signalInf -> SIGNAL WORD .)
+    $end            reduce using rule 49 (Content -> SIGNAL INT .)
+    FPC             reduce using rule 49 (Content -> SIGNAL INT .)
+    VIRG            reduce using rule 49 (Content -> SIGNAL INT .)
 
 
 state 69
 
-    (47) Lista -> APR Elementos . FPR
-    (49) Elementos -> Elementos . VIRG Elemento
-    (50) Elementos -> Elementos . VIRG
+    (50) Content -> SIGNAL FLOAT .
 
-    FPR             shift and go to state 85
-    VIRG            shift and go to state 86
+    $end            reduce using rule 50 (Content -> SIGNAL FLOAT .)
+    FPC             reduce using rule 50 (Content -> SIGNAL FLOAT .)
+    VIRG            reduce using rule 50 (Content -> SIGNAL FLOAT .)
 
 
 state 70
 
-    (48) Lista -> APR FPR .
+    (36) signalInf -> SIGNAL WORD .
 
-    $end            reduce using rule 48 (Lista -> APR FPR .)
-    FPR             reduce using rule 48 (Lista -> APR FPR .)
-    VIRG            reduce using rule 48 (Lista -> APR FPR .)
+    $end            reduce using rule 36 (signalInf -> SIGNAL WORD .)
+    FPC             reduce using rule 36 (signalInf -> SIGNAL WORD .)
+    VIRG            reduce using rule 36 (signalInf -> SIGNAL WORD .)
 
 
 state 71
 
-    (51) Elementos -> Elemento .
+    (37) InlineTable -> APC Conteudo . FPC
+    (39) Conteudo -> Conteudo . VIRG Dados
 
-    FPR             reduce using rule 51 (Elementos -> Elemento .)
-    VIRG            reduce using rule 51 (Elementos -> Elemento .)
+    FPC             shift and go to state 90
+    VIRG            shift and go to state 91
 
 
 state 72
 
-    (52) Elemento -> WORD .
+    (38) InlineTable -> APC FPC .
 
-    FPR             reduce using rule 52 (Elemento -> WORD .)
-    VIRG            reduce using rule 52 (Elemento -> WORD .)
+    $end            reduce using rule 38 (InlineTable -> APC FPC .)
+    FPC             reduce using rule 38 (InlineTable -> APC FPC .)
+    VIRG            reduce using rule 38 (InlineTable -> APC FPC .)
 
 
 state 73
 
-    (53) Elemento -> CONTENT .
+    (40) Conteudo -> Dados .
 
-    FPR             reduce using rule 53 (Elemento -> CONTENT .)
-    VIRG            reduce using rule 53 (Elemento -> CONTENT .)
+    FPC             reduce using rule 40 (Conteudo -> Dados .)
+    VIRG            reduce using rule 40 (Conteudo -> Dados .)
 
 
 state 74
 
-    (54) Elemento -> INT .
+    (52) Lista -> APR Elementos . FPR
+    (54) Elementos -> Elementos . VIRG Elemento
+    (55) Elementos -> Elementos . VIRG
 
-    FPR             reduce using rule 54 (Elemento -> INT .)
-    VIRG            reduce using rule 54 (Elemento -> INT .)
+    FPR             shift and go to state 92
+    VIRG            shift and go to state 93
 
 
 state 75
 
-    (55) Elemento -> FLOAT .
+    (53) Lista -> APR FPR .
 
-    FPR             reduce using rule 55 (Elemento -> FLOAT .)
-    VIRG            reduce using rule 55 (Elemento -> FLOAT .)
+    $end            reduce using rule 53 (Lista -> APR FPR .)
+    FPC             reduce using rule 53 (Lista -> APR FPR .)
+    VIRG            reduce using rule 53 (Lista -> APR FPR .)
+    FPR             reduce using rule 53 (Lista -> APR FPR .)
 
 
 state 76
 
-    (56) Elemento -> Lista .
+    (56) Elementos -> Elemento .
 
-    FPR             reduce using rule 56 (Elemento -> Lista .)
-    VIRG            reduce using rule 56 (Elemento -> Lista .)
+    FPR             reduce using rule 56 (Elementos -> Elemento .)
+    VIRG            reduce using rule 56 (Elementos -> Elemento .)
 
 
 state 77
 
-    (38) OtherEndians -> INTWITHUNDERSCORE . OtherEndians
-    (38) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
-    (40) OtherEndians -> .
+    (57) Elemento -> WORD .
 
-    INTWITHUNDERSCORE shift and go to state 77
-    $end            reduce using rule 40 (OtherEndians -> .)
+    FPR             reduce using rule 57 (Elemento -> WORD .)
+    VIRG            reduce using rule 57 (Elemento -> WORD .)
 
-    OtherEndians                   shift and go to state 87
 
 state 78
 
-    (37) LittleEndian -> INTWITHUNDERSCORE OtherEndians .
+    (58) Elemento -> CONTENT .
 
-    $end            reduce using rule 37 (LittleEndian -> INTWITHUNDERSCORE OtherEndians .)
+    FPR             reduce using rule 58 (Elemento -> CONTENT .)
+    VIRG            reduce using rule 58 (Elemento -> CONTENT .)
 
 
 state 79
 
-    (39) OtherEndiansFloat -> FLOATWITHUNDERSCORE . OtherEndiansFloat
-    (39) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (41) OtherEndiansFloat -> .
+    (59) Elemento -> INT .
 
-    FLOATWITHUNDERSCORE shift and go to state 79
-    $end            reduce using rule 41 (OtherEndiansFloat -> .)
+    FPR             reduce using rule 59 (Elemento -> INT .)
+    VIRG            reduce using rule 59 (Elemento -> INT .)
 
-    OtherEndiansFloat              shift and go to state 88
 
 state 80
 
-    (36) LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
+    (60) Elemento -> FLOAT .
 
-    $end            reduce using rule 36 (LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    FPR             reduce using rule 60 (Elemento -> FLOAT .)
+    VIRG            reduce using rule 60 (Elemento -> FLOAT .)
 
 
 state 81
 
-    (3) Dados -> ASPA ASPA IGUAL Content .
+    (61) Elemento -> Lista .
 
-    $end            reduce using rule 3 (Dados -> ASPA ASPA IGUAL Content .)
+    FPR             reduce using rule 61 (Elemento -> Lista .)
+    VIRG            reduce using rule 61 (Elemento -> Lista .)
 
 
 state 82
 
-    (4) Dados -> PLICA PLICA IGUAL Content .
+    (43) OtherEndians -> INTWITHUNDERSCORE . OtherEndians
+    (43) OtherEndians -> . INTWITHUNDERSCORE OtherEndians
+    (45) OtherEndians -> .
 
-    $end            reduce using rule 4 (Dados -> PLICA PLICA IGUAL Content .)
+    INTWITHUNDERSCORE shift and go to state 82
+    $end            reduce using rule 45 (OtherEndians -> .)
+    FPC             reduce using rule 45 (OtherEndians -> .)
+    VIRG            reduce using rule 45 (OtherEndians -> .)
 
+    OtherEndians                   shift and go to state 94
 
 state 83
 
-    (13) Dados -> INT WORD INT IGUAL . Content
-    (18) Content -> . CONTENT
-    (19) Content -> . DATE
-    (20) Content -> . TIME
-    (21) Content -> . Lista
-    (22) Content -> . Palavras
-    (23) Content -> . LittleEndian
-    (24) Content -> . LittleEndianFloat
-    (25) Content -> . HEXADECIMAL
-    (26) Content -> . OCTAL
-    (27) Content -> . BINARIO
-    (28) Content -> . EXPONENCIACAO
-    (29) Content -> . signalInf
-    (30) Content -> . OFFSETDATETIME
-    (31) Content -> . LOCALDATETIME
-    (32) Content -> . LOCALDATE
-    (33) Content -> . LOCALTIME
-    (34) Content -> . BOOL
-    (42) Content -> . INT
-    (43) Content -> . FLOAT
-    (44) Content -> . SIGNAL INT
-    (45) Content -> . SIGNAL FLOAT
-    (46) Content -> . WORD FLOAT
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
-    (57) Palavras -> . WORD Palavras
-    (58) Palavras -> .
-    (37) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
-    (36) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
-    (35) signalInf -> . SIGNAL WORD
+    (42) LittleEndian -> INTWITHUNDERSCORE OtherEndians .
 
-    CONTENT         shift and go to state 29
-    DATE            shift and go to state 30
-    TIME            shift and go to state 31
-    HEXADECIMAL     shift and go to state 36
-    OCTAL           shift and go to state 37
-    BINARIO         shift and go to state 38
-    EXPONENCIACAO   shift and go to state 39
-    OFFSETDATETIME  shift and go to state 41
-    LOCALDATETIME   shift and go to state 42
-    LOCALDATE       shift and go to state 43
-    LOCALTIME       shift and go to state 44
-    BOOL            shift and go to state 45
-    INT             shift and go to state 46
-    FLOAT           shift and go to state 47
-    SIGNAL          shift and go to state 48
-    WORD            shift and go to state 27
-    APR             shift and go to state 49
-    $end            reduce using rule 58 (Palavras -> .)
-    INTWITHUNDERSCORE shift and go to state 50
-    FLOATWITHUNDERSCORE shift and go to state 51
+    $end            reduce using rule 42 (LittleEndian -> INTWITHUNDERSCORE OtherEndians .)
+    FPC             reduce using rule 42 (LittleEndian -> INTWITHUNDERSCORE OtherEndians .)
+    VIRG            reduce using rule 42 (LittleEndian -> INTWITHUNDERSCORE OtherEndians .)
 
-    Content                        shift and go to state 89
-    Lista                          shift and go to state 32
-    Palavras                       shift and go to state 33
-    LittleEndian                   shift and go to state 34
-    LittleEndianFloat              shift and go to state 35
-    signalInf                      shift and go to state 40
 
 state 84
 
-    (12) Dados -> WORD WORD WORD IGUAL Content .
+    (44) OtherEndiansFloat -> FLOATWITHUNDERSCORE . OtherEndiansFloat
+    (44) OtherEndiansFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (46) OtherEndiansFloat -> .
 
-    $end            reduce using rule 12 (Dados -> WORD WORD WORD IGUAL Content .)
+    FLOATWITHUNDERSCORE shift and go to state 84
+    $end            reduce using rule 46 (OtherEndiansFloat -> .)
+    FPC             reduce using rule 46 (OtherEndiansFloat -> .)
+    VIRG            reduce using rule 46 (OtherEndiansFloat -> .)
 
+    OtherEndiansFloat              shift and go to state 95
 
 state 85
 
-    (47) Lista -> APR Elementos FPR .
+    (41) LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
 
-    $end            reduce using rule 47 (Lista -> APR Elementos FPR .)
-    FPR             reduce using rule 47 (Lista -> APR Elementos FPR .)
-    VIRG            reduce using rule 47 (Lista -> APR Elementos FPR .)
+    $end            reduce using rule 41 (LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    FPC             reduce using rule 41 (LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    VIRG            reduce using rule 41 (LittleEndianFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
 
 
 state 86
 
-    (49) Elementos -> Elementos VIRG . Elemento
-    (50) Elementos -> Elementos VIRG .
-    (52) Elemento -> . WORD
-    (53) Elemento -> . CONTENT
-    (54) Elemento -> . INT
-    (55) Elemento -> . FLOAT
-    (56) Elemento -> . Lista
-    (47) Lista -> . APR Elementos FPR
-    (48) Lista -> . APR FPR
+    (3) Dados -> ASPA ASPA IGUAL Content .
 
-    FPR             reduce using rule 50 (Elementos -> Elementos VIRG .)
-    VIRG            reduce using rule 50 (Elementos -> Elementos VIRG .)
-    WORD            shift and go to state 72
-    CONTENT         shift and go to state 73
-    INT             shift and go to state 74
-    FLOAT           shift and go to state 75
-    APR             shift and go to state 49
+    $end            reduce using rule 3 (Dados -> ASPA ASPA IGUAL Content .)
+    FPC             reduce using rule 3 (Dados -> ASPA ASPA IGUAL Content .)
+    VIRG            reduce using rule 3 (Dados -> ASPA ASPA IGUAL Content .)
 
-    Elemento                       shift and go to state 90
-    Lista                          shift and go to state 76
 
 state 87
 
-    (38) OtherEndians -> INTWITHUNDERSCORE OtherEndians .
+    (4) Dados -> PLICA PLICA IGUAL Content .
 
-    $end            reduce using rule 38 (OtherEndians -> INTWITHUNDERSCORE OtherEndians .)
+    $end            reduce using rule 4 (Dados -> PLICA PLICA IGUAL Content .)
+    FPC             reduce using rule 4 (Dados -> PLICA PLICA IGUAL Content .)
+    VIRG            reduce using rule 4 (Dados -> PLICA PLICA IGUAL Content .)
 
 
 state 88
 
-    (39) OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
+    (14) Dados -> INT WORD INT IGUAL . Content
+    (19) Content -> . CONTENT
+    (20) Content -> . DATE
+    (21) Content -> . TIME
+    (22) Content -> . Lista
+    (23) Content -> . Palavras
+    (24) Content -> . LittleEndian
+    (25) Content -> . LittleEndianFloat
+    (26) Content -> . HEXADECIMAL
+    (27) Content -> . OCTAL
+    (28) Content -> . BINARIO
+    (29) Content -> . EXPONENCIACAO
+    (30) Content -> . signalInf
+    (31) Content -> . OFFSETDATETIME
+    (32) Content -> . LOCALDATETIME
+    (33) Content -> . LOCALDATE
+    (34) Content -> . LOCALTIME
+    (35) Content -> . BOOL
+    (47) Content -> . INT
+    (48) Content -> . FLOAT
+    (49) Content -> . SIGNAL INT
+    (50) Content -> . SIGNAL FLOAT
+    (51) Content -> . WORD FLOAT
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+    (62) Palavras -> . WORD Palavras
+    (63) Palavras -> .
+    (42) LittleEndian -> . INTWITHUNDERSCORE OtherEndians
+    (41) LittleEndianFloat -> . FLOATWITHUNDERSCORE OtherEndiansFloat
+    (36) signalInf -> . SIGNAL WORD
 
-    $end            reduce using rule 39 (OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    CONTENT         shift and go to state 30
+    DATE            shift and go to state 31
+    TIME            shift and go to state 32
+    HEXADECIMAL     shift and go to state 37
+    OCTAL           shift and go to state 38
+    BINARIO         shift and go to state 39
+    EXPONENCIACAO   shift and go to state 40
+    OFFSETDATETIME  shift and go to state 42
+    LOCALDATETIME   shift and go to state 43
+    LOCALDATE       shift and go to state 44
+    LOCALTIME       shift and go to state 45
+    BOOL            shift and go to state 46
+    INT             shift and go to state 47
+    FLOAT           shift and go to state 48
+    SIGNAL          shift and go to state 49
+    WORD            shift and go to state 27
+    APR             shift and go to state 51
+    $end            reduce using rule 63 (Palavras -> .)
+    FPC             reduce using rule 63 (Palavras -> .)
+    VIRG            reduce using rule 63 (Palavras -> .)
+    INTWITHUNDERSCORE shift and go to state 52
+    FLOATWITHUNDERSCORE shift and go to state 53
 
+    Content                        shift and go to state 96
+    Lista                          shift and go to state 33
+    Palavras                       shift and go to state 34
+    LittleEndian                   shift and go to state 35
+    LittleEndianFloat              shift and go to state 36
+    signalInf                      shift and go to state 41
 
 state 89
 
-    (13) Dados -> INT WORD INT IGUAL Content .
+    (13) Dados -> WORD WORD WORD IGUAL Content .
 
-    $end            reduce using rule 13 (Dados -> INT WORD INT IGUAL Content .)
+    $end            reduce using rule 13 (Dados -> WORD WORD WORD IGUAL Content .)
+    FPC             reduce using rule 13 (Dados -> WORD WORD WORD IGUAL Content .)
+    VIRG            reduce using rule 13 (Dados -> WORD WORD WORD IGUAL Content .)
 
 
 state 90
 
-    (49) Elementos -> Elementos VIRG Elemento .
+    (37) InlineTable -> APC Conteudo FPC .
 
-    FPR             reduce using rule 49 (Elementos -> Elementos VIRG Elemento .)
-    VIRG            reduce using rule 49 (Elementos -> Elementos VIRG Elemento .)
+    $end            reduce using rule 37 (InlineTable -> APC Conteudo FPC .)
+    FPC             reduce using rule 37 (InlineTable -> APC Conteudo FPC .)
+    VIRG            reduce using rule 37 (InlineTable -> APC Conteudo FPC .)
+
+
+state 91
+
+    (39) Conteudo -> Conteudo VIRG . Dados
+    (1) Dados -> . WORD IGUAL Content
+    (2) Dados -> . HASHTAG Frase
+    (3) Dados -> . ASPA ASPA IGUAL Content
+    (4) Dados -> . PLICA PLICA IGUAL Content
+    (5) Dados -> . INT IGUAL Content
+    (6) Dados -> . CONTENT IGUAL Content
+    (7) Dados -> . WORD IGUAL InlineTable
+    (8) Dados -> . APR NEWDICTIONARY
+    (9) Dados -> . APR NEWSUBDICTIONARY
+    (10) Dados -> . APR CONTENT FPR
+    (11) Dados -> . APR WORD FPR
+    (12) Dados -> . WORD WORD IGUAL Content
+    (13) Dados -> . WORD WORD WORD IGUAL Content
+    (14) Dados -> . INT WORD INT IGUAL Content
+    (15) Dados -> . FLOAT IGUAL Content
+
+    WORD            shift and go to state 2
+    HASHTAG         shift and go to state 3
+    ASPA            shift and go to state 4
+    PLICA           shift and go to state 5
+    INT             shift and go to state 6
+    CONTENT         shift and go to state 7
+    APR             shift and go to state 8
+    FLOAT           shift and go to state 9
+
+    Dados                          shift and go to state 97
+
+state 92
+
+    (52) Lista -> APR Elementos FPR .
+
+    $end            reduce using rule 52 (Lista -> APR Elementos FPR .)
+    FPC             reduce using rule 52 (Lista -> APR Elementos FPR .)
+    VIRG            reduce using rule 52 (Lista -> APR Elementos FPR .)
+    FPR             reduce using rule 52 (Lista -> APR Elementos FPR .)
+
+
+state 93
+
+    (54) Elementos -> Elementos VIRG . Elemento
+    (55) Elementos -> Elementos VIRG .
+    (57) Elemento -> . WORD
+    (58) Elemento -> . CONTENT
+    (59) Elemento -> . INT
+    (60) Elemento -> . FLOAT
+    (61) Elemento -> . Lista
+    (52) Lista -> . APR Elementos FPR
+    (53) Lista -> . APR FPR
+
+    FPR             reduce using rule 55 (Elementos -> Elementos VIRG .)
+    VIRG            reduce using rule 55 (Elementos -> Elementos VIRG .)
+    WORD            shift and go to state 77
+    CONTENT         shift and go to state 78
+    INT             shift and go to state 79
+    FLOAT           shift and go to state 80
+    APR             shift and go to state 51
+
+    Elemento                       shift and go to state 98
+    Lista                          shift and go to state 81
+
+state 94
+
+    (43) OtherEndians -> INTWITHUNDERSCORE OtherEndians .
+
+    $end            reduce using rule 43 (OtherEndians -> INTWITHUNDERSCORE OtherEndians .)
+    FPC             reduce using rule 43 (OtherEndians -> INTWITHUNDERSCORE OtherEndians .)
+    VIRG            reduce using rule 43 (OtherEndians -> INTWITHUNDERSCORE OtherEndians .)
+
+
+state 95
+
+    (44) OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .
+
+    $end            reduce using rule 44 (OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    FPC             reduce using rule 44 (OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+    VIRG            reduce using rule 44 (OtherEndiansFloat -> FLOATWITHUNDERSCORE OtherEndiansFloat .)
+
+
+state 96
+
+    (14) Dados -> INT WORD INT IGUAL Content .
+
+    $end            reduce using rule 14 (Dados -> INT WORD INT IGUAL Content .)
+    FPC             reduce using rule 14 (Dados -> INT WORD INT IGUAL Content .)
+    VIRG            reduce using rule 14 (Dados -> INT WORD INT IGUAL Content .)
+
+
+state 97
+
+    (39) Conteudo -> Conteudo VIRG Dados .
+
+    FPC             reduce using rule 39 (Conteudo -> Conteudo VIRG Dados .)
+    VIRG            reduce using rule 39 (Conteudo -> Conteudo VIRG Dados .)
+
+
+state 98
+
+    (54) Elementos -> Elementos VIRG Elemento .
+
+    FPR             reduce using rule 54 (Elementos -> Elementos VIRG Elemento .)
+    VIRG            reduce using rule 54 (Elementos -> Elementos VIRG Elemento .)
 

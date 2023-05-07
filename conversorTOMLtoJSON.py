@@ -312,7 +312,22 @@ class Conversor:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
-
+        def p_Dados_InlineTables(p):
+            """
+            Dados : WORD IGUAL InlineTable
+            """
+            dicPreencher={}
+            
+            dic = self.documentData[self.fileStates[0]]
+            if len(self.fileStates) != 1:
+                    for i in range(1, len(self.fileStates)):
+                        dic = dic[self.fileStates[i]]
+                        if type(dic) == dict:
+                            dicPreencher[p[1]] = dic
+                            dic = dicPreencher
+            else:
+                dicPreencher[p[1]] = dic
+                self.documentData[self.fileStates[0]]= dicPreencher
         def p_Dados_NewDict_NewSubDict(p):
             """
             Dados : APR NEWDICTIONARY
@@ -447,27 +462,6 @@ class Conversor:
                 else:
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
                     
-        def p_Dados_IntwithPoints_Float(p):
-            """
-            Dados : FLOAT IGUAL Content
-            """
-            key = str(p[1])
-            fileStatesTemp = self.levelsData(key)
-            if len(fileStatesTemp) == 1:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
-            else:
-                if fileStatesTemp[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
-                dic = self.documentData[fileStatesTemp[0]]
-                for i in range(1, len(fileStatesTemp)):
-                    if fileStatesTemp[i] not in dic:
-                        dic[fileStatesTemp[i]] = dict()
-                if str(p[3])[0] == '"':
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
-                else:
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
-
         def p_Frase(p):
             """
             Frase : Seqword 
@@ -485,7 +479,6 @@ class Conversor:
                     | DATE
                     | TIME
                     | Lista
-                    | InlineTable
                     | Palavras
                     | LittleEndian
                     | LittleEndianFloat
@@ -514,7 +507,27 @@ class Conversor:
 
             """
             p[0] = str(p[1]) + str(p[2])
-
+        
+        def p_InlineTable(p):
+            """
+            InlineTable : APC Conteudo FPC
+            """
+            p[0] = p[2]
+        
+        def p_InlineTable_Vazia(p):
+            """
+            InlineTable : APC FPC
+            """
+        def p_Conteudo_InlineTable(p):
+            """
+            Conteudo : Conteudo VIRG Dados
+            """
+            p[0] = p[3]
+        def p_Conteudo_Unico(p):
+            """
+            Conteudo : Dados 
+            """
+            p[0] = p[1]
         def p_Content_LittleEndianFloat(p):
             """
             LittleEndianFloat : FLOATWITHUNDERSCORE OtherEndiansFloat
@@ -599,30 +612,6 @@ class Conversor:
             """
             p[0] = []
             self.auxListas.append([])
-
-        '''
-        def p_InlineTable(p):
-            """
-            Lista : APC DadosAux FPC
-            """
-            p[0] = self.auxListas
-            self.auxListas = []
-
-        def DadosAux(p):
-            """
-            DadosAux : APC DadosAux FPC
-            """
-            p[0] = self.auxListas
-            self.auxListas = []
-
-        
-        def p_InlineTable_Vazia(p):
-            """
-            Lista : APC FPC
-            """
-            p[0] = []
-            self.auxListas.append([])
-        '''
 
 
         def p_Elementos(p):
