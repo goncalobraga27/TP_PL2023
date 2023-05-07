@@ -157,7 +157,8 @@ class Conversor:
         t_LOCALDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:(\d+\.\d+|\d{2})'
         t_LOCALDATE = r'\d{4}-\d{2}-\d{2}'
         t_LOCALTIME = r'\d{2}:\d{2}:(\d+\.\d+|\d{2})'
-
+        t_APC = "{"
+        t_FPC = "}"
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
@@ -484,6 +485,7 @@ class Conversor:
                     | DATE
                     | TIME
                     | Lista
+                    | InlineTable
                     | Palavras
                     | LittleEndian
                     | LittleEndianFloat
@@ -597,6 +599,31 @@ class Conversor:
             """
             p[0] = []
             self.auxListas.append([])
+
+        '''
+        def p_InlineTable(p):
+            """
+            Lista : APC DadosAux FPC
+            """
+            p[0] = self.auxListas
+            self.auxListas = []
+
+        def DadosAux(p):
+            """
+            DadosAux : APC DadosAux FPC
+            """
+            p[0] = self.auxListas
+            self.auxListas = []
+
+        
+        def p_InlineTable_Vazia(p):
+            """
+            Lista : APC FPC
+            """
+            p[0] = []
+            self.auxListas.append([])
+        '''
+
 
         def p_Elementos(p):
             """

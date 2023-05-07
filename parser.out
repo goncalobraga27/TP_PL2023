@@ -1,5 +1,10 @@
 Created by PLY (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    APC
+    FPC
+
 Grammar
 
 Rule 0     S' -> Dados
@@ -64,6 +69,7 @@ Rule 58    Palavras -> <empty>
 
 Terminals, with rules where they appear
 
+APC                  : 
 APR                  : 7 8 9 10 47 48
 ASPA                 : 3 3
 BINARIO              : 27
@@ -73,6 +79,7 @@ DATE                 : 19
 EXPONENCIACAO        : 28
 FLOAT                : 14 43 45 46 55
 FLOATWITHUNDERSCORE  : 36 39
+FPC                  : 
 FPR                  : 9 10 47 48
 HASHTAG              : 2
 HEXADECIMAL          : 25
