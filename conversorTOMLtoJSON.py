@@ -125,7 +125,7 @@ class Conversor:
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "HASHTAG", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
             "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
-            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL"
+            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL","APC","FPC"
 
         )
 
@@ -135,7 +135,7 @@ class Conversor:
         t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
         t_WORD = r'([0-9]+)?[A-Za-z_\-]+([0-9]+)?([A-Za-z_\-]+)?([0-9]+)?'
         t_FLOAT = r'\d+\.\d+'
-        t_INT = r'\d+'
+        t_INT = r'\d+' #nao sera melhor passar ja aqui para int?
         t_PLICA = r'\''
         t_FPR = r'\]'
         t_APR = r'\['
@@ -157,6 +157,7 @@ class Conversor:
         t_LOCALDATETIME = r'\d{4}\-\d{2}\-\d{2}(T|\s)\d{2}\:\d{2}\:(\d+\.\d+|\d{2})'
         t_LOCALDATE = r'\d{4}-\d{2}-\d{2}'
         t_LOCALTIME = r'\d{2}:\d{2}:(\d+\.\d+|\d{2})'
+
         t_ANY_ignore = ' \t'
 
         def t_COMMENTARY(t):
