@@ -133,7 +133,7 @@ class Conversor:
         
         # t_KEY = r'.+(?==)'
         t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
-        t_WORD = r'([0-9]+)?[A-Za-z_\-\.]+([0-9]+)?([A-Za-z_\-\.]+)?([0-9]+)?'
+        t_WORD = r'([0-9]+)?[A-Za-z_\-]+([0-9]+|\.)?([A-Za-z_\-\.]+)?([0-9]+)?'
         t_FLOAT = r'\d+\.\d+'
         t_INT = r'\d+' #nao sera melhor passar ja aqui para int?
         t_PLICA = r'\''
