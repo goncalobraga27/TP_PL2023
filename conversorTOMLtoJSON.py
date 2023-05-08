@@ -253,11 +253,11 @@ class Conversor:
                 if len(self.fileStates) != 1:
                     for i in range(1, len(self.fileStates)):
                         dic = dic[self.fileStates[i]]
-                        if type(dic) == dict:
-                            if str(p[3])[0] == '"':
-                                dic[str(p[1])] = str(p[3][1:][:-1])
-                            else:
-                                dic[str(p[1])] = p[3]
+                    if type(dic) == dict:
+                        if str(p[3])[0] == '"':
+                            dic[str(p[1])] = str(p[3][1:][:-1])
+                        else:
+                            dic[str(p[1])] = p[3]
                 else:
                     if str(p[3])[0] == '"':
                         if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
@@ -388,12 +388,14 @@ class Conversor:
                 if self.fileStates[0] not in self.documentData:
                     self.documentData[fileStatesTemp[0]] = dict()
             else:
-                if fileStatesTemp[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
-                dic = self.documentData[fileStatesTemp[0]]
-                for i in range(1, len(fileStatesTemp)):
+                for i in range(0,len(self.fileStates)):
+                    if self.fileStates[i] not in self.documentData:
+                        self.documentData[self.fileStates[i]] = dict()
+                    dic = self.documentData[self.fileStates[i]]
+                for i in range(0, len(fileStatesTemp)-1):
                     if fileStatesTemp[i] not in dic:
                         dic[fileStatesTemp[i]] = dict()
+                    dic=dic[fileStatesTemp[i]]
                 if str(p[4])[0] == '"':
                     dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[4][1:][:-1]
                 else:
@@ -424,6 +426,7 @@ class Conversor:
             """
             Dados : INT WORD INT IGUAL Content
             """
+            dic = self.fileStates
             key = str(p[1]) + str(p[2]) + str(p[3])
             fileStatesTemp = self.levelsData(key)
             if len(fileStatesTemp) == 1:
@@ -445,22 +448,38 @@ class Conversor:
             """
             Dados : FLOAT IGUAL Content
             """
-            key = str(p[1])
-            fileStatesTemp = self.levelsData(key)
-            if len(fileStatesTemp) == 1:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
+            dic = self.documentData[self.fileStates[0]]
+            if len(self.fileStates) != 1:
+                for i in range(1, len(self.fileStates)):
+                    dic = dic[self.fileStates[i]]
+                    if type(dic) == dict:
+                        key = str(p[1])
+                        fileStatesTemp = self.levelsData(key)
+                        for i in range(1, len(fileStatesTemp)):
+                            if fileStatesTemp[i] not in dic:
+                                dic[fileStatesTemp[i]] = dict()
+                        if str(p[3])[0] == '"':
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                        else:
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
             else:
-                if fileStatesTemp[0] not in self.documentData:
-                    self.documentData[fileStatesTemp[0]] = dict()
-                dic = self.documentData[fileStatesTemp[0]]
-                for i in range(1, len(fileStatesTemp)):
-                    if fileStatesTemp[i] not in dic:
-                        dic[fileStatesTemp[i]] = dict()
-                if str(p[3])[0] == '"':
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                dic = self.documentData[self.fileStates[0]]
+                key = str(p[1])
+                fileStatesTemp = self.levelsData(key)
+                if len(fileStatesTemp) == 1:
+                    if fileStatesTemp[0] not in dic:
+                        dic[fileStatesTemp[0]] = dict()
                 else:
-                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+                    if fileStatesTemp[0] not in dic:
+                        dic[fileStatesTemp[0]] = dict()
+                    dic =  dic[fileStatesTemp[0]]
+                    for i in range(1, len(fileStatesTemp)):
+                        if fileStatesTemp[i] not in dic:
+                            dic[fileStatesTemp[i]] = dict()
+                    if str(p[3])[0] == '"':
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                    else:
+                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
                     
         def p_Content(p):
             """
