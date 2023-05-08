@@ -1,13 +1,9 @@
 {
-    "fruit": {
-        "apple": {
-            "color": "red",
-            "taste": {
-                "sweet": "true "
-            },
-            "texture": {
-                "smooth": "true "
-            }
-        }
+    "owner2": {
+        "ports": [
+            "teste1",
+            "teste2",
+            123
+        ]
     }
 }

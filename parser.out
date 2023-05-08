@@ -9,8 +9,8 @@ Rule 3     Dados -> PLICA PLICA IGUAL Content
 Rule 4     Dados -> INT IGUAL Content
 Rule 5     Dados -> CONTENT IGUAL Content
 Rule 6     Dados -> WORD IGUAL InlineTable
-Rule 7     Dados -> APR NEWDICTIONARY
-Rule 8     Dados -> APR NEWSUBDICTIONARY
+Rule 7     Dados -> NEWDICTIONARY
+Rule 8     Dados -> NEWSUBDICTIONARY
 Rule 9     Dados -> APR CONTENT FPR
 Rule 10    Dados -> APR WORD FPR
 Rule 11    Dados -> WORD WORD IGUAL Content
@@ -66,7 +66,7 @@ Rule 59    Palavras -> <empty>
 Terminals, with rules where they appear
 
 APC                  : 33 34
-APR                  : 7 8 9 10 48 49
+APR                  : 9 10 48 49
 ASPA                 : 2 2
 BINARIO              : 24
 BOOL                 : 31
@@ -121,8 +121,8 @@ state 0
     (4) Dados -> . INT IGUAL Content
     (5) Dados -> . CONTENT IGUAL Content
     (6) Dados -> . WORD IGUAL InlineTable
-    (7) Dados -> . APR NEWDICTIONARY
-    (8) Dados -> . APR NEWSUBDICTIONARY
+    (7) Dados -> . NEWDICTIONARY
+    (8) Dados -> . NEWSUBDICTIONARY
     (9) Dados -> . APR CONTENT FPR
     (10) Dados -> . APR WORD FPR
     (11) Dados -> . WORD WORD IGUAL Content
@@ -135,8 +135,10 @@ state 0
     PLICA           shift and go to state 4
     INT             shift and go to state 5
     CONTENT         shift and go to state 6
-    APR             shift and go to state 7
-    FLOAT           shift and go to state 8
+    NEWDICTIONARY   shift and go to state 7
+    NEWSUBDICTIONARY shift and go to state 8
+    APR             shift and go to state 9
+    FLOAT           shift and go to state 10
 
     Dados                          shift and go to state 1
 
@@ -153,22 +155,22 @@ state 2
     (11) Dados -> WORD . WORD IGUAL Content
     (12) Dados -> WORD . WORD WORD IGUAL Content
 
-    IGUAL           shift and go to state 10
-    WORD            shift and go to state 9
+    IGUAL           shift and go to state 12
+    WORD            shift and go to state 11
 
 
 state 3
 
     (2) Dados -> ASPA . ASPA IGUAL Content
 
-    ASPA            shift and go to state 11
+    ASPA            shift and go to state 13
 
 
 state 4
 
     (3) Dados -> PLICA . PLICA IGUAL Content
 
-    PLICA           shift and go to state 12
+    PLICA           shift and go to state 14
 
 
 state 5
@@ -176,38 +178,52 @@ state 5
     (4) Dados -> INT . IGUAL Content
     (13) Dados -> INT . WORD INT IGUAL Content
 
-    IGUAL           shift and go to state 13
-    WORD            shift and go to state 14
+    IGUAL           shift and go to state 15
+    WORD            shift and go to state 16
 
 
 state 6
 
     (5) Dados -> CONTENT . IGUAL Content
 
-    IGUAL           shift and go to state 15
+    IGUAL           shift and go to state 17
 
 
 state 7
 
-    (7) Dados -> APR . NEWDICTIONARY
-    (8) Dados -> APR . NEWSUBDICTIONARY
+    (7) Dados -> NEWDICTIONARY .
+
+    $end            reduce using rule 7 (Dados -> NEWDICTIONARY .)
+    FPC             reduce using rule 7 (Dados -> NEWDICTIONARY .)
+    VIRG            reduce using rule 7 (Dados -> NEWDICTIONARY .)
+
+
+state 8
+
+    (8) Dados -> NEWSUBDICTIONARY .
+
+    $end            reduce using rule 8 (Dados -> NEWSUBDICTIONARY .)
+    FPC             reduce using rule 8 (Dados -> NEWSUBDICTIONARY .)
+    VIRG            reduce using rule 8 (Dados -> NEWSUBDICTIONARY .)
+
+
+state 9
+
     (9) Dados -> APR . CONTENT FPR
     (10) Dados -> APR . WORD FPR
 
-    NEWDICTIONARY   shift and go to state 16
-    NEWSUBDICTIONARY shift and go to state 17
     CONTENT         shift and go to state 18
     WORD            shift and go to state 19
 
 
-state 8
+state 10
 
     (14) Dados -> FLOAT . IGUAL Content
 
     IGUAL           shift and go to state 20
 
 
-state 9
+state 11
 
     (11) Dados -> WORD WORD . IGUAL Content
     (12) Dados -> WORD WORD . WORD IGUAL Content
@@ -216,7 +232,7 @@ state 9
     WORD            shift and go to state 21
 
 
-state 10
+state 12
 
     (1) Dados -> WORD IGUAL . Content
     (6) Dados -> WORD IGUAL . InlineTable
@@ -284,21 +300,21 @@ state 10
     LittleEndianFloat              shift and go to state 32
     signalInf                      shift and go to state 37
 
-state 11
+state 13
 
     (2) Dados -> ASPA ASPA . IGUAL Content
 
     IGUAL           shift and go to state 50
 
 
-state 12
+state 14
 
     (3) Dados -> PLICA PLICA . IGUAL Content
 
     IGUAL           shift and go to state 51
 
 
-state 13
+state 15
 
     (4) Dados -> INT IGUAL . Content
     (15) Content -> . CONTENT
@@ -361,14 +377,14 @@ state 13
     LittleEndianFloat              shift and go to state 32
     signalInf                      shift and go to state 37
 
-state 14
+state 16
 
     (13) Dados -> INT WORD . INT IGUAL Content
 
     INT             shift and go to state 53
 
 
-state 15
+state 17
 
     (5) Dados -> CONTENT IGUAL . Content
     (15) Content -> . CONTENT
@@ -430,24 +446,6 @@ state 15
     LittleEndian                   shift and go to state 31
     LittleEndianFloat              shift and go to state 32
     signalInf                      shift and go to state 37
-
-state 16
-
-    (7) Dados -> APR NEWDICTIONARY .
-
-    $end            reduce using rule 7 (Dados -> APR NEWDICTIONARY .)
-    FPC             reduce using rule 7 (Dados -> APR NEWDICTIONARY .)
-    VIRG            reduce using rule 7 (Dados -> APR NEWDICTIONARY .)
-
-
-state 17
-
-    (8) Dados -> APR NEWSUBDICTIONARY .
-
-    $end            reduce using rule 8 (Dados -> APR NEWSUBDICTIONARY .)
-    FPC             reduce using rule 8 (Dados -> APR NEWSUBDICTIONARY .)
-    VIRG            reduce using rule 8 (Dados -> APR NEWSUBDICTIONARY .)
-
 
 state 18
 
@@ -823,8 +821,8 @@ state 46
     (4) Dados -> . INT IGUAL Content
     (5) Dados -> . CONTENT IGUAL Content
     (6) Dados -> . WORD IGUAL InlineTable
-    (7) Dados -> . APR NEWDICTIONARY
-    (8) Dados -> . APR NEWSUBDICTIONARY
+    (7) Dados -> . NEWDICTIONARY
+    (8) Dados -> . NEWSUBDICTIONARY
     (9) Dados -> . APR CONTENT FPR
     (10) Dados -> . APR WORD FPR
     (11) Dados -> . WORD WORD IGUAL Content
@@ -838,8 +836,10 @@ state 46
     PLICA           shift and go to state 4
     INT             shift and go to state 5
     CONTENT         shift and go to state 6
-    APR             shift and go to state 7
-    FLOAT           shift and go to state 8
+    NEWDICTIONARY   shift and go to state 7
+    NEWSUBDICTIONARY shift and go to state 8
+    APR             shift and go to state 9
+    FLOAT           shift and go to state 10
 
     Conteudo                       shift and go to state 66
     Dados                          shift and go to state 68
@@ -1450,8 +1450,8 @@ state 86
     (4) Dados -> . INT IGUAL Content
     (5) Dados -> . CONTENT IGUAL Content
     (6) Dados -> . WORD IGUAL InlineTable
-    (7) Dados -> . APR NEWDICTIONARY
-    (8) Dados -> . APR NEWSUBDICTIONARY
+    (7) Dados -> . NEWDICTIONARY
+    (8) Dados -> . NEWSUBDICTIONARY
     (9) Dados -> . APR CONTENT FPR
     (10) Dados -> . APR WORD FPR
     (11) Dados -> . WORD WORD IGUAL Content
@@ -1464,8 +1464,10 @@ state 86
     PLICA           shift and go to state 4
     INT             shift and go to state 5
     CONTENT         shift and go to state 6
-    APR             shift and go to state 7
-    FLOAT           shift and go to state 8
+    NEWDICTIONARY   shift and go to state 7
+    NEWSUBDICTIONARY shift and go to state 8
+    APR             shift and go to state 9
+    FLOAT           shift and go to state 10
 
     Dados                          shift and go to state 92
 

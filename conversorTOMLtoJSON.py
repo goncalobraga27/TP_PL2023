@@ -171,13 +171,13 @@ class Conversor:
             return t
 
         def t_NEWDICTIONARY(t):
-            r'[a-zA-Z\d\-]+(\s+)?\]'
+            r'\[[a-zA-Z\d\-]+(\s+)?\]'
             print("Entrei no estado NEWDICTIONARY")
             t.lexer.begin('NEWDICTIONARY')
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'([a-zA-Z\d\-]+(\s+)?\.(\s+)?[a-zA-Z\d\-]+(\s+)?\])|(([a-zA-Z\-\d]+(\s+)?\.(\s+)?)+[a-zA-Z\d\-]+(\s+)?\])'
+            r'(?<!\[)([a-zA-Z\d\-]+(\s+)?\.(\s+)?[a-zA-Z\d\-]+(\s+)?\])|(([a-zA-Z\-\d]+(\s+)?\.(\s+)?)+[a-zA-Z\d\-]+(\s+)?\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
@@ -329,10 +329,10 @@ class Conversor:
                 self.documentData[self.fileStates[0]]= dicPreencher
         def p_Dados_NewDict_NewSubDict(p):
             """
-            Dados : APR NEWDICTIONARY
-                  | APR NEWSUBDICTIONARY
+            Dados : NEWDICTIONARY
+                  | NEWSUBDICTIONARY
             """
-            self.fileStates = self.levelsData(str(p[2])[:-1])
+            self.fileStates = self.levelsData(str(p[1])[1:][:-1])
             if len(self.fileStates) == 1:
                 if self.fileStates[0] not in self.documentData:
                     self.documentData[self.fileStates[0]] = dict()
@@ -641,11 +641,16 @@ class Conversor:
             """
             if ',' not in str(p[1]):
                 p[0] = p[1]
-                self.auxListas.append(p[1])
+                if str(p[1])[0] == '"' and str(p[1])[-1] == '"':
+                    self.auxListas.append(p[1][1:][:-1])
+                else :
+                    self.auxListas.append(p[1])
             else:
                 palavras = p[1].split(',')
                 for item in palavras:
-                    self.auxListas.append(item[1:][:-1])
+                    item = item.replace(" ","")
+                    item=item.replace('"',"")
+                    self.auxListas.append(item)
 
         def p_Elemento(p):
             """
@@ -661,7 +666,7 @@ class Conversor:
             """
             Elemento : CONTENT
             """
-            p[0] = p[1]
+            p[0]=p[1]
 
         def p_Elemento_inteiros(p):
             """
@@ -691,8 +696,11 @@ class Conversor:
             p[0] = ""
 
         def p_error(p):
-            print("O p é isto:" + str(p))
-            print("Erro sintático no input!")
+            if str(p) == "None":
+                print("Comentário Ignorado")
+            else:
+                print(p)
+                print("Erro sintático no input!")
             parser.success = False
 
         parser = yacc(debug=True)
