@@ -10,6 +10,7 @@ class Conversor:
         self.documentData = dict()
         self.keyEmpty = 0
         self.auxListas = []
+        self.auxinlineTables = dict()
     def contaAPR(self,data):
         resultado = 0 
         for it in data:
@@ -249,26 +250,40 @@ class Conversor:
                         dic['discouraged' + str(self.keyEmpty)] = p[3]
                         self.keyEmpty += 1
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 0:
-                dic = self.documentData[self.fileStates[0]]
-                if len(self.fileStates) != 1:
-                    for i in range(1, len(self.fileStates)):
-                        dic = dic[self.fileStates[i]]
-                    if type(dic) == dict:
-                        if str(p[3])[0] == '"':
-                            dic[str(p[1])] = str(p[3][1:][:-1])
-                        else:
-                            dic[str(p[1])] = p[3]
-                else:
-                    if str(p[3])[0] == '"':
-                        if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                            dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
-                        else:
-                            dic[str(p[1])] = p[3][1:][:-1]
+                if len(self.fileStates) != 0 :
+                    dic = self.documentData[self.fileStates[0]]
+                    if len(self.fileStates) != 1:
+                        for i in range(1, len(self.fileStates)):
+                            dic = dic[self.fileStates[i]]
+                        if type(dic) == dict:
+                            if str(p[3])[0] == '"':
+                                dic[str(p[1])] = str(p[3][1:][:-1])
+                            else:
+                                dic[str(p[1])] = p[3]
                     else:
-                        if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                            dic[str(p[1])[1:][:-1]] = p[3]
+                        if str(p[3])[0] == '"':
+                            if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                                dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
+                            else:
+                                dic[str(p[1])] = p[3][1:][:-1]
                         else:
-                            dic[str(p[1])] = p[3]
+                            if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                                dic[str(p[1])[1:][:-1]] = p[3]
+                            else:
+                                dic[str(p[1])] = p[3]
+                else:
+                    self.fileStates = self.levelsData(str(p[1]))
+                    if len(self.fileStates) == 1 :
+                        self.auxinlineTables[str(p[1])] = p[3]
+                    else : 
+                        self.auxinlineTables[self.fileStates[0]] = dict()
+                        dic = self.auxinlineTables[self.fileStates[0]]
+                        for i in range(1, len(self.fileStates)):
+                            dic[self.fileStates[i]] = dict()
+                            dic = dic[self.fileStates[i]]
+                        dic[str(p[1])] = p[3]
+                    self.fileStates = []
+                        
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
                 dicPreencher=self.documentData
                 for it in self.fileStates:
@@ -311,9 +326,9 @@ class Conversor:
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
 
-        def p_Dados_InlineTables(p):
+        def p_Dados_InlineTables_Preenchida(p):
             """
-            Dados : WORD IGUAL InlineTable
+            Dados : WORD IGUAL APC Conteudo FPC
             """
             dicPreencher={}
             
@@ -327,6 +342,11 @@ class Conversor:
             else:
                 dicPreencher[p[1]] = dic
                 self.documentData[self.fileStates[0]]= dicPreencher
+        def p_Dados_InlineTables_Vazia(p):
+            """
+            Dados : WORD IGUAL APC FPC
+            """
+            self.documentData[str(p[1])]= {}
         def p_Dados_NewDict_NewSubDict(p):
             """
             Dados : NEWDICTIONARY
@@ -501,12 +521,7 @@ class Conversor:
                     | LOCALTIME
                     | BOOL
             """
-            if p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro':
-                p[0] = bool(p[1])
-            elif p[1] == 'False' or p[1] == 'false' or p[1] == 'Falso' or p[1] == 'falso':
-                p[0] = bool(None)
-            else:
-                p[0] = p[1]
+            p[0] = p[1]
             print("O conteúdo da atribuição é isto:" + str(p[0]))
 
         def p_Content_signalInf(p):
@@ -515,17 +530,8 @@ class Conversor:
 
             """
             p[0] = str(p[1]) + str(p[2])
-        
-        def p_InlineTable(p):
-            """
-            InlineTable : APC Conteudo FPC
-            """
-            p[0] = p[2]
-        
-        def p_InlineTable_Vazia(p):
-            """
-            InlineTable : APC FPC
-            """
+    
+    
         def p_Conteudo_InlineTable(p):
             """
             Conteudo : Conteudo VIRG Dados
@@ -687,14 +693,19 @@ class Conversor:
             """
             Palavras : WORD Palavras
             """
-            p[0] = str(p[1]) + " " + str(p[2])
-
+            if (p[1] == 'True' or p[1] == 'true' or p[1] == 'Verdadeiro' or p[1] == 'verdadeiro') :
+                p[0] = bool(p[1])
+            elif (p[1] == 'False' or p[1] == 'false' or p[1] == 'Falso' or p[1] == 'falso') :
+                p[0] = bool(None)
+            else:
+                p[0] = str(p[1]) + " " + str(p[2])
+            
         def p_Palavras_Vazia(p):
             """
             Palavras :
             """
             p[0] = ""
-
+        
         def p_error(p):
             if str(p) == "None":
                 print("Comentário Ignorado")
