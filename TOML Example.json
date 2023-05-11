@@ -1,57 +1,15 @@
 {
-    "owner": {
-        "testeBool": true,
-        "teste_inf": "inf ",
-        "expoente": "224_617_991 _228 ",
-        "float": 3.1415,
-        "bin": "0b11010110 ",
-        "testeOctal": "0o01234567 ",
-        "testetesteOctal": "0o755 ",
-        "testeHexadecimal": "0xDEADBEEF ",
-        "testeTesteHexadecimal": "0xdead_beef ",
-        "testeUnderScores": "1_23_34 ",
-        "ports": [
-            8001,
-            8001,
-            8002
-        ],
-        "connection_max": 5000.1,
-        "num": 89,
-        "regex": "'I [dw]on't need \\d{2} apples'",
-        "lines": "'''The first newline is trimmed in raw strings.    All other whitespace    is preserved. '''",
-        "multilinestring": "\"\"The quick brown  fox jumps over  the lazy dog. \"\"",
-        "str": "I'm a string. \\\"You can quote me\\\". Name\\tJos\\u00E9\\nLocation\\tSF.",
-        "fruit": {
-            "apple": {
-                "smooth": true,
-                "badTaste": true,
-                "badAspect": "YES "
-            },
-            "orange": 2
-        },
-        "3": {
-            "14159": "pi"
-        },
-        "discouraged0": "# This is not a comment",
-        "another \"teste\"": "Passed",
-        "1234": "teste",
-        "winpath": "'C:\\Users\\nodejs\\templates'"
+    "animal": {
+        "type": {
+            "name": "pug"
+        }
     },
-    "database": {
-        "server": "192.168.1.1",
-        "ports": [
-            8001,
-            8001,
-            8002
-        ],
-        "enabled": true
+    "name": {
+        "first": "Tom",
+        "last": "Preston-Werner"
     },
-    "servers": {
-        "ip": "10.0.0.2",
-        "dc": "eqdc10",
-        "hosts": [
-            "alpha",
-            "omega"
-        ]
+    "point": {
+        "x": 1,
+        "y": 2
     }
 }

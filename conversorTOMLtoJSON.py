@@ -274,26 +274,75 @@ class Conversor:
                 else:
                     self.fileStates = self.levelsData(str(p[1]))
                     if len(self.fileStates) == 1 :
-                        self.auxinlineTables[str(p[1])] = p[3]
+                        if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
+                            self.auxinlineTables[str(p[1])] = str(p[3])[1:][:-1]
+                        else :
+                            self.auxinlineTables[str(p[1])] = p[3]
                     else : 
                         self.auxinlineTables[self.fileStates[0]] = dict()
                         dic = self.auxinlineTables[self.fileStates[0]]
                         for i in range(1, len(self.fileStates)):
                             dic[self.fileStates[i]] = dict()
                             dic = dic[self.fileStates[i]]
-                        dic[str(p[1])] = p[3]
+                        if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
+                            dic[str(p[1])] = str(p[3])[1:][:-1]
+                        else: 
+                            dic[str(p[1])] =p[3]
                     self.fileStates = []
                         
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
-                dicPreencher=self.documentData
-                for it in self.fileStates:
-                    dicPreencher = dicPreencher[it]
-                fileStatesTemp = self.levelsData(str(p[1]))
-                if len(fileStatesTemp) == 1:
-                    dicPreencher[fileStatesTemp[0]] = dict()
+                if len(self.fileStates) != 0 :
+                    dicPreencher=self.documentData
+                    for it in self.fileStates:
+                        dicPreencher = dicPreencher[it]
+                    fileStatesTemp = self.levelsData(str(p[1]))
+                    if len(fileStatesTemp) == 1:
+                        dicPreencher[fileStatesTemp[0]] = dict()
+                    else:
+                        if fileStatesTemp[0] not in dicPreencher:
+                            dicPreencher[fileStatesTemp[0]] = dict()
+                            dic = dicPreencher[fileStatesTemp[0]]
+                            for i in range(1, len(fileStatesTemp) - 1):
+                                if fileStatesTemp[i] not in dic:
+                                    dic[fileStatesTemp[i]] = dict()
+                                    dic = dic[fileStatesTemp[i]]
+                                else:
+                                    dic = dic[fileStatesTemp[i]]
+                            if type(dic) != str:
+                                if str(p[3])[0] == '"':
+                                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                                else:
+                                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
                 else:
+                    dicPreencher = self.auxinlineTables
+                    for it in self.fileStates:
+                        dicPreencher = dicPreencher[it]
+                    fileStatesTemp = self.levelsData(str(p[1]))
+                    if len(fileStatesTemp) == 1:
+                        dicPreencher[fileStatesTemp[0]] = dict()
+                    else:
+                        if fileStatesTemp[0] not in dicPreencher:
+                            dicPreencher[fileStatesTemp[0]] = dict()
+                            dic = dicPreencher[fileStatesTemp[0]]
+                            for i in range(1, len(fileStatesTemp) - 1):
+                                if fileStatesTemp[i] not in dic:
+                                    dic[fileStatesTemp[i]] = dict()
+                                    dic = dic[fileStatesTemp[i]]
+                                else:
+                                    dic = dic[fileStatesTemp[i]]
+                            if type(dic) != str:
+                                if str(p[3])[0] == '"':
+                                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                                else:
+                                    dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+            elif str(p[2]) == "=" and self.countPoints(str(p[1])) > 1:
+                if (len(self.fileStates)) != 0:
+                    dicPreencher=self.documentData
+                    for it in self.fileStates:
+                        dicPreencher = dicPreencher [it]
+                    fileStatesTemp = self.levelsData(str(p[1]))
                     if fileStatesTemp[0] not in dicPreencher:
-                       dicPreencher[fileStatesTemp[0]] = dict()
+                        dicPreencher[fileStatesTemp[0]] = dict()
                     dic = dicPreencher[fileStatesTemp[0]]
                     for i in range(1, len(fileStatesTemp) - 1):
                         if fileStatesTemp[i] not in dic:
@@ -306,42 +355,34 @@ class Conversor:
                             dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                         else:
                             dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
-            elif str(p[2]) == "=" and self.countPoints(str(p[1])) > 1:
-                dicPreencher=self.documentData
-                for it in self.fileStates:
-                    dicPreencher = dicPreencher [it]
-                fileStatesTemp = self.levelsData(str(p[1]))
-                if fileStatesTemp[0] not in dicPreencher:
-                    dicPreencher[fileStatesTemp[0]] = dict()
-                dic = dicPreencher[fileStatesTemp[0]]
-                for i in range(1, len(fileStatesTemp) - 1):
-                    if fileStatesTemp[i] not in dic:
-                        dic[fileStatesTemp[i]] = dict()
-                        dic = dic[fileStatesTemp[i]]
-                    else:
-                        dic = dic[fileStatesTemp[i]]
-                if type(dic) != str:
-                    if str(p[3])[0] == '"':
-                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
-                    else:
-                        dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
+                else:
+                    dicPreencher=self.auxinlineTables
+                    for it in self.fileStates:
+                        dicPreencher = dicPreencher [it]
+                    fileStatesTemp = self.levelsData(str(p[1]))
+                    if fileStatesTemp[0] not in dicPreencher:
+                        dicPreencher[fileStatesTemp[0]] = dict()
+                    dic = dicPreencher[fileStatesTemp[0]]
+                    for i in range(1, len(fileStatesTemp) - 1):
+                        if fileStatesTemp[i] not in dic:
+                            dic[fileStatesTemp[i]] = dict()
+                            dic = dic[fileStatesTemp[i]]
+                        else:
+                            dic = dic[fileStatesTemp[i]]
+                    if type(dic) != str:
+                        if str(p[3])[0] == '"':
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
+                        else:
+                            dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
 
         def p_Dados_InlineTables_Preenchida(p):
             """
             Dados : WORD IGUAL APC Conteudo FPC
             """
-            dicPreencher={}
-            
-            dic = self.documentData[self.fileStates[0]]
-            if len(self.fileStates) != 1:
-                    for i in range(1, len(self.fileStates)):
-                        dic = dic[self.fileStates[i]]
-                        if type(dic) == dict:
-                            dicPreencher[p[1]] = dic
-                            dic = dicPreencher
-            else:
-                dicPreencher[p[1]] = dic
-                self.documentData[self.fileStates[0]]= dicPreencher
+            self.fileStates = self.levelsData(str(p[1]))
+            self.documentData[self.fileStates[0]]= self.auxinlineTables
+            self.auxinlineTables={}
+            self.fileStates = []
         def p_Dados_InlineTables_Vazia(p):
             """
             Dados : WORD IGUAL APC FPC
