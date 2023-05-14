@@ -11,6 +11,7 @@ class Conversor:
         self.keyEmpty = 0
         self.auxListas = []
         self.auxinlineTables = dict()
+        self.listaKeysUsadas = []
     def contaAPR(self,data):
         resultado = 0 
         for it in data:
@@ -389,8 +390,8 @@ class Conversor:
                 dic=self.documentData[self.fileStates[0]]
                 for i in range(1,len(self.fileStates)):
                     dic = dic[self.fileStates[i]]
-                self.documentData.pop(fileStates[0])
-
+                if len(self.listaKeysUsadas) != 0 :
+                    dic.pop(self.listaKeysUsadas[-1])
                 self.documentData[fileStates[0]]= {}
                 dicPreencher = self.documentData[fileStates[0]]
                 for i in range(1,len(fileStates)):
@@ -399,6 +400,7 @@ class Conversor:
                 self.fileStates = self.levelsData(str(p[1]))
                 dicPreencher[self.fileStates[0]] = dic
                 self.auxinlineTables={}
+                self.listaKeysUsadas.extend(self.fileStates)
                 self.fileStates = fileStates
         def p_Dados_InlineTables_Vazia(p):
             """

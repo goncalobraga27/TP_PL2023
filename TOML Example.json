@@ -1,15 +1,6 @@
 {
     "teste": {
         "point": {
-            "name": {
-                "animal": {
-                    "type": {
-                        "name": "pug"
-                    }
-                },
-                "first": "Tom",
-                "last": "Preston-Werner"
-            },
             "x": 1,
             "y": 2
         }
