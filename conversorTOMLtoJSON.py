@@ -127,13 +127,14 @@ class Conversor:
             "WORD", "INT", "FLOAT", "PLICA", "FPR", "APR",
             "VIRG", "ASPA", "IGUAL", "CONTENT", "DATE", "TIME", "NEWDICTIONARY", "NEWSUBDICTIONARY",
             "SIGNAL", "INTWITHUNDERSCORE", "HEXADECIMAL", "OCTAL", "BINARIO", "EXPONENCIACAO", "FLOATWITHUNDERSCORE",
-            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL","APC","FPC"
+            "OFFSETDATETIME", "LOCALDATETIME", "LOCALDATE", "LOCALTIME","BOOL","APC","FPC", "AOT"
 
         )
 
         literals = (':', '-')
         
         # t_KEY = r'.+(?==)'
+        t_AOT = r'\[\[.+\]\]'
         t_BOOL = r'True|False|true|false|Verdadeiro|Falso|verdadeiro|falso'
         t_WORD = r'([0-9]+)?[A-Za-z_\-]+([0-9]+|\.)?([A-Za-z_\-\.]+)?([0-9]+)?'
         t_FLOAT = r'\d+\.\d+'
@@ -424,6 +425,12 @@ class Conversor:
                     if self.fileStates[i] not in dic:
                         dic[self.fileStates[i]] = dict()
                     dic = dic[self.fileStates[i]]
+
+        def p_Dados_AOT(p):
+            """
+            Dados : AOT 
+            """ 
+            print("COMPLETAR ISTO")
 
         def p_Dados_NewDict_NewSubDict_Aspas(p):
             """
