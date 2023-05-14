@@ -379,10 +379,27 @@ class Conversor:
             """
             Dados : WORD IGUAL APC Conteudo FPC
             """
-            self.fileStates = self.levelsData(str(p[1]))
-            self.documentData[self.fileStates[0]]= self.auxinlineTables
-            self.auxinlineTables={}
-            self.fileStates = []
+            if len(self.fileStates) == 0:
+                self.fileStates = self.levelsData(str(p[1]))
+                self.documentData[self.fileStates[0]]= self.auxinlineTables
+                self.auxinlineTables={}
+                self.fileStates = []
+            else:
+                fileStates = self.fileStates
+                dic=self.documentData[self.fileStates[0]]
+                for i in range(1,len(self.fileStates)):
+                    dic = dic[self.fileStates[i]]
+                self.documentData.pop(fileStates[0])
+
+                self.documentData[fileStates[0]]= {}
+                dicPreencher = self.documentData[fileStates[0]]
+                for i in range(1,len(fileStates)):
+                    dicPreencher[fileStates[i]]= {}
+                    dicPreencher=dicPreencher[fileStates[i]]
+                self.fileStates = self.levelsData(str(p[1]))
+                dicPreencher[self.fileStates[0]] = dic
+                self.auxinlineTables={}
+                self.fileStates = fileStates
         def p_Dados_InlineTables_Vazia(p):
             """
             Dados : WORD IGUAL APC FPC
