@@ -12,6 +12,10 @@ class Conversor:
         self.auxListas = []
         self.auxinlineTables = dict()
         self.listaKeysUsadas = []
+        self.listaKeysNRetirar = []
+        self.listaKeysRetirar = []
+        self.keyOndeRet = []
+        self.inlineTables = 0
     def contaAPR(self,data):
         resultado = 0 
         for it in data:
@@ -388,21 +392,30 @@ class Conversor:
                 self.fileStates = []
             else:
                 fileStates = self.fileStates
-                dic=self.documentData[self.fileStates[0]]
-                for i in range(1,len(self.fileStates)):
-                    dic = dic[self.fileStates[i]]
-                if len(self.listaKeysUsadas) != 0 :
-                    dic.pop(self.listaKeysUsadas[-1])
-                self.documentData[fileStates[0]]= {}
-                dicPreencher = self.documentData[fileStates[0]]
+                dic=self.documentData[fileStates[0]]
                 for i in range(1,len(fileStates)):
-                    dicPreencher[fileStates[i]]= {}
-                    dicPreencher=dicPreencher[fileStates[i]]
-                self.fileStates = self.levelsData(str(p[1]))
-                dicPreencher[self.fileStates[0]] = dic
-                self.auxinlineTables={}
-                self.listaKeysUsadas.extend(self.fileStates)
-                self.fileStates = fileStates
+                    dic = dic[fileStates[i]]
+                print("Dic -",str(dic))
+                fileStatesTemp = self.levelsData(str(p[1]))
+                dicAux = dic.copy()
+                print("DicAux -",str(dicAux))
+                for k in self.listaKeysUsadas:
+                    if k in dicAux:
+                        dicAux.pop(k)
+                print("DicAux -",str(dicAux))
+                dic[fileStatesTemp[0]]=dicAux
+                for k in dic.keys():
+                    if k not in self.listaKeysUsadas:
+                        self.listaKeysUsadas.append(k)
+                self.listaKeysNRetirar.extend(fileStatesTemp)
+                for k in dic.keys():
+                    if k not in self.listaKeysNRetirar:
+                        if k not in self.listaKeysRetirar:
+                            self.listaKeysRetirar.append(k)
+                self.keyOndeRet.extend(fileStates)
+                print(self.listaKeysRetirar)
+                self.inlineTables = 1
+
         def p_Dados_InlineTables_Vazia(p):
             """
             Dados : WORD IGUAL APC FPC
@@ -785,6 +798,10 @@ class Conversor:
 
         for it in data:
             parser.parse(it)
+        if self.inlineTables == 1 :
+            for k in self.listaKeysRetirar:
+                self.documentData[self.keyOndeRet[0]].pop(k)
+            self.inlineTables = 0
         print(self.documentData)
         with open(self.documentTitle + ".json", "w") as write_file:
             json.dump(self.documentData, write_file, indent=4)
