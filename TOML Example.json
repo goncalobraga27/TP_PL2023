@@ -1,17 +1,14 @@
 {
-    "teste": {
-        "animal": {
-            "type": {
-                "name": "pug"
+    "s": {
+        "ss": " [[sajdkaks]]"
+    },
+    "fruit": {
+        "apple": {
+            "color": "red",
+            "taste": {
+                "sweet": true
             }
         },
-        "name": {
-            "first": "Tom",
-            "last": "Preston-Werner"
-        },
-        "point": {
-            "x": 1,
-            "y": 2
-        }
+        "smooth": true
     }
 }
