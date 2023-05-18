@@ -1,15 +1,15 @@
 title = "TOML Example"
 
-
+[[Ola]]
 [[Ola]]
 a = 15
+adeus = 5 # {a=15,adeus = 5}
+a2 = 10
+laksnlda = 556
+dabjsdbhajs = 565
 
-[s]
-ss = " [[sajdkaks]]"
+[[Ola]]
+[[Ola]]
+assasas = 10
 
-[fruit]
-apple. color = "red"
-apple. taste.sweet = true
 
-[fruit.apple.texture]  # you can add sub-tables
-smooth = true

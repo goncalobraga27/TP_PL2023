@@ -5,6 +5,7 @@ import json
 
 class Conversor:
     def __init__(self):
+        self.aot = []
         self.fileStates = []
         self.documentTitle = ""
         self.documentData = dict()
@@ -273,10 +274,23 @@ class Conversor:
                             else:
                                 dic[str(p[1])] = p[3][1:][:-1]
                         else:
-                            if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                                dic[str(p[1])[1:][:-1]] = p[3]
-                            else:
-                                dic[str(p[1])] = p[3]
+                            if type(dic) == dict :
+                                if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                                    dic[str(p[1])[1:][:-1]] = p[3]
+                                
+                                else:
+                                    dic[str(p[1])] = p[3]
+                            else : # AOT -> array of table
+                                ld = len(dic)
+                                la = len(self.aot)
+                                #print(f"aot:{la}----{ld}") 
+                                if(la != ld):
+                                    atr = dict() # AOT
+                                    atr[p[1]] = p[3]
+                                    dic.append(atr)
+                                else:
+                                    dicionarioapreencher = dic[la-1]
+                                    dicionarioapreencher[p[1]] = p[3]
                 else:
                     self.fileStates = self.levelsData(str(p[1]))
                     if len(self.fileStates) == 1 :
@@ -421,6 +435,7 @@ class Conversor:
             Dados : WORD IGUAL APC FPC
             """
             self.documentData[str(p[1])]= {}
+
         def p_Dados_NewDict_NewSubDict(p):
             """
             Dados : NEWDICTIONARY
@@ -443,7 +458,17 @@ class Conversor:
             """
             Dados : AOT 
             """ 
-            print("COMPLETAR ISTO")
+            #print("COMPLETAR ISTO")
+            self.aot.append(p[1][2:-2])
+            self.fileStates = self.levelsData(p[1][2:-2])
+            #print(self.fileStates)
+            for item in self.fileStates:
+                if item not in self.documentData:
+                    self.documentData[p[1][2:-2]] = list()
+                else : 
+                    lista = self.documentData[p[1][2:-2]] 
+                    lista.append(dict())
+            
 
         def p_Dados_NewDict_NewSubDict_Aspas(p):
             """

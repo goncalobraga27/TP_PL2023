@@ -1,14 +1,16 @@
 {
-    "s": {
-        "ss": " [[sajdkaks]]"
-    },
-    "fruit": {
-        "apple": {
-            "color": "red",
-            "taste": {
-                "sweet": true
-            }
+    "Ola": [
+        {},
+        {
+            "a": 15,
+            "adeus": 5,
+            "a2": 10,
+            "laksnlda": 556,
+            "dabjsdbhajs": 565
         },
-        "smooth": true
-    }
+        {},
+        {
+            "assasas": 10
+        }
+    ]
 }
