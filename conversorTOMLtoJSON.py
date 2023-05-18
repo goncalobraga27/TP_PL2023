@@ -5,6 +5,7 @@ import json
 
 class Conversor:
     def __init__(self):
+        #self.result = dict()
         self.aot = []
         self.fileStates = []
         self.documentTitle = ""
