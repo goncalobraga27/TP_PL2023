@@ -5,7 +5,7 @@ import json
 
 class Conversor:
     def __init__(self):
-        #self.result = dict()
+        self.numberAOT = 0
         self.aot = []
         self.fileStates = []
         self.documentTitle = ""
@@ -18,6 +18,8 @@ class Conversor:
         self.listaKeysRetirar = []
         self.keyOndeRet = []
         self.inlineTables = 0
+        self.inAOT = 0 
+        self.lastAOT=""
     def contaAPR(self,data):
         resultado = 0 
         for it in data:
@@ -272,6 +274,17 @@ class Conversor:
                         if str(p[3])[0] == '"':
                             if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
                                 dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
+                            elif self.inAOT == 1:
+                                ld = len(dic)
+                                la = len(self.aot)
+                                #print(f"aot:{la}----{ld}") 
+                                if(la != ld):
+                                    atr = dict() # AOT
+                                    atr[p[1]] = p[3][1:][:-1]
+                                    dic.append(atr)
+                                else:
+                                    dicionarioapreencher = dic[la-1]
+                                    dicionarioapreencher[p[1]] = p[3][1:][:-1]
                             else:
                                 dic[str(p[1])] = p[3][1:][:-1]
                         else:
@@ -442,23 +455,56 @@ class Conversor:
             Dados : NEWDICTIONARY
                   | NEWSUBDICTIONARY
             """
-            self.fileStates = self.levelsData(str(p[1])[1:][:-1])
-            if len(self.fileStates) == 1:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[self.fileStates[0]] = dict()
-            else:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[self.fileStates[0]] = dict()
-                dic = self.documentData[self.fileStates[0]]
-                for i in range(1, len(self.fileStates)):
-                    if self.fileStates[i] not in dic:
-                        dic[self.fileStates[i]] = dict()
-                    dic = dic[self.fileStates[i]]
+            if self.inAOT == 0:
+                self.fileStates = self.levelsData(str(p[1])[1:][:-1])
+                if len(self.fileStates) == 1:
+                    if self.fileStates[0] not in self.documentData:
+                        self.documentData[self.fileStates[0]] = dict()
+                else:
+                    if self.fileStates[0] not in self.documentData:
+                        self.documentData[self.fileStates[0]] = dict()
+                    dic = self.documentData[self.fileStates[0]]
+                    for i in range(1, len(self.fileStates)):
+                        if self.fileStates[i] not in dic:
+                            dic[self.fileStates[i]] = dict()
+                        dic = dic[self.fileStates[i]]
+            else :
+                listaConteudo = self.documentData[self.lastAOT]
+                if len(listaConteudo)>0:
+                    dicConteudo = listaConteudo[self.numberAOT-1]
+                    self.fileStates = self.levelsData(str(p[1])[1:][:-1])
+                    if len(self.fileStates) == 1:
+                        if self.fileStates[0] not in dicConteudo:
+                            dicConteudo[self.fileStates[0]] = dict()
+                    else:
+                        if self.fileStates[0] not in dicConteudo:
+                            dicConteudo[self.fileStates[0]] = dict()
+                        dic = dicConteudo[self.fileStates[0]]
+                        for i in range(1, len(self.fileStates)):
+                            if self.fileStates[i] not in dic:
+                                dic[self.fileStates[i]] = dict()
+                            dic = dic[self.fileStates[i]]
+                else:
+                    listaConteudo.append(dict())
+                    dicConteudo = listaConteudo[self.numberAOT-1]
+                    self.fileStates = self.levelsData(str(p[1])[1:][:-1])
+                    if len(self.fileStates) == 1:
+                        if self.fileStates[0] not in dicConteudo:
+                            dicConteudo[self.fileStates[0]] = dict()
+                    else:
+                        if self.fileStates[0] not in dicConteudo:
+                            dicConteudo[self.fileStates[0]] = dict()
+                        dic = dicConteudo[self.fileStates[0]]
+                        for i in range(1, len(self.fileStates)):
+                            if self.fileStates[i] not in dic:
+                                dic[self.fileStates[i]] = dict()
+                            dic = dic[self.fileStates[i]]
 
         def p_Dados_AOT(p):
             """
             Dados : AOT 
             """ 
+            self.inAOT = 1
             #print("COMPLETAR ISTO")
             self.aot.append(p[1][2:-2])
             self.fileStates = self.levelsData(p[1][2:-2])
@@ -469,24 +515,28 @@ class Conversor:
                 else : 
                     lista = self.documentData[p[1][2:-2]] 
                     lista.append(dict())
+            self.numberAOT += 1
+            self.lastAOT = p[1][2:-2]
             
 
         def p_Dados_NewDict_NewSubDict_Aspas(p):
             """
             Dados : APR CONTENT FPR
             """
-            self.fileStates = self.levelsData(str(p[2]))
-            if len(self.fileStates) == 1:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[self.fileStates[0]] = dict()
-            else:
-                if self.fileStates[0] not in self.documentData:
-                    self.documentData[self.fileStates[0]] = dict()
-                dic = self.documentData[self.fileStates[0]]
-                for i in range(1, len(self.fileStates)):
-                    if self.fileStates[i] not in dic:
-                        dic[self.fileStates[i]] = dict()
-                    dic = dic[self.fileStates[i]]
+            if self.inAOT == 0:
+                self.fileStates = self.levelsData(str(p[2]))
+                if len(self.fileStates) == 1:
+                    if self.fileStates[0] not in self.documentData:
+                        self.documentData[self.fileStates[0]] = dict()
+                else:
+                    if self.fileStates[0] not in self.documentData:
+                        self.documentData[self.fileStates[0]] = dict()
+                    dic = self.documentData[self.fileStates[0]]
+                    for i in range(1, len(self.fileStates)):
+                        if self.fileStates[i] not in dic:
+                            dic[self.fileStates[i]] = dict()
+                        dic = dic[self.fileStates[i]]
+  
         def p_Dados_NewDict_NewSubDict_Word(p):
             """
             Dados : APR WORD FPR
