@@ -3,10 +3,6 @@ title = "TOML Example"
 [owner]
 testeBool = true
 teste_inf = inf
-numbers = [
-[1],
-[2,3]
-]
 teste=Inf2 = false
 expoente = 224_617_991_228
 float = +3.1415
@@ -56,10 +52,10 @@ enabled = True
 [servers.alpha]
 ip = "10.0.0.1"
 dc = "eqdc10"
-
 [servers.alpha.beta]
 ip = "10.0.1.2"
 dc = "eqdc10.1"
+num = [[1,2],[3,4]]
 
 [servers.beta]
 ip = "10.0.0.2"

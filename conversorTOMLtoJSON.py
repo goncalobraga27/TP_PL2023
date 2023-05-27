@@ -22,6 +22,39 @@ class Conversor:
         self.inlineTables = 0
         self.inAOT = 0 
         self.lastAOT=""
+    def giveListas(self,data):
+        resultado = []
+        listaAtual = []
+        elem=""
+        for it in data:
+            if it != '[' and it != ']' and it !=',':
+                elem+=it
+            elif it == ',':
+                if elem !='':
+                    if elem.isdigit():
+                        listaAtual.append(int(elem))
+                        elem=""
+                    elif '.' in elem:
+                        listaAtual.append(float(elem))
+                        elem=""
+                    else:
+                        listaAtual.append(elem[1:-1])
+                        elem=""
+            elif it == ']':
+                if elem.isdigit():
+                    listaAtual.append(int(elem))
+                    elem=""
+                elif '.' in elem:
+                    listaAtual.append(float(elem))
+                    elem=""
+                else:
+                    listaAtual.append(elem[1:-1])
+                    elem=""
+                resultado.append(listaAtual)
+                listaAtual = []
+        return resultado
+
+            
     def contaAPR(self,data):
         resultado = 0 
         for it in data:
@@ -190,7 +223,7 @@ class Conversor:
             return t
 
         def t_NEWSUBDICTIONARY(t):
-            r'(?<!\[)([a-zA-Z\d\-]+(\s+)?\.(\s+)?[a-zA-Z\d\-]+(\s+)?\])|(([a-zA-Z\-\d]+(\s+)?\.(\s+)?)+[a-zA-Z\d\-]+(\s+)?\])'
+            r'(\[)([a-zA-Z\d\-]+(\s+)?\.(\s+)?[a-zA-Z\d\-]+(\s+)?\])|(\[([a-zA-Z\-\d]+(\s+)?\.(\s+)?)+[a-zA-Z\d\-]+(\s+)?\])'
             print("Entrei no estado NEWSUBDICTIONARY")
             t.lexer.begin('NEWSUBDICTIONARY')
             return t
@@ -669,7 +702,19 @@ class Conversor:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3][1:][:-1]
                     else:
                         dic[fileStatesTemp[len(fileStatesTemp) - 1]] = p[3]
-                    
+        def p_Dados_ListaListas(p):
+            """
+            Dados : WORD IGUAL AOT
+            """
+            if len(self.fileStates) != 0:
+                dic = self.documentData[self.fileStates[0]]
+                if len(self.fileStates) != 1:
+                    for i in range(1,len(self.fileStates)):
+                         dic = dic[self.fileStates[i]]
+                lista = self.giveListas(p[3][1:-1])
+                dic[p[1]]=lista
+
+
         def p_Content(p):
             """
             Content : CONTENT
@@ -853,11 +898,6 @@ class Conversor:
             Elemento : FLOAT
             """
             p[0] = float(p[1]) 
-        def p_Elemento_Lista(p):
-            """
-            Elemento : Lista
-            """
-            p[0] = p[1]
         def p_Palavras(p):
             """
             Palavras : WORD Palavras

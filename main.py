@@ -5,7 +5,7 @@ def main():
     while i:#True:
         #nomeFicheiro = input('Insira o path do ficheiro que quer converter : ')
         conv = Conversor()
-        f = open("dataset6.txt")#open(nomeFicheiro)
+        f = open("dataset.txt")#open(nomeFicheiro)
         data = f.read()
         data = conv.splitData(data)
         conv.conversor(data)
