@@ -2,6 +2,7 @@ import PyQt5.QtGui as qtg
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtCore as qtc
 from conversorTOMLtoJSON import Conversor
+import json
 import sys
 
 """
@@ -25,28 +26,28 @@ class MainMenu(qtw.QMainWindow):
         self.title = qtw.QLabel("Processamento de Linguagens",self)
         self.title.setFont(qtg.QFont('Arial', 30,weight=qtg.QFont.Bold))
         self.title.setStyleSheet("color: rgb(0,0,0);")
-        self.title.move(265,10)
-        self.title.resize(580,45)
+        self.title.move(230,10)
+        self.title.resize(800,55)
 
         self.setStyleSheet("background-color: rgb(154,192,205);")
         self.title = qtw.QLabel("Trabalho Prático - Conversor de TOML",self)
         self.title.setFont(qtg.QFont('Arial', 20,weight=qtg.QFont.Bold))
         self.title.setStyleSheet("color: rgb(0,0,0);")
-        self.title.move(300,65)
-        self.title.resize(510,35)
+        self.title.move(300,70)
+        self.title.resize(650,35)
 
         self.setStyleSheet("background-color: rgb(154,192,205);")
-        self.title = qtw.QLabel("Ano Letivo 2022/2023 - Grupo XX",self)
+        self.title = qtw.QLabel("Ano Letivo 2022/2023 - Grupo 31",self)
         self.title.setFont(qtg.QFont('Arial', 17,weight=qtg.QFont.Bold))
         self.title.setStyleSheet("color: rgb(0,0,0);")
-        self.title.move(370,105)
+        self.title.move(370,110)
         self.title.resize(510,35)
 
         self.title = qtw.QLabel("Projeto concebido por Gonçalo Braga, João Loureiro e Simão Barroso",self)
         self.title.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
         self.title.setStyleSheet("color: white;")
-        self.title.move(430,750)
-        self.title.resize(600,60)
+        self.title.move(275,750)
+        self.title.resize(800,60)
 
         self.logo = qtw.QLabel(self)
         #pixmap = qtg.QPixmap('images/EEUMLOGO(1).png')
@@ -188,7 +189,12 @@ class MainMenu(qtw.QMainWindow):
                 widget.setCurrentWidget(convertPage)      
 
 class ConvertMenu(qtw.QMainWindow):
-
+    def __init__(self):
+        super(ConvertMenu,self).__init__()
+        self.setGeometry(500,100,1000,800)
+        self.setFixedSize(1000,800)
+        self.setWindowTitle("Conversor JSON")
+    
     # trocar pra menu de conversao
     def convertUI(self,input,output,option):
         self.setStyleSheet("background-color: rgb(154,192,205);")
@@ -199,7 +205,7 @@ class ConvertMenu(qtw.QMainWindow):
         self.inputType.resize(450,60)
 
         self.textboxInput = qtw.QTextEdit(self,
-        acceptRichText= True,
+        acceptRichText= False,
         #lineWrapMode=qtw.QTextEdit.FixedColumnWidth,
         #lineWrapColumnOrWidth=120,
         #placeholderText="Insira o conteúdo a converter..."
@@ -207,7 +213,7 @@ class ConvertMenu(qtw.QMainWindow):
         self.textboxInput.setFontPointSize(13)
         self.textboxInput.setStyleSheet("background-color: white;")
         self.textboxInput.setPlaceholderText("Insira o conteúdo a converter...")
-        self.textboxInput.move(20, 50)
+        self.textboxInput.move(20, 60)
         self.textboxInput.resize(450,660)
 
         self.outputType = qtw.QLabel(output,self)
@@ -217,7 +223,7 @@ class ConvertMenu(qtw.QMainWindow):
         self.outputType.resize(450,60)
 
         self.textboxOutput = qtw.QTextEdit(self,
-        acceptRichText= True,
+        acceptRichText= False,
         readOnly = True,
         #lineWrapMode=qtw.QTextEdit.FixedColumnWidth,
         #lineWrapColumnOrWidth=120,
@@ -226,7 +232,7 @@ class ConvertMenu(qtw.QMainWindow):
         self.textboxOutput.setPlainText(". . .")
         self.textboxOutput.setFontPointSize(13)
         self.textboxOutput.setStyleSheet("background-color: white;")
-        self.textboxOutput.move(530, 50)
+        self.textboxOutput.move(530, 60)
         self.textboxOutput.resize(450,660)
 
         self.convertButton = qtw.QPushButton("Converter", self)
@@ -246,11 +252,16 @@ class ConvertMenu(qtw.QMainWindow):
         self.convertButton.resize(140,60)
         self.convertButton.clicked.connect(lambda: self.press_Converter(option))
 
-    def press_Converter(self,option):    
+    def press_Converter(self,option):
+        conv = Conversor()
+        data = conv.splitData(self.textboxInput.toPlainText())
+        print(self.textboxInput.toPlainText())
+        conv.conversor(data)   
+        self.textboxOutput.setPlainText(str(json.dumps(conv.documentData, indent=4))) 
         #usar funcao de conversao
         #pegar texto inserido : { self.textboxInput.toPlainText()}
         #apos conversao: self.textboxOutput.setPlainText(-texto convertido-)
-        self.textboxOutput.setPlainText("IHIHIHIHIHI")
+        #self.textboxOutput.setPlainText("IHIHIHIHIHI")
                  
 
 
@@ -258,6 +269,9 @@ def start():
     app = qtw.QApplication(sys.argv)
     global widget 
     widget = qtw.QStackedWidget()
+    widget.setGeometry(500,100,1000,800)
+    widget.setFixedSize(1000,800)
+    widget.setWindowTitle("Conversor JSON")
     mainWin = MainMenu()
     widget.addWidget(mainWin)
     widget.setCurrentWidget(mainWin)   # setting the page that you want to load when application starts up. you can also use setCurrentIndex(int)
