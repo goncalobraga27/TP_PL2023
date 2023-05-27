@@ -5,7 +5,9 @@ import json
 
 class Conversor:
     def __init__(self):
+        self.inDicInAOT = 0
         self.numberAOT = 0
+        self.dicionario = ""
         self.aot = []
         self.fileStates = []
         self.documentTitle = ""
@@ -260,70 +262,78 @@ class Conversor:
                         dic['discouraged' + str(self.keyEmpty)] = p[3]
                         self.keyEmpty += 1
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 0:
-                if len(self.fileStates) != 0 :
-                    dic = self.documentData[self.fileStates[0]]
-                    if len(self.fileStates) != 1:
-                        for i in range(1, len(self.fileStates)):
-                            dic = dic[self.fileStates[i]]
-                        if type(dic) == dict:
-                            if str(p[3])[0] == '"':
-                                dic[str(p[1])] = str(p[3][1:][:-1])
-                            else:
-                                dic[str(p[1])] = p[3]
-                    else:
-                        if str(p[3])[0] == '"':
-                            if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                                dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
-                            elif self.inAOT == 1:
-                                ld = len(dic)
-                                la = len(self.aot)
-                                #print(f"aot:{la}----{ld}") 
-                                if(la != ld):
-                                    atr = dict() # AOT
-                                    atr[p[1]] = p[3][1:][:-1]
-                                    dic.append(atr)
-                                else:
-                                    dicionarioapreencher = dic[la-1]
-                                    dicionarioapreencher[p[1]] = p[3][1:][:-1]
-                            else:
-                                dic[str(p[1])] = p[3][1:][:-1]
-                        else:
-                            if type(dic) == dict :
-                                if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
-                                    dic[str(p[1])[1:][:-1]] = p[3]
-                                
+                if self.inDicInAOT == 0 :
+                    if len(self.fileStates) != 0 :
+                        dic = self.documentData[self.fileStates[0]]
+                        if len(self.fileStates) != 1:
+                            for i in range(1, len(self.fileStates)):
+                                dic = dic[self.fileStates[i]]
+                            if type(dic) == dict:
+                                if str(p[3])[0] == '"':
+                                    dic[str(p[1])] = str(p[3][1:][:-1])
                                 else:
                                     dic[str(p[1])] = p[3]
-                            else : # AOT -> array of table
-                                ld = len(dic)
-                                la = len(self.aot)
-                                #print(f"aot:{la}----{ld}") 
-                                if(la != ld):
-                                    atr = dict() # AOT
-                                    atr[p[1]] = p[3]
-                                    dic.append(atr)
+                        else:
+                            if str(p[3])[0] == '"':
+                                if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                                    dic[str(p[1])[1:][:-1]] = p[3][1:][:-1]
+                                elif self.inAOT == 1:
+                                    ld = len(dic)
+                                    la = len(self.aot)
+                                    #print(f"aot:{la}----{ld}") 
+                                    if(la != ld):
+                                        atr = dict() # AOT
+                                        atr[p[1]] = p[3][1:][:-1]
+                                        dic.append(atr)
+                                    else:
+                                        dicionarioapreencher = dic[la-1]
+                                        dicionarioapreencher[p[1]] = p[3][1:][:-1]
                                 else:
-                                    dicionarioapreencher = dic[la-1]
-                                    dicionarioapreencher[p[1]] = p[3]
+                                    dic[str(p[1])] = p[3][1:][:-1]
+                            else:
+                                if type(dic) == dict :
+                                    if str(p[1])[0] == '"' or str(p[1])[0] == '\'':
+                                        dic[str(p[1])[1:][:-1]] = p[3]
+                                    
+                                    else:
+                                        dic[str(p[1])] = p[3]
+                                else : # AOT -> array of table
+                                    ld = len(dic)
+                                    la = len(self.aot)
+                                    #print(f"aot:{la}----{ld}") 
+                                    if(la != ld):
+                                        atr = dict() # AOT
+                                        atr[p[1]] = p[3]
+                                        dic.append(atr)
+                                    else:
+                                        dicionarioapreencher = dic[la-1]
+                                        dicionarioapreencher[p[1]] = p[3]
+                    else:
+                        self.fileStates = self.levelsData(str(p[1]))
+                        if len(self.fileStates) == 1 :
+                            if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
+                                self.auxinlineTables[str(p[1])] = str(p[3])[1:][:-1]
+                            else :
+                                self.auxinlineTables[str(p[1])] = p[3]
+                        else : 
+                            self.auxinlineTables[self.fileStates[0]] = dict()
+                            dic = self.auxinlineTables[self.fileStates[0]]
+                            for i in range(1, len(self.fileStates)):
+                                dic[self.fileStates[i]] = dict()
+                                dic = dic[self.fileStates[i]]
+                            if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
+                                dic[str(p[1])] = str(p[3])[1:][:-1]
+                            else: 
+                                dic[str(p[1])] =p[3]
+                        self.fileStates = []
                 else:
-                    self.fileStates = self.levelsData(str(p[1]))
-                    if len(self.fileStates) == 1 :
-                        if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
-                            self.auxinlineTables[str(p[1])] = str(p[3])[1:][:-1]
-                        else :
-                            self.auxinlineTables[str(p[1])] = p[3]
-                    else : 
-                        self.auxinlineTables[self.fileStates[0]] = dict()
-                        dic = self.auxinlineTables[self.fileStates[0]]
-                        for i in range(1, len(self.fileStates)):
-                            dic[self.fileStates[i]] = dict()
-                            dic = dic[self.fileStates[i]]
-                        if str(p[3])[0] == '"' and str(p[3])[-1] == '"':
-                            dic[str(p[1])] = str(p[3])[1:][:-1]
-                        else: 
-                            dic[str(p[1])] =p[3]
-                    self.fileStates = []
-                        
+                    listaConteudo = self.documentData[self.lastAOT]
+                    if len(listaConteudo)>0:
+                            dicConteudo = listaConteudo[self.numberAOT-1]
+                            dicAPreencher = dicConteudo[self.dicionario[1:-1]]
+                            dicAPreencher[str(p[1])]=p[3]
+
+                
             elif str(p[2]) == "=" and self.countPoints(str(p[1])) == 1:
                 if len(self.fileStates) != 0 :
                     dicPreencher=self.documentData
@@ -469,7 +479,9 @@ class Conversor:
                             dic[self.fileStates[i]] = dict()
                         dic = dic[self.fileStates[i]]
             else :
+                self.inDicInAOT = 1
                 listaConteudo = self.documentData[self.lastAOT]
+                self.dicionario = p[1]
                 if len(listaConteudo)>0:
                     dicConteudo = listaConteudo[self.numberAOT-1]
                     self.fileStates = self.levelsData(str(p[1])[1:][:-1])
@@ -517,6 +529,7 @@ class Conversor:
                     lista.append(dict())
             self.numberAOT += 1
             self.lastAOT = p[1][2:-2]
+            self.inDicInAOT = 0
             
 
         def p_Dados_NewDict_NewSubDict_Aspas(p):
