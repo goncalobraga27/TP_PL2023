@@ -2,6 +2,7 @@ import PyQt5.QtGui as qtg
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtCore as qtc
 from conversorTOMLtoJSON import Conversor
+import toYAML_XML
 import json
 import sys
 
@@ -75,27 +76,7 @@ class MainMenu(qtw.QMainWindow):
         self.o1Button.setToolTip('Converta algo no formato <b>TOML</b> para o formato <b>JSON</b>')
         self.o1Button.clicked.connect(lambda: self.press_Option(1))
 
-        self.o2Button = qtw.QPushButton("PLACEHOLDER 2", self)
-        self.o2Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
-        self.o2Button.setStyleSheet("""
-        QPushButton {
-            background-color: rgb(238,64,0); 
-            border: 2px solid rgb(0,0,0);
-            border-radius: 11px;
-            color: white;
-        }
-        QPushButton:hover {
-            background-color: rgb(124,205,124);
-            border: 2px solid rgb(0,0,0);
-            color: white;
-        }
-        """)
-        self.o2Button.move(370, 245)
-        self.o2Button.resize(250,150)
-        self.o2Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
-        #self.o2Button.clicked.connect(self.press_Option(2))
-
-        self.o3Button = qtw.QPushButton("PLACEHOLDER 3", self)
+        self.o3Button = qtw.QPushButton("Converter TOML\n para YAML", self)
         self.o3Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
         self.o3Button.setStyleSheet("""
         QPushButton {
@@ -113,9 +94,9 @@ class MainMenu(qtw.QMainWindow):
         self.o3Button.move(670, 245)
         self.o3Button.resize(250,150)
         self.o3Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
-        #self.o3Button.clicked.connect(self.press_Option(3))
+        self.o3Button.clicked.connect(lambda: self.press_Option(3))
 
-        self.o4Button = qtw.QPushButton("PLACEHOLDER 4", self)
+        self.o4Button = qtw.QPushButton("Converter TOML\n para XML", self)
         self.o4Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
         self.o4Button.setStyleSheet("""
         QPushButton {
@@ -135,27 +116,7 @@ class MainMenu(qtw.QMainWindow):
         self.o4Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
         #self.o4Button.clicked.connect(self.press_Option(4))
 
-        self.o5Button = qtw.QPushButton("PLACEHOLDER 5", self)
-        self.o5Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
-        self.o5Button.setStyleSheet("""
-        QPushButton {
-            background-color: rgb(238,64,0); 
-            border: 2px solid rgb(0,0,0);
-            border-radius: 11px;
-            color: white;
-        }
-        QPushButton:hover {
-            background-color: rgb(124,205,124);
-            border: 2px solid rgb(0,0,0);
-            color: white;
-        }
-        """)
-        self.o5Button.move(370, 485)
-        self.o5Button.resize(250,150)
-        self.o5Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
-        #self.o5Button.clicked.connect(self.press_Option(5))
-
-        self.o6Button = qtw.QPushButton("PLACEHOLDER 6", self)
+        self.o6Button = qtw.QPushButton("Converter JSON\n para TOML", self)
         self.o6Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
         self.o6Button.setStyleSheet("""
         QPushButton {
@@ -179,12 +140,17 @@ class MainMenu(qtw.QMainWindow):
         match option:
             case 1:
                 convertPage = ConvertMenu()
-                convertPage.convertUI("TOML","JSON",1)
+                convertPage.convertUI("TOML","JSON",1,True)
+                widget.addWidget(convertPage)
+                widget.setCurrentWidget(convertPage)
+            case 3:
+                convertPage = ConvertMenu()
+                convertPage.convertUI("TOML","YAML",3,True)
                 widget.addWidget(convertPage)
                 widget.setCurrentWidget(convertPage)
             case _:
                 convertPage = ConvertMenu()
-                convertPage.convertUI("X","Y",1)
+                convertPage.convertUI("X","Y",1,False)
                 widget.addWidget(convertPage)
                 widget.setCurrentWidget(convertPage)      
 
@@ -196,7 +162,7 @@ class ConvertMenu(qtw.QMainWindow):
         self.setWindowTitle("Conversor JSON")
     
     # trocar pra menu de conversao
-    def convertUI(self,input,output,option):
+    def convertUI(self,input,output,option,file):
         self.setStyleSheet("background-color: rgb(154,192,205);")
         self.inputType = qtw.QLabel(input,self)
         self.inputType.setFont(qtg.QFont('Arial', 30))
@@ -252,17 +218,90 @@ class ConvertMenu(qtw.QMainWindow):
         self.convertButton.resize(140,60)
         self.convertButton.clicked.connect(lambda: self.press_Converter(option))
 
+        if file:
+            self.AFButton = qtw.QPushButton("Abrir Ficheiro", self)
+            self.AFButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
+            self.AFButton.setStyleSheet("""
+            QPushButton {
+                background-color: rgb(238,64,0); 
+                border: 2px solid rgb(0,0,0);
+                border-radius: 20px;
+            }
+            QPushButton:hover {
+                background-color: rgb(124,205,124);
+                border: 2px solid rgb(0,0,0);
+            }
+        """)
+            self.AFButton.move(20, 730)
+            self.AFButton.resize(140,60)
+            self.AFButton.clicked.connect(lambda: self.openFile())
+
+            self.convertButton.move(675, 730)
+            self.convertButton.resize(140,60)
+            self.convertButton.clicked.connect(lambda: self.press_Converter(option))
+
+            self.SVButton = qtw.QPushButton("Guardar em\n Ficheiro", self)
+            self.SVButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
+            self.SVButton.setStyleSheet("""
+            QPushButton {
+                background-color: rgb(238,64,0); 
+                border: 2px solid rgb(0,0,0);
+                border-radius: 20px;
+            }
+            QPushButton:hover {
+                background-color: rgb(124,205,124);
+                border: 2px solid rgb(0,0,0);
+            }
+        """)
+            self.SVButton.move(840, 730)
+            self.SVButton.resize(140,60)
+            self.SVButton.clicked.connect(lambda: self.saveFile(option))
+
     def press_Converter(self,option):
-        conv = Conversor()
-        data = conv.splitData(self.textboxInput.toPlainText())
-        print(self.textboxInput.toPlainText())
-        conv.conversor(data)   
-        self.textboxOutput.setPlainText(str(json.dumps(conv.documentData, indent=4))) 
-        #usar funcao de conversao
-        #pegar texto inserido : { self.textboxInput.toPlainText()}
-        #apos conversao: self.textboxOutput.setPlainText(-texto convertido-)
-        #self.textboxOutput.setPlainText("IHIHIHIHIHI")
-                 
+        match option:
+            #usar funcao de conversao
+            #pegar texto inserido : { self.textboxInput.toPlainText()}
+            #apos conversao: self.textboxOutput.setPlainText(-texto convertido-)
+            #self.textboxOutput.setPlainText("IHIHIHIHIHI")
+            case 1:
+                conv = Conversor()
+                data = conv.splitData(self.textboxInput.toPlainText())
+                #print(self.textboxInput.toPlainText())
+                conv.conversor(data)   
+                self.textboxOutput.setPlainText(str(json.dumps(conv.documentData, indent=4)))
+            case 3:
+                conv = Conversor()
+                data = conv.splitData(self.textboxInput.toPlainText())
+                #print(self.textboxInput.toPlainText())
+                conv.conversor(data)   
+                self.textboxOutput.setPlainText(str(toYAML_XML.dictToYAML(conv.documentData,0)))
+            case _:
+                self.textboxOutput.setPlainText(". . .")
+    
+    def openFile(self):
+        fname = qtw.QFileDialog.getOpenFileName(self, 'Abrir Ficheiro', 'c:\\',"All Files (*)")
+        #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        if fname[0]!= '':
+            f = open(fname[0])
+            data = f.read()
+            self.textboxInput.setPlainText(data)
+        else:
+            pass
+
+    def saveFile(self,option):
+        fname = qtw.QFileDialog.getSaveFileName(self, 'Guardar Ficheiro', 'c:\\',"All Files (*)")
+        #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        if fname[0]!= '':
+            if option == 1:
+                with open(fname[0], "w") as write_file:
+                    conv = Conversor()
+                    data = conv.splitData(self.textboxInput.toPlainText())
+                    #print(self.textboxInput.toPlainText())
+                    conv.conversor(data)
+                    json.dump(conv.documentData, write_file, indent=4)
+        else:
+            pass
+
 
 
 def start():
