@@ -128,7 +128,6 @@ parser = yacc.yacc()
 
 exemplo= '''
 {
-  "name" : [
   "string": "Hello, world!",
   "number": 12345,
   "boolean": true,
@@ -143,7 +142,6 @@ exemplo= '''
             }
         }
     }
-  ]
 }
 '''
 exemplo2 = '''
@@ -196,16 +194,6 @@ exemplo2 = '''
 }
 
 '''
-print(parser.parse(exemplo2))
-print("-<><><><><><><><><><><><")
-print(toml.dumps(parser.parse(exemplo2))) # esta correto (ERRO NO ARRAY)
-
-
-print('''\n\n------------------------\n
-      Problemas : \n
-      -Tratar da notacao cientifica\n
-      -Ver se as datas fazem parte\n
-      - Problema virgula array -> supostamente funciona em python
-      - testar com mais exemplos
-      - date type error
---------------------------\n''')
+#print(parser.parse(exemplo2))
+#print("-<><><><><><><><><><><><")
+#print(toml.dumps(parser.parse(exemplo2))) # esta correto (ERRO NO ARRAY)

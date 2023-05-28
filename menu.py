@@ -2,9 +2,10 @@ import PyQt5.QtGui as qtg
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtCore as qtc
 from conversorTOMLtoJSON import Conversor
-import toYAML_XML
+import toYAML_XML as tYX
 import json
 import sys
+import jsonToToml as jTT
 
 """
 #TODO:  - Mexer na cor da barra de descer
@@ -18,7 +19,7 @@ class MainMenu(qtw.QMainWindow):
         super(MainMenu,self).__init__()
         self.setGeometry(500,100,1000,800)
         self.setFixedSize(1000,800)
-        self.setWindowTitle("Conversor JSON")
+        #self.setWindowTitle("Conversor JSON")
         self.initUI()
         #self.convertUI("TOML","JSON",1)
 
@@ -71,7 +72,7 @@ class MainMenu(qtw.QMainWindow):
             color: white;
         }
         """)
-        self.o1Button.move(70, 245)
+        self.o1Button.move(200, 245)
         self.o1Button.resize(250,150)
         self.o1Button.setToolTip('Converta algo no formato <b>TOML</b> para o formato <b>JSON</b>')
         self.o1Button.clicked.connect(lambda: self.press_Option(1))
@@ -91,9 +92,9 @@ class MainMenu(qtw.QMainWindow):
             color: white;
         }
         """)
-        self.o3Button.move(670, 245)
+        self.o3Button.move(550, 245)
         self.o3Button.resize(250,150)
-        self.o3Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
+        self.o3Button.setToolTip('Converta algo no formato <b>TOML</b> para o formato <b>YAML</b>')
         self.o3Button.clicked.connect(lambda: self.press_Option(3))
 
         self.o4Button = qtw.QPushButton("Converter TOML\n para XML", self)
@@ -111,10 +112,10 @@ class MainMenu(qtw.QMainWindow):
             color: white;
         }
         """)
-        self.o4Button.move(70, 485)
+        self.o4Button.move(200, 485)
         self.o4Button.resize(250,150)
-        self.o4Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
-        #self.o4Button.clicked.connect(self.press_Option(4))
+        self.o4Button.setToolTip('Converta algo no formato <b>TOML</b> para o formato <b>XML</b>')
+        self.o4Button.clicked.connect(lambda: self.press_Option(4))
 
         self.o6Button = qtw.QPushButton("Converter JSON\n para TOML", self)
         self.o6Button.setFont(qtg.QFont('Arial', 16,weight=qtg.QFont.Bold))
@@ -131,10 +132,10 @@ class MainMenu(qtw.QMainWindow):
             color: white;
         }
         """)
-        self.o6Button.move(670, 485)
+        self.o6Button.move(550, 485)
         self.o6Button.resize(250,150)
-        self.o6Button.setToolTip('Converta algo no formato <b>X</b> para o formato <b>Y</b>')
-        #self.o6Button.clicked.connect(self.press_Option(6))
+        self.o6Button.setToolTip('Converta algo no formato <b>JSON</b> para o formato <b>TOML</b>')
+        self.o6Button.clicked.connect(lambda: self.press_Option(6))
 
     def press_Option(self,option):
         match option:
@@ -145,7 +146,17 @@ class MainMenu(qtw.QMainWindow):
                 widget.setCurrentWidget(convertPage)
             case 3:
                 convertPage = ConvertMenu()
-                convertPage.convertUI("TOML","YAML",3,True)
+                convertPage.convertUI("TOML","YAML",3,False)
+                widget.addWidget(convertPage)
+                widget.setCurrentWidget(convertPage)
+            case 4:
+                convertPage = ConvertMenu()
+                convertPage.convertUI("TOML","XML",4,False)
+                widget.addWidget(convertPage)
+                widget.setCurrentWidget(convertPage)
+            case 6:
+                convertPage = ConvertMenu()
+                convertPage.convertUI("JSON","TOML",6,False)
                 widget.addWidget(convertPage)
                 widget.setCurrentWidget(convertPage)
             case _:
@@ -159,10 +170,11 @@ class ConvertMenu(qtw.QMainWindow):
         super(ConvertMenu,self).__init__()
         self.setGeometry(500,100,1000,800)
         self.setFixedSize(1000,800)
-        self.setWindowTitle("Conversor JSON")
+        #self.setWindowTitle("Conversor JSON")
     
     # trocar pra menu de conversao
     def convertUI(self,input,output,option,file):
+        widget.setWindowTitle("Conversor " + input + " para " + output)
         self.setStyleSheet("background-color: rgb(154,192,205);")
         self.inputType = qtw.QLabel(input,self)
         self.inputType.setFont(qtg.QFont('Arial', 30))
@@ -218,10 +230,9 @@ class ConvertMenu(qtw.QMainWindow):
         self.convertButton.resize(140,60)
         self.convertButton.clicked.connect(lambda: self.press_Converter(option))
 
-        if file:
-            self.AFButton = qtw.QPushButton("Abrir Ficheiro", self)
-            self.AFButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
-            self.AFButton.setStyleSheet("""
+        self.AFButton = qtw.QPushButton("Abrir Ficheiro", self)
+        self.AFButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
+        self.AFButton.setStyleSheet("""
             QPushButton {
                 background-color: rgb(238,64,0); 
                 border: 2px solid rgb(0,0,0);
@@ -232,10 +243,11 @@ class ConvertMenu(qtw.QMainWindow):
                 border: 2px solid rgb(0,0,0);
             }
         """)
-            self.AFButton.move(20, 730)
-            self.AFButton.resize(140,60)
-            self.AFButton.clicked.connect(lambda: self.openFile())
+        self.AFButton.move(20, 730)
+        self.AFButton.resize(140,60)
+        self.AFButton.clicked.connect(lambda: self.openFile())
 
+        if file:
             self.convertButton.move(675, 730)
             self.convertButton.resize(140,60)
             self.convertButton.clicked.connect(lambda: self.press_Converter(option))
@@ -256,6 +268,35 @@ class ConvertMenu(qtw.QMainWindow):
             self.SVButton.move(840, 730)
             self.SVButton.resize(140,60)
             self.SVButton.clicked.connect(lambda: self.saveFile(option))
+        
+        self.BackButton = qtw.QPushButton("🡸", self)
+        self.BackButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
+        self.BackButton.setStyleSheet("""
+            QPushButton {
+                background-color: rgb(238,64,0); 
+                border: 2px solid rgb(0,0,0);
+                border-radius: 20px;
+            }
+            QPushButton:hover {
+                background-color: rgb(124,205,124);
+                border: 2px solid rgb(0,0,0);
+            }
+        """)
+        self.BackButton.move(930, 7)
+        self.BackButton.resize(50,50)
+        self.BackButton.clicked.connect(lambda: self.returnMenu())
+        self.BackButton.setToolTip('Voltar ao Início')
+        
+    
+    def returnMenu(self):
+        '''
+        mainPage = MainMenu()
+        mainPage.initUI()
+        widget.addWidget(mainPage)
+        widget.setCurrentWidget(mainPage)
+        '''
+        widget.setWindowTitle("Trabalho Prático")
+        widget.removeWidget(widget.currentWidget())
 
     def press_Converter(self,option):
         match option:
@@ -274,7 +315,16 @@ class ConvertMenu(qtw.QMainWindow):
                 data = conv.splitData(self.textboxInput.toPlainText())
                 #print(self.textboxInput.toPlainText())
                 conv.conversor(data)   
-                self.textboxOutput.setPlainText(str(toYAML_XML.dictToYAML(conv.documentData,0)))
+                self.textboxOutput.setPlainText(str(tYX.dictToYAML(conv.documentData,0)))
+            case 4:
+                conv = Conversor()
+                data = conv.splitData(self.textboxInput.toPlainText())
+                #print(self.textboxInput.toPlainText())
+                conv.conversor(data)   
+                self.textboxOutput.setPlainText(str(tYX.dict2xml(conv.documentData,1)))
+            case 6:
+                inp = self.textboxInput.toPlainText()
+                self.textboxOutput.setPlainText(str(jTT.toml.dumps(jTT.parser.parse(inp))))
             case _:
                 self.textboxOutput.setPlainText(". . .")
     
@@ -310,7 +360,7 @@ def start():
     widget = qtw.QStackedWidget()
     widget.setGeometry(500,100,1000,800)
     widget.setFixedSize(1000,800)
-    widget.setWindowTitle("Conversor JSON")
+    widget.setWindowTitle("Trabalho Prático")
     mainWin = MainMenu()
     widget.addWidget(mainWin)
     widget.setCurrentWidget(mainWin)   # setting the page that you want to load when application starts up. you can also use setCurrentIndex(int)
