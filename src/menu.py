@@ -1,11 +1,11 @@
 import PyQt5.QtGui as qtg
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtCore as qtc
-from src.conversorTOMLtoJSON import Conversor
-import src.toYAML_XML as tYX
+from conversorTOMLtoJSON import Conversor
+import toYAML_XML as tYX
 import json
 import sys
-import src.jsonToToml as jTT
+import jsonToToml as jTT
 
 """
 #TODO:  - Mexer na cor da barra de descer
@@ -329,7 +329,7 @@ class ConvertMenu(qtw.QMainWindow):
                 self.textboxOutput.setPlainText(". . .")
     
     def openFile(self):
-        fname = qtw.QFileDialog.getOpenFileName(self, 'Abrir Ficheiro', 'c:\\',"All Files (*)")
+        fname = qtw.QFileDialog.getOpenFileName(self, 'Abrir Ficheiro', '\\',"All Files (*)")
         #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         if fname[0]!= '':
             f = open(fname[0])
@@ -339,7 +339,7 @@ class ConvertMenu(qtw.QMainWindow):
             pass
 
     def saveFile(self,option):
-        fname = qtw.QFileDialog.getSaveFileName(self, 'Guardar Ficheiro', 'c:\\',"All Files (*)")
+        fname = qtw.QFileDialog.getSaveFileName(self, 'Guardar Ficheiro', '\\',"All Files (*)")
         #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         if fname[0]!= '':
             if option == 1:

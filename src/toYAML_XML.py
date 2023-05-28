@@ -1,17 +1,3 @@
-# Passa um dictionario (dic) para o formato YAML, escrevendo este num ficheiro YAML (f). Numero de espacos para a identacao deve comecar por 0, sendo recursivamente manipulado.
-def dictToYAML_F(dic,espacos,f):
-    for e in dic:
-        if type(dic[e]) == dict:
-            f.write((espacos * "  " ) + e + ":\n")
-            #res += dictToYAML(dic[e],espacos+1,res)         
-            dictToYAML(dic[e],espacos+1,f)
-        elif type(dic[e]) == list:
-            f.write((espacos * "  " ) + e + ":\n")
-            for l in dic[e]:
-                f.write(((espacos+1) * "  " ) + "- " + str(l) + "\n")
-        else:
-            f.write((espacos * "  " ) + e + ": " + str(dic[e]) + "\n")
-
 # Passa um dictionario (dic) para o formato YAML, escrevendo este numa string (result). Numero de espacos para a identacao deve comecar por 0, sendo recursivamente manipulado.
 def dictToYAML(dic, espacos):
     result = ""
