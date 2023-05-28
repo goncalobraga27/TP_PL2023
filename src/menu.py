@@ -46,7 +46,7 @@ class MainMenu(qtw.QMainWindow):
 
         self.logo = qtw.QLabel(self)
         #pixmap = qtg.QPixmap('images/EEUMLOGO(1).png')
-        self.logo.setPixmap(qtg.QPixmap('images\EEUMLOGO(1).png').scaled(150,136,qtc.Qt.IgnoreAspectRatio))
+        self.logo.setPixmap(qtg.QPixmap('./images/EEUMLOGO(1).png').scaled(150,136,qtc.Qt.IgnoreAspectRatio))
         self.logo.resize(150,136)
         self.logo.move(30,16)
 
