@@ -7,13 +7,6 @@ import json
 import sys
 import jsonToToml as jTT
 
-"""
-#TODO:  - Mexer na cor da barra de descer
-        - Mexer em cores
-        - E o que a imaginação ditar... ඞඞඞඞ
-        - Minor: tentar centar ao inicializar e mudar o nome da janela
-"""
-
 class MainMenu(qtw.QMainWindow):
     def __init__(self):
         super(MainMenu,self).__init__()
@@ -53,7 +46,7 @@ class MainMenu(qtw.QMainWindow):
 
         self.logo = qtw.QLabel(self)
         #pixmap = qtg.QPixmap('images/EEUMLOGO(1).png')
-        self.logo.setPixmap(qtg.QPixmap('images/EEUMLOGO(1).png').scaled(150,136,qtc.Qt.IgnoreAspectRatio))
+        self.logo.setPixmap(qtg.QPixmap('images\EEUMLOGO(1).png').scaled(150,136,qtc.Qt.IgnoreAspectRatio))
         self.logo.resize(150,136)
         self.logo.move(30,16)
 
@@ -170,6 +163,7 @@ class ConvertMenu(qtw.QMainWindow):
         super(ConvertMenu,self).__init__()
         self.setGeometry(500,100,1000,800)
         self.setFixedSize(1000,800)
+        #ඞඞඞඞ
         #self.setWindowTitle("Conversor JSON")
     
     # trocar pra menu de conversao
@@ -269,7 +263,7 @@ class ConvertMenu(qtw.QMainWindow):
             self.SVButton.resize(140,60)
             self.SVButton.clicked.connect(lambda: self.saveFile(option))
         
-        self.BackButton = qtw.QPushButton("🡸", self)
+        self.BackButton = qtw.QPushButton("Voltar", self)
         self.BackButton.setFont(qtg.QFont('Arial', 13,weight=qtg.QFont.Bold))
         self.BackButton.setStyleSheet("""
             QPushButton {
@@ -282,8 +276,8 @@ class ConvertMenu(qtw.QMainWindow):
                 border: 2px solid rgb(0,0,0);
             }
         """)
-        self.BackButton.move(930, 7)
-        self.BackButton.resize(50,50)
+        self.BackButton.move(900, 7)
+        self.BackButton.resize(80,50)
         self.BackButton.clicked.connect(lambda: self.returnMenu())
         self.BackButton.setToolTip('Voltar ao Início')
         
