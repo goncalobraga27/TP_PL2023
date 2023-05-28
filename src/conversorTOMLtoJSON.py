@@ -932,5 +932,5 @@ class Conversor:
                 self.documentData[self.keyOndeRet[0]].pop(k)
             self.inlineTables = 0
         print(self.documentData)
-        with open(self.documentTitle + ".json", "w") as write_file:
+        with open("../output/"+self.documentTitle + ".json", "w") as write_file:
             json.dump(self.documentData, write_file, indent=4)

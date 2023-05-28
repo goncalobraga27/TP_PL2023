@@ -1,11 +1,11 @@
 import PyQt5.QtGui as qtg
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtCore as qtc
-from conversorTOMLtoJSON import Conversor
-import toYAML_XML as tYX
+from src.conversorTOMLtoJSON import Conversor
+import src.toYAML_XML as tYX
 import json
 import sys
-import jsonToToml as jTT
+import src.jsonToToml as jTT
 
 """
 #TODO:  - Mexer na cor da barra de descer
